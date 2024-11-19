@@ -4,9 +4,9 @@ function Snowfall() {
   const snowflakes = Array.from({ length: 100 }, (_, i) => i); // Generate 100 snowflakes
 
   return (
-    <div className="snowfall">
+    <div className="snowfall z-50">
       {snowflakes.map((flake) => (
-        <div key={flake} className="snowflake">
+        <div key={flake} className="snowflake ">
           ❄
         </div>
       ))}
@@ -19,7 +19,7 @@ export default function Home() {
     <div className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden">
       <ModeToggle />
       <Snowfall />
-      <div className="text-center space-y-6 mt-10 z-10">
+      <div className="text-center space-y-6 mt-10">
         {/* Title */}
         <h1
           className="text-6xl md:text-8xl leading-[5rem] md:leading-[8rem] font-extrabold tracking-tight text-transparent 
