@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 const ImageSection = () => {
     const sections = [
@@ -44,10 +45,12 @@ const ImageSection = () => {
                         whileInView={{ scale: 1 }}
                         transition={{ duration: 0.6, delay: 0.2 }}
                     >
-                        <img
+                        <Image
                             src="https://placehold.co/600x400"
                             alt={section.title}
-                            className="rounded-xl shadow-lg w-full object-cover"
+                            width={600}
+                            height={400}
+                            className="rounded-xl shadow-lg object-cover"
                         />
                     </motion.div>
 

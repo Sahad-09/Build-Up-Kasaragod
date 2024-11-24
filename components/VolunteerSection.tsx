@@ -1,17 +1,6 @@
-import React, { useRef } from 'react';
-import Image from 'next/image';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import React from 'react';
+import { motion } from 'framer-motion';
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import {
-    Heart,
-    GraduationCap,
-    Sprout,
-    Users,
-    Laptop,
-    Building2
-} from 'lucide-react';
 
 
 export const VolunteerSection = () => {
