@@ -1,10 +1,7 @@
-import type { NextConfig } from "next";
-
-const nextConfig: NextConfig = {
+// next.config.js
+module.exports = {
   images: {
-    domains: ['placehold.co'], // Allow images from placehold.co
+    domains: ['placehold.co'],
+    dangerouslyAllowSVG: true, // Enable SVG images
   },
-  // other config options here
 };
-
-export default nextConfig;

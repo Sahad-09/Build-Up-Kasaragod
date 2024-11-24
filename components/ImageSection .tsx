@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { motion } from "framer-motion";
-import Image from "next/image";
+import Image from "next/image"; // Import Image component from next/image
 
 const ImageSection = () => {
     const sections = [
@@ -48,9 +48,9 @@ const ImageSection = () => {
                         <Image
                             src="https://placehold.co/600x400"
                             alt={section.title}
-                            width={600}
-                            height={400}
-                            className="rounded-xl shadow-lg object-cover"
+                            width={600} // Set width of the image
+                            height={400} // Set height of the image
+                            className="rounded-xl shadow-lg w-full object-cover"
                         />
                     </motion.div>
 
