@@ -1,7 +1,6 @@
 "use client"
 import React, { useRef, useState, useEffect } from "react";
 import { useScroll, useTransform } from "framer-motion";
-import { motion } from "framer-motion";
 import HeroSection from "@/components/HeroSection"; // Import the HeroSection component
 import { WhatWeDoSection } from "@/components/WhatWeDo";
 import { ResourceCenter } from "@/components/ResourceCenter";
@@ -48,32 +47,26 @@ const KasaragodLandingPage = () => {
         buttonText={heroData.buttonText}
       />
 
-      {/* Image Section with backgroundY transform */}
-      <motion.div style={{ y: backgroundY }} className="container mx-auto py-6">
+      {/* Other Sections */}
+      <div className="container mx-auto py-6">
         <ImageSection />
-      </motion.div>
-
-      {/* What We Do Section with textY transform */}
-      <motion.div style={{ y: textY }} className="container mx-auto py-6">
+      </div>
+      <div className="container mx-auto py-6">
         <WhatWeDoSection />
-      </motion.div>
-
-      {/* Impact Statistics Section */}
+      </div>
       <div className="container mx-auto py-6">
         <ImpactStatistics />
       </div>
 
-      {/* Resource Center Section */}
       <div className="container mx-auto py-6">
         <ResourceCenter />
       </div>
 
-      {/* Upcoming Events Section */}
+
       <div className="container mx-auto py-6">
         <UpcomingEventsSection />
       </div>
 
-      {/* Newsletter Section */}
       <div className="container mx-auto py-6">
         <NewsletterSection />
       </div>
