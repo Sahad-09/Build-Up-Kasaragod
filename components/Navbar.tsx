@@ -1,14 +1,12 @@
 "use client"
 
 import React from 'react';
-import { Menu, X } from "lucide-react";
+import { Menu } from "lucide-react";
 import {
     NavigationMenu,
-    NavigationMenuContent,
     NavigationMenuItem,
     NavigationMenuLink,
     NavigationMenuList,
-    NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
@@ -54,9 +52,9 @@ const Navbar = () => {
 
                     {/* Mobile Navigation */}
                     <div className="md:hidden">
-                        <Sheet>
+                        <Sheet open={isOpen} onOpenChange={setIsOpen}>
                             <SheetTrigger asChild>
-                                <Button variant="ghost" size="icon">
+                                <Button variant="ghost" size="icon" onClick={() => setIsOpen(!isOpen)}>
                                     <Menu className="h-6 w-6" />
                                 </Button>
                             </SheetTrigger>

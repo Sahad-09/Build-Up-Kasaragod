@@ -1,13 +1,4 @@
-import {
-    FileText,
-    Download,
-    Book,
-    File,
-    Mail,
-    ArrowRight,
-    CheckCircle2,
-    AlertCircle
-} from 'lucide-react';
+import { Mail, ArrowRight, CheckCircle2 } from 'lucide-react';
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription } from "@/components/ui/alert";
@@ -18,7 +9,7 @@ export const NewsletterSection = () => {
     const [email, setEmail] = useState('');
     const [status, setStatus] = useState('');
 
-    const handleSubmit = (e: any) => {
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         // Simulate form submission
         setStatus('success');
