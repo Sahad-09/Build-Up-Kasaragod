@@ -7,6 +7,29 @@ import { Card, CardContent } from "@/components/ui/card";
 import { FaPhoneAlt, FaEnvelope } from "react-icons/fa";
 import { motion } from "framer-motion";
 
+// Dynamic contact and social media data
+const contactInfo = {
+    phone: "+1 234 567 890",
+    email: "contact@kasaragod.org",
+    socialMedia: [
+        { name: "Facebook", url: "https://facebook.com", color: "text-blue-600 hover:text-blue-800" },
+        { name: "Twitter", url: "https://twitter.com", color: "text-blue-400 hover:text-blue-600" },
+        { name: "Instagram", url: "https://instagram.com", color: "text-pink-500 hover:text-pink-700" }
+    ]
+};
+
+// Constant object for button and form status text
+const formMessages = {
+    submitButton: {
+        sending: "Sending...",
+        default: "Send Message",
+    },
+    formStatus: {
+        submitting: "Submitting...",
+        success: "Message Sent! Thank you for contacting us.",
+    }
+};
+
 const ContactPage = () => {
     const [formData, setFormData] = useState({ name: "", email: "", message: "" });
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -21,11 +44,11 @@ const ContactPage = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setIsSubmitting(true);
-        setFormStatus("Submitting...");
+        setFormStatus(formMessages.formStatus.submitting);
 
         setTimeout(() => {
             setIsSubmitting(false);
-            setFormStatus("Message Sent! Thank you for contacting us.");
+            setFormStatus(formMessages.formStatus.success);
             setFormData({ name: "", email: "", message: "" });
         }, 2000);
     };
@@ -101,7 +124,7 @@ const ContactPage = () => {
                                         }`}
                                     disabled={isSubmitting}
                                 >
-                                    {isSubmitting ? "Sending..." : "Send Message"}
+                                    {isSubmitting ? formMessages.submitButton.sending : formMessages.submitButton.default}
                                 </Button>
                             </form>
                         </CardContent>
@@ -126,7 +149,7 @@ const ContactPage = () => {
                         <FaPhoneAlt className="text-4xl text-purple-500" />
                         <div className="text-lg">
                             <p className="font-bold">Phone:</p>
-                            <p>+1 234 567 890</p>
+                            <p>{contactInfo.phone}</p>
                         </div>
                     </motion.div>
 
@@ -139,7 +162,7 @@ const ContactPage = () => {
                         <FaEnvelope className="text-4xl text-purple-500" />
                         <div className="text-lg">
                             <p className="font-bold">Email:</p>
-                            <p>contact@kasaragod.org</p>
+                            <p>{contactInfo.email}</p>
                         </div>
                     </motion.div>
 
@@ -150,30 +173,17 @@ const ContactPage = () => {
                         transition={{ duration: 1, delay: 0.7 }}
                         className="flex space-x-6"
                     >
-                        <a
-                            href="https://facebook.com"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-3xl text-blue-600 hover:text-blue-800 transition-colors"
-                        >
-                            Facebook
-                        </a>
-                        <a
-                            href="https://twitter.com"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-3xl text-blue-400 hover:text-blue-600 transition-colors"
-                        >
-                            Twitter
-                        </a>
-                        <a
-                            href="https://instagram.com"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-3xl text-pink-500 hover:text-pink-700 transition-colors"
-                        >
-                            Instagram
-                        </a>
+                        {contactInfo.socialMedia.map((platform) => (
+                            <a
+                                key={platform.name}
+                                href={platform.url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className={`text-3xl ${platform.color} transition-colors`}
+                            >
+                                {platform.name}
+                            </a>
+                        ))}
                     </motion.div>
                 </motion.div>
             </div>

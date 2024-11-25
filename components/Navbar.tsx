@@ -11,6 +11,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
 import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
+import Link from 'next/link';
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = React.useState(false);
@@ -24,12 +25,14 @@ const Navbar = () => {
     ];
 
     return (
-        <nav className="border-b">
+        <nav className="border-b ">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-between items-center h-16">
                     {/* Logo */}
                     <div className="flex-shrink-0 flex items-center">
-                        <span className="text-xl font-bold">Logo</span>
+                        <Link href="/" className="text-xl font-bold hover:underline">
+                            Build Up Kasaragod
+                        </Link>
                     </div>
 
                     {/* Desktop Navigation */}

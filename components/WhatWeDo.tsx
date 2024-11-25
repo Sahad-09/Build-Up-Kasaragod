@@ -1,161 +1,187 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import React, { useState } from 'react';
+import {
+    Card,
+    CardContent,
+    CardHeader,
+    CardTitle,
+} from "@/components/ui/card";
 import {
     Heart,
     GraduationCap,
     Sprout,
     Users,
     Laptop,
-    Building2
+    Building2,
+    Lightbulb,
+    ChevronRight
 } from 'lucide-react';
 
-// ... (previous imports and code remain the same until after the Explore button)
+const initiatives = [
+    {
+        id: 'education',
+        title: 'Educational Initiatives',
+        icon: GraduationCap,
+        color: 'text-blue-500 border-blue-500',
+        items: [
+            'Free tutoring programs for underprivileged students',
+            'Digital literacy workshops for all age groups',
+            'Career guidance and mentorship programs',
+            'School infrastructure improvement projects'
+        ]
+    },
+    {
+        id: 'healthcare',
+        title: 'Healthcare Access',
+        icon: Heart,
+        color: 'text-red-500 border-red-500',
+        items: [
+            'Mobile health clinics for remote areas',
+            'Health awareness campaigns',
+            'Medical camps and check-ups',
+            'Mental health support programs'
+        ]
+    },
+    {
+        id: 'environment',
+        title: 'Environmental Conservation',
+        icon: Sprout,
+        color: 'text-green-500 border-green-500',
+        items: [
+            'Tree plantation drives',
+            'Promoting renewable energy solutions',
+            'Community waste management programs',
+            'Conservation of natural habitats'
+        ]
+    },
+    {
+        id: 'skills',
+        title: 'Skills Development',
+        icon: Users,
+        color: 'text-yellow-500 border-yellow-500',
+        items: [
+            'Vocational training programs',
+            'Entrepreneurship workshops',
+            'Hands-on technical skill development',
+            'Career-oriented certifications'
+        ]
+    },
+    {
+        id: 'technology',
+        title: 'Technological Advancements',
+        icon: Laptop,
+        color: 'text-purple-500 border-purple-500',
+        items: [
+            'Building tech labs in schools',
+            'Coding bootcamps for beginners',
+            'Access to modern digital tools',
+            'Initiatives for AI and robotics education'
+        ]
+    },
+    {
+        id: 'infrastructure',
+        title: 'Infrastructure Development',
+        icon: Building2,
+        color: 'text-orange-500 border-orange-500',
+        items: [
+            'Building schools and healthcare facilities',
+            'Enhancing rural transportation networks',
+            'Providing clean water and sanitation',
+            'Supporting urban community centers'
+        ]
+    }
+];
 
 export const WhatWeDoSection = () => {
+    const [activeInitiative, setActiveInitiative] = useState(initiatives[0].id);
+    const [isHovering, setIsHovering] = useState(null);
+
     return (
-        <div className="container mx-auto py-24 px-4">
-            <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6 }}
-                className="text-center mb-16"
-            >
-                <h2 className="text-4xl font-bold mb-6">What We Do?</h2>
-                <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+        <div className="container mx-auto py-16 px-4">
+            {/* Header Section */}
+            <div className="text-center mb-16 space-y-6">
+                <div className="relative inline-block">
+                    <Lightbulb className="w-16 h-16 text-purple-500" />
+                </div>
+                <h2 className="text-4xl md:text-5xl font-bold text-purple-500">
+                    What We Do?
+                </h2>
+                <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
                     Our initiatives focus on sustainable development and community empowerment through various targeted programs.
                 </p>
-            </motion.div>
+            </div>
 
-            <Tabs defaultValue="education" className="w-full max-w-4xl mx-auto">
-                <TabsList className="grid w-full grid-cols-3 lg:grid-cols-6">
-                    <TabsTrigger value="education">Education</TabsTrigger>
-                    <TabsTrigger value="healthcare">Healthcare</TabsTrigger>
-                    <TabsTrigger value="environment">Environment</TabsTrigger>
-                    <TabsTrigger value="skills">Skills</TabsTrigger>
-                    <TabsTrigger value="technology">Technology</TabsTrigger>
-                    <TabsTrigger value="infrastructure">Infrastructure</TabsTrigger>
-                </TabsList>
-
-                <div className="mt-8">
-                    <TabsContent value="education">
-                        <Card>
-                            <CardHeader>
-                                <CardTitle className="flex items-center gap-2">
-                                    <GraduationCap className="h-6 w-6" />
-                                    Educational Initiatives
-                                </CardTitle>
-                            </CardHeader>
-                            <CardContent>
-                                <ul className="space-y-4">
-                                    <li>• Free tutoring programs for underprivileged students</li>
-                                    <li>• Digital literacy workshops for all age groups</li>
-                                    <li>• Career guidance and mentorship programs</li>
-                                    <li>• School infrastructure improvement projects</li>
-                                </ul>
-                            </CardContent>
-                        </Card>
-                    </TabsContent>
-
-                    <TabsContent value="healthcare">
-                        <Card>
-                            <CardHeader>
-                                <CardTitle className="flex items-center gap-2">
-                                    <Heart className="h-6 w-6" />
-                                    Healthcare Access
-                                </CardTitle>
-                            </CardHeader>
-                            <CardContent>
-                                <ul className="space-y-4">
-                                    <li>• Mobile health clinics for remote areas</li>
-                                    <li>• Health awareness campaigns</li>
-                                    <li>• Medical camps and check-ups</li>
-                                    <li>• Mental health support programs</li>
-                                </ul>
-                            </CardContent>
-                        </Card>
-                    </TabsContent>
-
-                    <TabsContent value="environment">
-                        <Card>
-                            <CardHeader>
-                                <CardTitle className="flex items-center gap-2">
-                                    <Sprout className="h-6 w-6" />
-                                    Environmental Conservation
-                                </CardTitle>
-                            </CardHeader>
-                            <CardContent>
-                                <ul className="space-y-4">
-                                    <li>• Tree plantation drives</li>
-                                    <li>• Promoting renewable energy solutions</li>
-                                    <li>• Community waste management programs</li>
-                                    <li>• Conservation of natural habitats</li>
-                                </ul>
-                            </CardContent>
-                        </Card>
-                    </TabsContent>
-
-                    <TabsContent value="skills">
-                        <Card>
-                            <CardHeader>
-                                <CardTitle className="flex items-center gap-2">
-                                    <Users className="h-6 w-6" />
-                                    Skills Development
-                                </CardTitle>
-                            </CardHeader>
-                            <CardContent>
-                                <ul className="space-y-4">
-                                    <li>• Vocational training programs</li>
-                                    <li>• Entrepreneurship workshops</li>
-                                    <li>• Hands-on technical skill development</li>
-                                    <li>• Career-oriented certifications</li>
-                                </ul>
-                            </CardContent>
-                        </Card>
-                    </TabsContent>
-
-                    <TabsContent value="technology">
-                        <Card>
-                            <CardHeader>
-                                <CardTitle className="flex items-center gap-2">
-                                    <Laptop className="h-6 w-6" />
-                                    Technological Advancements
-                                </CardTitle>
-                            </CardHeader>
-                            <CardContent>
-                                <ul className="space-y-4">
-                                    <li>• Building tech labs in schools</li>
-                                    <li>• Coding bootcamps for beginners</li>
-                                    <li>• Access to modern digital tools</li>
-                                    <li>• Initiatives for AI and robotics education</li>
-                                </ul>
-                            </CardContent>
-                        </Card>
-                    </TabsContent>
-
-                    <TabsContent value="infrastructure">
-                        <Card>
-                            <CardHeader>
-                                <CardTitle className="flex items-center gap-2">
-                                    <Building2 className="h-6 w-6" />
-                                    Infrastructure Development
-                                </CardTitle>
-                            </CardHeader>
-                            <CardContent>
-                                <ul className="space-y-4">
-                                    <li>• Building schools and healthcare facilities</li>
-                                    <li>• Enhancing rural transportation networks</li>
-                                    <li>• Providing clean water and sanitation</li>
-                                    <li>• Supporting urban community centers</li>
-                                </ul>
-                            </CardContent>
-                        </Card>
-                    </TabsContent>
-
+            {/* Main Content */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 max-w-6xl mx-auto">
+                {/* Initiative Selector */}
+                <div className="lg:col-span-4 space-y-3">
+                    {initiatives.map((initiative) => {
+                        const Icon = initiative.icon;
+                        const isActive = activeInitiative === initiative.id;
+                        return (
+                            <div
+                                key={initiative.id}
+                                className={`cursor-pointer transition-all duration-300 ${isActive ? 'scale-102' : 'hover:scale-101'
+                                    }`}
+                                onMouseEnter={() => setIsHovering(initiative.id)}
+                                onMouseLeave={() => setIsHovering(null)}
+                                onClick={() => setActiveInitiative(initiative.id)}
+                            >
+                                <Card className={`border-l-4 ${isActive ? `${initiative.color} border-l-8` : 'border-transparent'
+                                    } transition-all duration-300 hover:shadow-md`}>
+                                    <CardContent className="flex items-center p-4">
+                                        <Icon className={`h-6 w-6 ${initiative.color}`} />
+                                        <span className="ml-4 font-medium flex-grow">
+                                            {initiative.title}
+                                        </span>
+                                        <ChevronRight className={`h-5 w-5 transform transition-transform duration-300 ${isActive || isHovering === initiative.id ? 'translate-x-1 opacity-100' : 'opacity-0'
+                                            } ${initiative.color}`} />
+                                    </CardContent>
+                                </Card>
+                            </div>
+                        );
+                    })}
                 </div>
-            </Tabs>
+
+                {/* Content Display */}
+                <div className="lg:col-span-8">
+                    {initiatives.map((initiative) => {
+                        const Icon = initiative.icon;
+                        return (
+                            <div
+                                key={initiative.id}
+                                className={`transition-all duration-500 ${activeInitiative === initiative.id
+                                    ? 'opacity-100 translate-y-0'
+                                    : 'opacity-0 translate-y-4 hidden'
+                                    }`}
+                            >
+                                <Card className="h-full shadow-sm hover:shadow-md transition-shadow duration-300">
+                                    <CardHeader>
+                                        <CardTitle className="flex items-center gap-3">
+                                            <Icon className={`h-6 w-6 ${initiative.color}`} />
+                                            {initiative.title}
+                                        </CardTitle>
+                                    </CardHeader>
+                                    <CardContent>
+                                        <div className="grid gap-4">
+                                            {initiative.items.map((item, index) => (
+                                                <div
+                                                    key={index}
+                                                    className="flex items-start gap-4 p-4  transition-colors duration-300"
+                                                >
+                                                    <div className={`w-1 h-1 rounded-full mt-2 border ${initiative.color}`} />
+                                                    <p className="flex-grow">{item}</p>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </CardContent>
+                                </Card>
+                            </div>
+                        );
+                    })}
+                </div>
+            </div>
         </div>
     );
 };
 
+export default WhatWeDoSection;

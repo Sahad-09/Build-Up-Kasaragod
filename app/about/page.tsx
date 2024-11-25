@@ -1,90 +1,190 @@
-"use client";
-import React from "react";
-import { motion } from "framer-motion";
-import { FaHandsHelping, FaTrophy, FaUserFriends } from "react-icons/fa";
+"use client"
+import React from 'react';
+import { motion } from 'framer-motion';
+import {
+    Card,
+    CardContent,
+    CardHeader,
+    CardTitle
+} from "@/components/ui/card";
+import {
+    Users,
+    Target,
+    Flag,
+    Shield,
+    Book,
+    Settings
+} from 'lucide-react';
+import { Badge } from "@/components/ui/badge";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const AboutUsPage = () => {
+    const pageVariants = {
+        initial: { opacity: 0, y: 50 },
+        animate: {
+            opacity: 1,
+            y: 0,
+            transition: {
+                duration: 0.6,
+                ease: "easeOut"
+            }
+        }
+    };
+
+    const officeBearers = [
+        {
+            name: "John Doe",
+            position: "Founder & Chairman",
+            image: "/api/placeholder/300/300",
+            fallback: "JD"
+        },
+        {
+            name: "Jane Smith",
+            position: "Executive Director",
+            image: "/api/placeholder/300/300",
+            fallback: "JS"
+        },
+        {
+            name: "Michael Johnson",
+            position: "Chief Operations Officer",
+            image: "/api/placeholder/300/300",
+            fallback: "MJ"
+        }
+    ];
+
+    const sectionData = [
+        {
+            title: "Mission",
+            icon: Target,
+            color: "text-blue-500",
+            content: "To empower local communities, drive sustainable development, and create lasting positive impact in Kasaragod through collaborative and innovative approaches."
+        },
+        {
+            title: "Vision",
+            icon: Flag,
+            color: "text-green-500",
+            content: "To establish Kasaragod as a model of holistic, community-led development that balances economic growth, social welfare, and environmental sustainability."
+        }
+    ];
+
+    const detailSections = [
+        {
+            title: "Core Values",
+            icon: Shield,
+            color: "text-purple-500",
+            items: [
+                "Community Empowerment",
+                "Transparency",
+                "Sustainable Development",
+                "Inclusivity",
+                "Innovation"
+            ]
+        },
+        {
+            title: "Principles",
+            icon: Book,
+            color: "text-yellow-500",
+            items: [
+                "Collaborative Decision Making",
+                "Cultural Respect",
+                "Environmental Stewardship",
+                "Continuous Learning",
+                "Ethical Governance"
+            ]
+        },
+        {
+            title: "Policies",
+            icon: Settings,
+            color: "text-red-500",
+            items: [
+                "Financial Transparency",
+                "Equal Opportunity",
+                "Sustainable Resources",
+                "Community Participation",
+                "Impact Assessment"
+            ]
+        }
+    ];
+
     return (
-        <div className="min-h-screen flex flex-col items-center justify-center py-16 px-8 space-y-12">
-            <div className="max-w-4xl w-full text-center space-y-8">
-                {/* Animated Heading */}
-                <motion.h1
-                    initial={{ opacity: 0, y: -50 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 1 }}
-                    className="text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-500 via-pink-500 to-red-500"
-                >
-                    About Us
-                </motion.h1>
+        <motion.div
+            initial="initial"
+            animate="animate"
+            variants={pageVariants}
+            className="container mx-auto px-4 py-8 space-y-8"
+        >
+            <h1 className="text-4xl font-bold text-center mb-12">
+                About Build Up Kasaragod
+            </h1>
 
-                {/* Introduction Text with animation */}
-                <motion.p
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 1, delay: 0.5 }}
-                    className="text-xl text-gray-700"
-                >
-                    We are a passionate team driven by innovation and excellence, crafting solutions that shape the future.
-                </motion.p>
+            {/* Office Bearers */}
+            <Card>
+                <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                        <Users className="h-6 w-6 text-indigo-500" />
+                        Office Bearers
+                    </CardTitle>
+                </CardHeader>
+                <CardContent className="grid md:grid-cols-3 gap-6">
+                    {officeBearers.map((bearer, index) => (
+                        <motion.div
+                            key={index}
+                            whileHover={{ scale: 1.05 }}
+                            className="flex flex-col items-center space-y-3"
+                        >
+                            <Avatar className="w-24 h-24">
+                                <AvatarImage src={bearer.image} alt={bearer.name} />
+                                <AvatarFallback>{bearer.fallback}</AvatarFallback>
+                            </Avatar>
+                            <div className="text-center">
+                                <p className="font-semibold">{bearer.name}</p>
+                                <Badge variant="secondary">{bearer.position}</Badge>
+                            </div>
+                        </motion.div>
+                    ))}
+                </CardContent>
+            </Card>
+
+            {/* Mission and Vision */}
+            <div className="grid md:grid-cols-2 gap-6">
+                {sectionData.map(({ title, icon: Icon, color, content }, index) => (
+                    <Card key={index}>
+                        <CardHeader>
+                            <CardTitle className="flex items-center gap-2">
+                                <Icon className={`h-6 w-6 ${color}`} />
+                                {title}
+                            </CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                            <p className="text-muted-foreground">{content}</p>
+                        </CardContent>
+                    </Card>
+                ))}
             </div>
 
-            {/* Three Icon Sections with Animations */}
-            <div className="flex flex-wrap justify-center gap-16">
-                <motion.div
-                    initial={{ opacity: 0, scale: 0.5 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 1, delay: 1 }}
-                    className="text-center space-y-4"
-                >
-                    <FaHandsHelping className="text-6xl text-purple-500 mx-auto" />
-                    <h3 className="text-2xl font-semibold">Collaboration</h3>
-                    <p className="text-lg text-gray-600">
-                        We believe in teamwork and the power of collaboration to achieve amazing things.
-                    </p>
-                </motion.div>
-
-                <motion.div
-                    initial={{ opacity: 0, scale: 0.5 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 1, delay: 1.3 }}
-                    className="text-center space-y-4"
-                >
-                    <FaTrophy className="text-6xl text-yellow-500 mx-auto" />
-                    <h3 className="text-2xl font-semibold">Excellence</h3>
-                    <p className="text-lg text-gray-600">
-                        Excellence is at the core of everything we do. We aim to deliver the best results.
-                    </p>
-                </motion.div>
-
-                <motion.div
-                    initial={{ opacity: 0, scale: 0.5 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 1, delay: 1.6 }}
-                    className="text-center space-y-4"
-                >
-                    <FaUserFriends className="text-6xl text-green-500 mx-auto" />
-                    <h3 className="text-2xl font-semibold">Community</h3>
-                    <p className="text-lg text-gray-600">
-                        We foster a supportive community, valuing every individual’s input to create something greater.
-                    </p>
-                </motion.div>
+            {/* Core Values, Principles, Policies */}
+            <div className="grid md:grid-cols-3 gap-6">
+                {detailSections.map(({ title, icon: Icon, color, items }, index) => (
+                    <Card key={index}>
+                        <CardHeader>
+                            <CardTitle className="flex items-center gap-2">
+                                <Icon className={`h-6 w-6 ${color}`} />
+                                {title}
+                            </CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                            <ul className="space-y-2 list-disc pl-4">
+                                {items.map((item, idx) => (
+                                    <li key={idx} className="text-muted-foreground">
+                                        {item}
+                                    </li>
+                                ))}
+                            </ul>
+                        </CardContent>
+                    </Card>
+                ))}
             </div>
-
-            {/* Additional Info Section */}
-            <motion.div
-                initial={{ opacity: 0, y: 50 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1, delay: 2 }}
-                className="space-y-4 text-center max-w-2xl mx-auto"
-            >
-                <p className="text-lg text-gray-600">
-                    We are committed to crafting a future that is powered by technology, creativity, and collaboration. Our team works with dedication and passion, focused on making a real impact with every project we undertake.
-                </p>
-                <p className="text-lg text-gray-600">
-                    Our core values—innovation, quality, and customer-first—guide us in everything we do. Join us in making a difference.
-                </p>
-            </motion.div>
-        </div>
+        </motion.div>
     );
 };
 

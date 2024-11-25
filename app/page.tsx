@@ -5,7 +5,6 @@ import HeroSection from "@/components/HeroSection"; // Import the HeroSection co
 import { WhatWeDoSection } from "@/components/WhatWeDo";
 import { ResourceCenter } from "@/components/ResourceCenter";
 import { NewsletterSection } from "@/components/NewsletterSection";
-import { UpcomingEventsSection } from "@/components/UpcomingEventsSection";
 import ImpactStatistics from "@/components/ImpactStatistics";
 import ImageSection from "@/components/ImageSection ";
 
@@ -14,7 +13,7 @@ const KasaragodLandingPage = () => {
   const [isMounted, setIsMounted] = useState(false);
 
   const heroData = {
-    title: "Empowering Kasaragod",
+    title: "Build Up Kasaragod",
     description: "A Community-Driven Initiative to Transform and Uplift Kasaragod",
     buttonText: "Explore Our Initiatives",
   };
@@ -63,9 +62,9 @@ const KasaragodLandingPage = () => {
       </div>
 
 
-      <div className="container mx-auto py-6">
+      {/* <div className="container mx-auto py-6">
         <UpcomingEventsSection />
-      </div>
+      </div> */}
 
       <div className="container mx-auto py-6">
         <NewsletterSection />

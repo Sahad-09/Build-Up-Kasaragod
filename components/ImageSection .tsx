@@ -57,7 +57,7 @@ const ImageSection = () => {
                     {/* Text Section */}
                     <div className="w-full md:w-1/2 text-center md:text-left space-y-4">
                         <motion.h2
-                            className="text-3xl font-bold text-gray-800"
+                            className="text-3xl font-bold"
                             initial={{ y: 30, opacity: 0 }}
                             whileInView={{ y: 0, opacity: 1 }}
                             transition={{ duration: 0.7 }}
@@ -65,7 +65,7 @@ const ImageSection = () => {
                             {section.title}
                         </motion.h2>
                         <motion.p
-                            className="text-gray-600 leading-relaxed"
+                            className="text-muted-foreground leading-relaxed"
                             initial={{ y: 30, opacity: 0 }}
                             whileInView={{ y: 0, opacity: 1 }}
                             transition={{ duration: 0.7, delay: 0.1 }}
