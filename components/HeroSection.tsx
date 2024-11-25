@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Code2, Users, Globe, Database, Cloud, Lock, Sparkles } from "lucide-react";
+import Link from 'next/link';
 
 interface HeroSectionProps {
     title: string;
@@ -227,14 +228,18 @@ const HeroSection: React.FC<HeroSectionProps> = ({ title, description, buttonTex
                     transition={{ delay: 0.5 }}
                     className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full"
                 >
-                    <Button variant="default" size="lg" className="rounded-full px-8 w-full sm:w-auto">
-                        {buttonText}
-                        <Users className="ml-2 h-4 w-4" />
-                    </Button>
-                    <Button variant="secondary" size="lg" className="rounded-full px-8 w-full sm:w-auto">
-                        Explore Projects
-                        <Code2 className="ml-2 h-4 w-4" />
-                    </Button>
+                    <Link href="/initiatives">
+                        <Button variant="default" size="lg" className="rounded-full px-8 w-full sm:w-auto">
+                            {buttonText}
+                            <Users className="ml-2 h-4 w-4" />
+                        </Button>
+                    </Link>
+                    <Link href="/about">
+                        <Button variant="secondary" size="lg" className="rounded-full px-8 w-full sm:w-auto">
+                            About Us
+                            <Users className="ml-2 h-4 w-4" />
+                        </Button>
+                    </Link>
                 </motion.div>
             </motion.div>
         </div>
