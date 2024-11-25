@@ -1,10 +1,27 @@
-"use client"
+"use client";
 import React from "react";
 import { motion } from "framer-motion";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { ArrowRight, GraduationCap, Heart, Lightbulb, Users } from "lucide-react";
 
-const getScholarshipIcon = (name: any) => {
+// Define the type for the scholarship names (as string literals)
+type ScholarshipName =
+    | "Merit-Based Scholarship"
+    | "Need-Based Scholarship"
+    | "STEM Scholarship"
+    | "Women in Tech Scholarship";
+
+// Type for scholarship data
+interface Scholarship {
+    name: ScholarshipName;
+    description: string;
+    eligibility: string;
+    amount: string;
+    link: string;
+}
+
+// Type the getScholarshipIcon function argument as ScholarshipName
+const getScholarshipIcon = (name: ScholarshipName): JSX.Element | null => {
     switch (name) {
         case "Merit-Based Scholarship":
             return (
@@ -35,7 +52,8 @@ const getScholarshipIcon = (name: any) => {
     }
 };
 
-const scholarships = [
+// Define the scholarships array with the Scholarship type
+const scholarships: Scholarship[] = [
     {
         name: "Merit-Based Scholarship",
         description: "Awarded to students with exceptional academic achievements.",
@@ -68,7 +86,7 @@ const scholarships = [
 
 const MotionCard = motion(Card);
 
-const ScholarshipsPage = () => {
+const ScholarshipsPage: React.FC = () => {
     return (
         <div className="max-w-7xl mx-auto px-4 py-12">
             {/* Header Section */}
@@ -98,7 +116,7 @@ const ScholarshipsPage = () => {
                         }}
                         whileHover={{
                             y: -5,
-                            transition: { duration: 0.2 }
+                            transition: { duration: 0.2 },
                         }}
                     >
                         <CardHeader>
@@ -110,7 +128,7 @@ const ScholarshipsPage = () => {
                                     duration: 0.5,
                                     delay: 0.2 + index * 0.1,
                                     type: "spring",
-                                    stiffness: 200
+                                    stiffness: 200,
                                 }}
                             >
                                 {getScholarshipIcon(scholarship.name)}
