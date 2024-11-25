@@ -93,7 +93,8 @@ const initiatives = [
 
 export const WhatWeDoSection = () => {
     const [activeInitiative, setActiveInitiative] = useState(initiatives[0].id);
-    const [isHovering, setIsHovering] = useState(null);
+    const [isHovering, setIsHovering] = useState<string | null>(null);
+
 
     return (
         <div className="container mx-auto py-16 px-4">
