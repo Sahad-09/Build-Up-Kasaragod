@@ -1,4 +1,5 @@
-"use client"
+'use client';
+
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { Send, MapPin, Phone, Mail, Facebook, Twitter, Instagram } from "lucide-react";
@@ -6,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent } from "@/components/ui/card";
+import { sendEmail } from "@/lib/action-contact"; // Adjust the path according to where your action.ts is located
 
 const ElegantContactPage = () => {
     const [formData, setFormData] = useState({
@@ -15,7 +17,7 @@ const ElegantContactPage = () => {
     });
     const [formStatus, setFormStatus] = useState("");
 
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const handleInputChange = (e: any) => {
         const { name, value } = e.target;
         setFormData(prev => ({
             ...prev,
@@ -23,15 +25,23 @@ const ElegantContactPage = () => {
         }));
     };
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: any) => {
         e.preventDefault();
         setFormStatus("Sending...");
 
-        // Simulate form submission
-        setTimeout(() => {
+        // Create FormData to pass to the server-side function
+        const formDataObj = new FormData();
+        formDataObj.append("name", formData.name);
+        formDataObj.append("email", formData.email);
+        formDataObj.append("message", formData.message);
+
+        const response = await sendEmail(formDataObj); // Call the sendEmail function
+        if (response.success) {
             setFormStatus("Message sent successfully!");
             setFormData({ name: "", email: "", message: "" });
-        }, 2000);
+        } else {
+            setFormStatus("Failed to send message. Please try again.");
+        }
     };
 
     return (
@@ -78,8 +88,8 @@ const ElegantContactPage = () => {
                         </div>
 
                         <div className="flex space-x-6 pt-4">
-                            {[{ Icon: Facebook, color: "text-muted-foreground hover:text-primary" }, { Icon: Twitter, color: "text-muted-foreground hover:text-primary" }, { Icon: Instagram, color: "text-muted-foreground hover:text-primary" }].map(({ Icon, color }, index) => (
-                                <a key={index} href="#" className={`${color} transition-colors`}>
+                            {[{ Icon: Facebook }, { Icon: Twitter }, { Icon: Instagram }].map(({ Icon }, index) => (
+                                <a key={index} href="#" className="text-muted-foreground hover:text-primary transition-colors">
                                     <Icon className="w-6 h-6" />
                                 </a>
                             ))}
@@ -92,7 +102,9 @@ const ElegantContactPage = () => {
                     <CardContent>
                         <form onSubmit={handleSubmit} className="space-y-6">
                             <div className="space-y-2">
-                                <label htmlFor="name" className="text-sm font-medium">Name</label>
+                                <label htmlFor="name" className="text-sm font-medium">
+                                    Name
+                                </label>
                                 <Input
                                     type="text"
                                     id="name"
@@ -105,7 +117,9 @@ const ElegantContactPage = () => {
                             </div>
 
                             <div className="space-y-2">
-                                <label htmlFor="email" className="text-sm font-medium">Email</label>
+                                <label htmlFor="email" className="text-sm font-medium">
+                                    Email
+                                </label>
                                 <Input
                                     type="email"
                                     id="email"
@@ -118,7 +132,9 @@ const ElegantContactPage = () => {
                             </div>
 
                             <div className="space-y-2">
-                                <label htmlFor="message" className="text-sm font-medium">Message</label>
+                                <label htmlFor="message" className="text-sm font-medium">
+                                    Message
+                                </label>
                                 <Textarea
                                     id="message"
                                     name="message"
@@ -136,10 +152,7 @@ const ElegantContactPage = () => {
                                 </p>
                             )}
 
-                            <Button
-                                type="submit"
-                                className="w-full flex items-center justify-center space-x-2"
-                            >
+                            <Button type="submit" className="w-full flex items-center justify-center space-x-2">
                                 <Send className="w-5 h-5 mr-2" />
                                 Send Message
                             </Button>
