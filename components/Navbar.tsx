@@ -12,12 +12,13 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
 import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
 import Link from 'next/link';
+import Image from 'next/image';
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = React.useState(false);
 
     const menuItems = [
-        { title: "New Rooms", href: "/rooms" },
+        { title: "Events", href: "/events" },
         { title: "Initiatives", href: "/initiatives" },
         { title: "Scholarship", href: "/scholarship" },
         { title: "About Us", href: "/about" },
@@ -25,18 +26,23 @@ const Navbar = () => {
     ];
 
     return (
-        <nav className="border-b ">
+        <nav className="border-b p-3 ">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-between items-center h-16">
                     {/* Logo */}
-                    <div className="flex-shrink-0 flex items-center">
+                    <div className="flex-shrink-0 flex items-center p-3">
                         <Link href="/" className="text-xl font-bold hover:underline">
-                            Build Up Kasaragod
+                            <Image
+                                src="/logo-SVG.svg"
+                                width={100}
+                                height={100}
+                                alt='Logo'
+                            />
                         </Link>
                     </div>
 
                     {/* Desktop Navigation */}
-                    <div className="hidden md:block">
+                    <div className="hidden md:block ">
                         <NavigationMenu>
                             <NavigationMenuList>
                                 {menuItems.map((item) => (

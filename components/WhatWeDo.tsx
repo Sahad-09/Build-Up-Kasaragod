@@ -101,9 +101,9 @@ export const WhatWeDoSection = () => {
             {/* Header Section */}
             <div className="text-center mb-16 space-y-6">
                 <div className="relative inline-block">
-                    <Lightbulb className="w-16 h-16 text-purple-500" />
+                    <Lightbulb className="w-16 h-16 text-[#FBAA18]" />
                 </div>
-                <h2 className="text-4xl md:text-5xl font-bold text-purple-500">
+                <h2 className="text-4xl md:text-5xl font-bold">
                     What We Do?
                 </h2>
                 <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">

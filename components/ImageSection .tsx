@@ -1,29 +1,29 @@
 "use client";
 import React from "react";
 import { motion } from "framer-motion";
-import Image from "next/image"; // Import Image component from next/image
+import Image from "next/image";
 
 const ImageSection = () => {
     const sections = [
         {
-            title: "Empowering Communities",
-            description:
-                "We work hand-in-hand with communities to create sustainable and impactful solutions. Join us in our mission to make a difference.",
+            title: 'Bekal Fort Landscape',
+            description: 'Explore the historic Bekal Fort, a magnificent coastal fortification showcasing Kerala\'s architectural heritage and strategic location.',
+            imageSrc: '/Image1.webp',
         },
         {
-            title: "Innovating for the Future",
-            description:
-                "Our projects are driven by innovation, aiming to solve challenges with cutting-edge technology and forward-thinking solutions.",
+            title: 'Serene Beach',
+            description: 'Discover a tranquil coastline with pristine sands, gentle waves, and a peaceful atmosphere that invites relaxation and serenity.',
+            imageSrc: '/Image2.webp',
         },
         {
-            title: "Sustainability at Core",
-            description:
-                "We believe in building a future that is not only prosperous but also environmentally sustainable for generations to come.",
+            title: 'Winding Roads',
+            description: 'Journey through picturesque routes that curve through stunning landscapes, revealing scenic vistas and adventurous pathways.',
+            imageSrc: '/Image3.webp',
         },
         {
-            title: "Connecting the World",
-            description:
-                "Our initiatives aim to bring people together, fostering collaboration and understanding across borders.",
+            title: 'Enchanting Forests',
+            description: 'Delve into lush, mysterious woodlands teeming with diverse ecosystems, ancient trees, and hidden natural wonders.',
+            imageSrc: '/Image4.webp',
         },
     ];
 
@@ -46,10 +46,10 @@ const ImageSection = () => {
                         transition={{ duration: 0.6, delay: 0.2 }}
                     >
                         <Image
-                            src="https://placehold.co/600x400"
+                            src={section.imageSrc}
                             alt={section.title}
-                            width={600} // Set width of the image
-                            height={400} // Set height of the image
+                            width={600}
+                            height={400}
                             className="rounded-xl shadow-lg w-full object-cover"
                         />
                     </motion.div>

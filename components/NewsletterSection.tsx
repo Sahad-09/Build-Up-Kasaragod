@@ -26,7 +26,7 @@ export const NewsletterSection = () => {
                     transition={{ duration: 0.6 }}
                     className="max-w-2xl mx-auto text-center"
                 >
-                    <Mail className="w-12 h-12 mx-auto mb-6 text-purple-500" />
+                    <Mail className="w-12 h-12 mx-auto mb-6 text-[#FBAA18]" />
                     <h2 className="text-4xl font-bold mb-6">Stay Connected</h2>
                     <p className="text-xl mb-8 text-muted-foreground">
                         Subscribe to our newsletter for updates on community initiatives,

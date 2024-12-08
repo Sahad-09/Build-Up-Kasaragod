@@ -74,7 +74,7 @@ const ImpactStatistics = () => {
                         >
                             <div className="absolute inset-0 -z-10 opacity-5 pointer-events-none"></div>
                             <CardContent className="flex flex-col items-center justify-center p-12 text-center">
-                                <stat.icon className="h-12 w-12 mb-4 text-purple-500" />
+                                <stat.icon className="h-12 w-12 mb-4 text-[#FBAA18]" />
                                 <div className="text-5xl font-bold mb-2">{stat.number}</div>
                                 <div className="text-sm text-muted-foreground">{stat.label}</div>
                             </CardContent>

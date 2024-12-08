@@ -85,7 +85,7 @@ export const ResourceCenter = () => {
                 transition={{ duration: 0.6 }}
                 className="text-center mb-16"
             >
-                <Book className="w-12 h-12 mx-auto mb-6 text-purple-500" />
+                <Book className="w-12 h-12 mx-auto mb-6 text-[#FBAA18]" />
                 <h2 className="text-4xl font-bold mb-6">Resource Center</h2>
                 <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
                     Access our collection of resources, guides, and materials to support
