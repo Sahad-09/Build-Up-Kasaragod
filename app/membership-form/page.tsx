@@ -74,7 +74,7 @@ export default function MembershipForm() {
                         considerations.
                     </li>
                     <li>
-                        Members must adhere to the organization's bylaws and decisions of the
+                        Members must adhere to the organization&apos;s bylaws and decisions of the
                         Governing Board and AGM.
                     </li>
                 </ul>
@@ -115,7 +115,7 @@ export default function MembershipForm() {
 
                         <div>
                             <Label htmlFor="gender">Gender</Label>
-                            <Select name="gender" required >
+                            <Select name="gender" required>
                                 <SelectTrigger className="bg-[#030712]">
                                     <SelectValue placeholder="Select Gender" />
                                 </SelectTrigger>
@@ -134,7 +134,7 @@ export default function MembershipForm() {
                     </div>
 
                     <div>
-                        <Label htmlFor="fatherName">Father's Name</Label>
+                        <Label htmlFor="fatherName">Father&apos;s Name</Label>
                         <Input type="text" id="fatherName" name="fatherName" required className="bg-[#030712]" />
                     </div>
 
@@ -212,5 +212,7 @@ export default function MembershipForm() {
                 )}
             </form>
         </div>
+
+
     );
 }
