@@ -1,3 +1,4 @@
+"use client"
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { Send, MapPin, Phone, Mail, Facebook, Twitter, Instagram } from "lucide-react";
