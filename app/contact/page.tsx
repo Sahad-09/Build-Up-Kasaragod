@@ -15,7 +15,7 @@ const ElegantContactPage = () => {
     });
     const [formStatus, setFormStatus] = useState("");
 
-    const handleInputChange = (e: any) => {
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
         setFormData(prev => ({
             ...prev,
@@ -23,7 +23,7 @@ const ElegantContactPage = () => {
         }));
     };
 
-    const handleSubmit = (e: any) => {
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setFormStatus("Sending...");
 
@@ -59,7 +59,7 @@ const ElegantContactPage = () => {
                             transition={{ delay: 0.3 }}
                             className="text-muted-foreground"
                         >
-                            We'd love to hear from you. Send us a message and we'll respond as soon as possible.
+                            We&apos;d love to hear from you. Send us a message and we&apos;ll respond as soon as possible.
                         </motion.p>
 
                         <div className="space-y-4">
@@ -78,16 +78,8 @@ const ElegantContactPage = () => {
                         </div>
 
                         <div className="flex space-x-6 pt-4">
-                            {[
-                                { Icon: Facebook, color: "text-muted-foreground hover:text-primary" },
-                                { Icon: Twitter, color: "text-muted-foreground hover:text-primary" },
-                                { Icon: Instagram, color: "text-muted-foreground hover:text-primary" }
-                            ].map(({ Icon, color }, index) => (
-                                <a
-                                    key={index}
-                                    href="#"
-                                    className={`${color} transition-colors`}
-                                >
+                            {[{ Icon: Facebook, color: "text-muted-foreground hover:text-primary" }, { Icon: Twitter, color: "text-muted-foreground hover:text-primary" }, { Icon: Instagram, color: "text-muted-foreground hover:text-primary" }].map(({ Icon, color }, index) => (
+                                <a key={index} href="#" className={`${color} transition-colors`}>
                                     <Icon className="w-6 h-6" />
                                 </a>
                             ))}
@@ -100,12 +92,7 @@ const ElegantContactPage = () => {
                     <CardContent>
                         <form onSubmit={handleSubmit} className="space-y-6">
                             <div className="space-y-2">
-                                <label
-                                    htmlFor="name"
-                                    className="text-sm font-medium"
-                                >
-                                    Name
-                                </label>
+                                <label htmlFor="name" className="text-sm font-medium">Name</label>
                                 <Input
                                     type="text"
                                     id="name"
@@ -118,12 +105,7 @@ const ElegantContactPage = () => {
                             </div>
 
                             <div className="space-y-2">
-                                <label
-                                    htmlFor="email"
-                                    className="text-sm font-medium"
-                                >
-                                    Email
-                                </label>
+                                <label htmlFor="email" className="text-sm font-medium">Email</label>
                                 <Input
                                     type="email"
                                     id="email"
@@ -136,12 +118,7 @@ const ElegantContactPage = () => {
                             </div>
 
                             <div className="space-y-2">
-                                <label
-                                    htmlFor="message"
-                                    className="text-sm font-medium"
-                                >
-                                    Message
-                                </label>
+                                <label htmlFor="message" className="text-sm font-medium">Message</label>
                                 <Textarea
                                     id="message"
                                     name="message"
