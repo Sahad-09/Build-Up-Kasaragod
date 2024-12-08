@@ -41,7 +41,7 @@ const EventsPage: React.FC = () => {
             location: "BUK Agricultural Division",
             description: "Promoting organic farming through paddy cultivation under the BUK Agricultural Division.",
             category: "Agriculture",
-            image: "/paddy-cultivation-3.jpeg"
+            image: "/id-0.jpg"
         },
         {
             id: 1,
@@ -50,7 +50,7 @@ const EventsPage: React.FC = () => {
             location: "BUK Help Desk",
             description: "During Covid, the Help Desk provided various services such as oxygen cylinders, PPE & medical kits, food kits, etc.",
             category: "Community",
-            image: "/buk-help-desk.jpg"
+            image: "/id-1.jpg"
         },
         {
             id: 2,
@@ -59,7 +59,7 @@ const EventsPage: React.FC = () => {
             location: "Enmakaje Panchayath",
             description: "A project to support Endosulfan affected victims in Enmakaje Panchayath through Paper Seed Pens.",
             category: "Community",
-            image: "/paper-seed-pen-project.jpg"
+            image: "/id-2.jpeg"
         },
         {
             id: 3,
@@ -68,7 +68,7 @@ const EventsPage: React.FC = () => {
             location: "Bela Kumbale & Manjeshwar",
             description: "Free medical camps conducted to provide health services in Bela Kumbale and Manjeshwar.",
             category: "Health",
-            image: "/free-medical-camps.jpg"
+            image: "/id-3.jpg"
         },
         {
             id: 4,
@@ -77,7 +77,7 @@ const EventsPage: React.FC = () => {
             location: "Kasaragod Government College",
             description: "A seminar on drug abuse effects on youths, with an essay writing competition for students.",
             category: "Education",
-            image: "/drug-abuse-seminar.jpg"
+            image: "/id-4.jpeg"
         },
         {
             id: 5,
@@ -86,7 +86,7 @@ const EventsPage: React.FC = () => {
             location: "Majibail Bank Hall, Manjeshwar",
             description: "A felicitation ceremony for 25 farmers of Kasaragod District.",
             category: "Agriculture",
-            image: "/buk-karshaka-puraskaram.jpg"
+            image: "/id-5.jpg"
         },
         {
             id: 6,
@@ -95,7 +95,7 @@ const EventsPage: React.FC = () => {
             location: "Various Locations",
             description: "Participated in World Environment Day with plantation activities.",
             category: "Community",
-            image: "/environment-day.jpg"
+            image: "/id-6.jpeg"
         },
         {
             id: 7,
@@ -104,7 +104,7 @@ const EventsPage: React.FC = () => {
             location: "Various Locations",
             description: "A series of seminars and workshops conducted both virtually and physically, including topics such as Nano Enterprises, Financial Literacy, and AI tools for education.",
             category: "Education",
-            image: "/seminars-workshops.jpg"
+            image: "/id-7.png"
         },
         {
             id: 8,
@@ -113,7 +113,7 @@ const EventsPage: React.FC = () => {
             location: "Kasaragod",
             description: "Seminar focusing on the scope of household enterprises without a license.",
             category: "Community",
-            image: "/household-enterprise-seminar.jpg"
+            image: "/id-8.jpg"
         }
     ];
 
@@ -231,7 +231,7 @@ const EventsPage: React.FC = () => {
             transition={{ duration: 0.5 }}
             className="container mx-auto px-4 py-8"
         >
-            <h1 className="text-3xl font-bold mb-8 text-center">Our Events</h1>
+            {/* <h1 className="text-3xl font-bold mb-8 text-center">Our Events</h1> */}
 
             {/* Upcoming Events Section */}
             <section className="mb-12">

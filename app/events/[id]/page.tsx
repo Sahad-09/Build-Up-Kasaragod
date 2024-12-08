@@ -37,8 +37,8 @@ const events: Event[] = [
         description:
             "Promoting organic farming through paddy cultivation under the BUK Agricultural Division.",
         category: "Agriculture",
-        image: "/paddy-cultivation-3.jpeg",
-        additionalImages: ["/paddy-cultivation-1.jpg", "/paddy-cultivation-2.jpg"],
+        image: "/id-0.jpg",
+        additionalImages: ["/id-0_02.jpg"],
     },
     {
         id: 1,
@@ -48,7 +48,7 @@ const events: Event[] = [
         description:
             "During Covid, the Help Desk provided various services such as oxygen cylinders, PPE & medical kits, food kits, etc.",
         category: "Community",
-        image: "/buk-help-desk.jpg",
+        image: "/id-1.jpg",
         additionalImages: [],
     },
     {
@@ -59,7 +59,7 @@ const events: Event[] = [
         description:
             "A project to support Endosulfan affected victims in Enmakaje Panchayath through Paper Seed Pens.",
         category: "Community",
-        image: "/paper-seed-pen-project.jpg",
+        image: "/id-2.jpeg",
         additionalImages: [],
     },
     {
@@ -70,7 +70,7 @@ const events: Event[] = [
         description:
             "Free medical camps conducted to provide health services in Bela Kumbale and Manjeshwar.",
         category: "Health",
-        image: "/free-medical-camps.jpg",
+        image: "/id-3.jpg",
         additionalImages: [],
     },
     {
@@ -81,8 +81,8 @@ const events: Event[] = [
         description:
             "A seminar on drug abuse effects on youths, with an essay writing competition for students.",
         category: "Education",
-        image: "/drug-abuse-seminar.jpg",
-        additionalImages: [],
+        image: "/id-4.jpeg",
+        additionalImages: ["/id-4_02.jpg"],
     },
     {
         id: 5,
@@ -92,8 +92,8 @@ const events: Event[] = [
         description:
             "A felicitation ceremony for 25 farmers of Kasaragod District.",
         category: "Agriculture",
-        image: "/buk-karshaka-puraskaram.jpg",
-        additionalImages: [],
+        image: "/id-5.jpg",
+        additionalImages: ["/id-5_02.jpeg", "/id-5_03.jpeg", "/id-5_04.jpeg"],
     },
     {
         id: 6,
@@ -103,7 +103,7 @@ const events: Event[] = [
         description:
             "Participated in World Environment Day with plantation activities.",
         category: "Community",
-        image: "/environment-day.jpg",
+        image: "/id-6.jpeg",
         additionalImages: [],
     },
     {
@@ -114,7 +114,7 @@ const events: Event[] = [
         description:
             "A series of seminars and workshops conducted both virtually and physically, including topics such as Nano Enterprises, Financial Literacy, and AI tools for education.",
         category: "Education",
-        image: "/seminars-workshops.jpg",
+        image: "/id-7.png",
         additionalImages: [],
     },
     {
@@ -125,7 +125,7 @@ const events: Event[] = [
         description:
             "Seminar focusing on the scope of household enterprises without a license.",
         category: "Community",
-        image: "/household-enterprise-seminar.jpg",
+        image: "/id-8.jpg",
         additionalImages: [],
     },
 ];

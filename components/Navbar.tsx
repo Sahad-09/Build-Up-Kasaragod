@@ -1,7 +1,7 @@
-"use client"
+"use client";
 
 import React from 'react';
-import { Menu } from "lucide-react";
+import { Menu, UserPlus } from "lucide-react";
 import {
     NavigationMenu,
     NavigationMenuItem,
@@ -18,15 +18,14 @@ const Navbar = () => {
     const [isOpen, setIsOpen] = React.useState(false);
 
     const menuItems = [
-        { title: "Events", href: "/events" },
-        { title: "Initiatives", href: "/initiatives" },
-        { title: "Scholarship", href: "/scholarship" },
         { title: "About Us", href: "/about" },
+        { title: "Events", href: "/events" },
+        { title: "Scholarship", href: "/scholarship" },
         { title: "Contact", href: "/contact" },
     ];
 
     return (
-        <nav className="border-b p-3 ">
+        <nav className="border-b p-3">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-between items-center h-16">
                     {/* Logo */}
@@ -42,7 +41,7 @@ const Navbar = () => {
                     </div>
 
                     {/* Desktop Navigation */}
-                    <div className="hidden md:block ">
+                    <div className="hidden md:flex items-center space-x-6">
                         <NavigationMenu>
                             <NavigationMenuList>
                                 {menuItems.map((item) => (
@@ -57,6 +56,19 @@ const Navbar = () => {
                                 ))}
                             </NavigationMenuList>
                         </NavigationMenu>
+                        {/* New Member Section */}
+                        <div className="relative">
+                            <Link
+                                href="/membership-form"
+                                className="text-white bg-primary px-4 py-2 rounded-3xl text-sm font-medium 
+                                animate-pulse-custom hover:scale-110 transform transition
+                                hover:shadow-lg hover:shadow-primary/50
+                                group relative overflow-hidden flex items-center gap-2"
+                            >
+                                <UserPlus className="h-5 w-5" />
+                                <span className="relative z-10">New Member</span>
+                            </Link>
+                        </div>
                     </div>
 
                     {/* Mobile Navigation */}
@@ -73,11 +85,23 @@ const Navbar = () => {
                                         <a
                                             key={item.title}
                                             href={item.href}
-                                            className="px-4 py-2 text-sm font-medium rounded-md hover:bg-accent hover:text-accent-foreground transition-colors"
+                                            className="px-4 py-2 text-sm font-medium rounded-full hover:bg-accent hover:text-accent-foreground transition-colors"
                                         >
                                             {item.title}
                                         </a>
                                     ))}
+                                </div>
+                                <div className="mt-4">
+                                    <Link
+                                        href="/membership-form"
+                                        className="text-white bg-primary px-4 py-2 rounded-full text-sm font-medium 
+                                        animate-pulse-custom hover:scale-110 transform transition
+                                        hover:shadow-lg hover:shadow-primary/50
+                                        group relative overflow-hidden flex items-center gap-2"
+                                    >
+                                        <UserPlus className="h-5 w-5" />
+                                        <span className="relative z-10">New Member</span>
+                                    </Link>
                                 </div>
                                 <SheetTitle className="hidden">
                                     <VisuallyHidden.Root>x</VisuallyHidden.Root>

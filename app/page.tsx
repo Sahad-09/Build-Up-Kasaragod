@@ -7,6 +7,7 @@ import { ResourceCenter } from "@/components/ResourceCenter";
 import { NewsletterSection } from "@/components/NewsletterSection";
 import ImpactStatistics from "@/components/ImpactStatistics";
 import ImageSection from "@/components/ImageSection ";
+import { MembershipCTASection } from "@/components/MembershipCTASection";
 
 const KasaragodLandingPage = () => {
   const scrollRef = useRef(null);
@@ -40,11 +41,13 @@ const KasaragodLandingPage = () => {
   return (
     <div ref={scrollRef} className="relative w-full overflow-hidden">
       {/* Hero Section */}
-      <HeroSection
-        title={heroData.title}
-        description={heroData.description}
-        buttonText={heroData.buttonText}
-      />
+      <div className=" mt-[-100px] md:mt-[-50px]">
+        <HeroSection
+          title={heroData.title}
+          description={heroData.description}
+          buttonText={heroData.buttonText}
+        />
+      </div>
 
       {/* Other Sections */}
       <div className="container mx-auto py-6">
@@ -66,8 +69,13 @@ const KasaragodLandingPage = () => {
         <UpcomingEventsSection />
       </div> */}
 
-      <div className="container mx-auto py-6">
+      {/* <div className="container mx-auto py-6">
         <NewsletterSection />
+      </div> */}
+
+
+      <div className="container mx-auto py-6">
+        <MembershipCTASection />
       </div>
     </div>
   );
