@@ -1,5 +1,3 @@
-'use client';
-
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { Send, MapPin, Phone, Mail, Facebook, Twitter, Instagram } from "lucide-react";
@@ -17,7 +15,8 @@ const ElegantContactPage = () => {
     });
     const [formStatus, setFormStatus] = useState("");
 
-    const handleInputChange = (e: any) => {
+    // Updated type for event parameter
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
         setFormData(prev => ({
             ...prev,
@@ -25,7 +24,8 @@ const ElegantContactPage = () => {
         }));
     };
 
-    const handleSubmit = async (e: any) => {
+    // Updated type for event parameter
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setFormStatus("Sending...");
 
