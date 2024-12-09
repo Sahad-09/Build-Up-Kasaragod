@@ -15,6 +15,7 @@ import {
     Lightbulb,
     ChevronRight
 } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 const initiatives = [
     {
@@ -97,90 +98,97 @@ export const WhatWeDoSection = () => {
 
 
     return (
+
         <div className="container mx-auto py-16 px-4">
             {/* Header Section */}
-            <div className="text-center mb-16 space-y-6">
-                <div className="relative inline-block">
-                    <Lightbulb className="w-16 h-16 text-[#FBAA18]" />
-                </div>
-                <h2 className="text-4xl md:text-5xl font-bold">
-                    What We Do?
-                </h2>
-                <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
-                    Our initiatives focus on sustainable development and community empowerment through various targeted programs.
-                </p>
-            </div>
-
-            {/* Main Content */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 max-w-6xl mx-auto">
-                {/* Initiative Selector */}
-                <div className="lg:col-span-4 space-y-3">
-                    {initiatives.map((initiative) => {
-                        const Icon = initiative.icon;
-                        const isActive = activeInitiative === initiative.id;
-                        return (
-                            <div
-                                key={initiative.id}
-                                className={`cursor-pointer transition-all duration-300 ${isActive ? 'scale-102' : 'hover:scale-101'
-                                    }`}
-                                onMouseEnter={() => setIsHovering(initiative.id)}
-                                onMouseLeave={() => setIsHovering(null)}
-                                onClick={() => setActiveInitiative(initiative.id)}
-                            >
-                                <Card className={`border-l-4 ${isActive ? `${initiative.color} border-l-8` : 'border-transparent'
-                                    } transition-all duration-300 hover:shadow-md`}>
-                                    <CardContent className="flex items-center p-4">
-                                        <Icon className={`h-6 w-6 ${initiative.color}`} />
-                                        <span className="ml-4 font-medium flex-grow">
-                                            {initiative.title}
-                                        </span>
-                                        <ChevronRight className={`h-5 w-5 transform transition-transform duration-300 ${isActive || isHovering === initiative.id ? 'translate-x-1 opacity-100' : 'opacity-0'
-                                            } ${initiative.color}`} />
-                                    </CardContent>
-                                </Card>
-                            </div>
-                        );
-                    })}
+            <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+            >
+                <div className="text-center mb-16 space-y-6">
+                    <div className="relative inline-block">
+                        <Lightbulb className="w-16 h-16 text-[#FBAA18]" />
+                    </div>
+                    <h2 className="text-4xl md:text-5xl font-bold">
+                        What We Do?
+                    </h2>
+                    <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
+                        Our initiatives focus on sustainable development and community empowerment through various targeted programs.
+                    </p>
                 </div>
 
-                {/* Content Display */}
-                <div className="lg:col-span-8">
-                    {initiatives.map((initiative) => {
-                        const Icon = initiative.icon;
-                        return (
-                            <div
-                                key={initiative.id}
-                                className={`transition-all duration-500 ${activeInitiative === initiative.id
-                                    ? 'opacity-100 translate-y-0'
-                                    : 'opacity-0 translate-y-4 hidden'
-                                    }`}
-                            >
-                                <Card className="h-full shadow-sm hover:shadow-md transition-shadow duration-300">
-                                    <CardHeader>
-                                        <CardTitle className="flex items-center gap-3">
+                {/* Main Content */}
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 max-w-6xl mx-auto">
+                    {/* Initiative Selector */}
+                    <div className="lg:col-span-4 space-y-3">
+                        {initiatives.map((initiative) => {
+                            const Icon = initiative.icon;
+                            const isActive = activeInitiative === initiative.id;
+                            return (
+                                <div
+                                    key={initiative.id}
+                                    className={`cursor-pointer transition-all duration-300 ${isActive ? 'scale-102' : 'hover:scale-101'
+                                        }`}
+                                    onMouseEnter={() => setIsHovering(initiative.id)}
+                                    onMouseLeave={() => setIsHovering(null)}
+                                    onClick={() => setActiveInitiative(initiative.id)}
+                                >
+                                    <Card className={`border-l-4 ${isActive ? `${initiative.color} border-l-8` : 'border-transparent'
+                                        } transition-all duration-300 hover:shadow-md`}>
+                                        <CardContent className="flex items-center p-4">
                                             <Icon className={`h-6 w-6 ${initiative.color}`} />
-                                            {initiative.title}
-                                        </CardTitle>
-                                    </CardHeader>
-                                    <CardContent>
-                                        <div className="grid gap-4">
-                                            {initiative.items.map((item, index) => (
-                                                <div
-                                                    key={index}
-                                                    className="flex items-start gap-4 p-4  transition-colors duration-300"
-                                                >
-                                                    <div className={`w-1 h-1 rounded-full mt-2 border ${initiative.color}`} />
-                                                    <p className="flex-grow">{item}</p>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    </CardContent>
-                                </Card>
-                            </div>
-                        );
-                    })}
+                                            <span className="ml-4 font-medium flex-grow">
+                                                {initiative.title}
+                                            </span>
+                                            <ChevronRight className={`h-5 w-5 transform transition-transform duration-300 ${isActive || isHovering === initiative.id ? 'translate-x-1 opacity-100' : 'opacity-0'
+                                                } ${initiative.color}`} />
+                                        </CardContent>
+                                    </Card>
+                                </div>
+                            );
+                        })}
+                    </div>
+
+                    {/* Content Display */}
+                    <div className="lg:col-span-8">
+                        {initiatives.map((initiative) => {
+                            const Icon = initiative.icon;
+                            return (
+                                <div
+                                    key={initiative.id}
+                                    className={`transition-all duration-500 ${activeInitiative === initiative.id
+                                        ? 'opacity-100 translate-y-0'
+                                        : 'opacity-0 translate-y-4 hidden'
+                                        }`}
+                                >
+                                    <Card className="h-full shadow-sm hover:shadow-md transition-shadow duration-300">
+                                        <CardHeader>
+                                            <CardTitle className="flex items-center gap-3">
+                                                <Icon className={`h-6 w-6 ${initiative.color}`} />
+                                                {initiative.title}
+                                            </CardTitle>
+                                        </CardHeader>
+                                        <CardContent>
+                                            <div className="grid gap-4">
+                                                {initiative.items.map((item, index) => (
+                                                    <div
+                                                        key={index}
+                                                        className="flex items-start gap-4 p-4  transition-colors duration-300"
+                                                    >
+                                                        <div className={`w-1 h-1 rounded-full mt-2 border ${initiative.color}`} />
+                                                        <p className="flex-grow">{item}</p>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </CardContent>
+                                    </Card>
+                                </div>
+                            );
+                        })}
+                    </div>
                 </div>
-            </div>
+            </motion.div >
         </div>
     );
 };

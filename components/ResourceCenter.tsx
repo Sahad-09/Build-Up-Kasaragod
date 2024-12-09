@@ -1,26 +1,8 @@
-import {
-    FileText,
-    Download,
-    Book,
-    File,
-    Mail,
-    ArrowRight,
-    CheckCircle2,
-    AlertCircle
-} from 'lucide-react';
-import {
-    Accordion,
-    AccordionContent,
-    AccordionItem,
-    AccordionTrigger,
-} from "@/components/ui/accordion";
+import { FileText, Download, Book, File, ArrowRight } from 'lucide-react';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { motion } from 'framer-motion';
-import {
-    Card,
-    CardContent
-} from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 
 export const ResourceCenter = () => {
     const resources = [
@@ -31,13 +13,15 @@ export const ResourceCenter = () => {
                     title: "Digital Literacy Guide",
                     description: "Basic computer and internet skills handbook",
                     type: "PDF",
-                    size: "2.5 MB"
+                    size: "2.5 MB",
+                    downloadUrl: "/path/to/digital-literacy-guide.pdf"
                 },
                 {
                     title: "Career Development Workbook",
                     description: "Interactive workbook for career planning",
                     type: "PDF",
-                    size: "1.8 MB"
+                    size: "1.8 MB",
+                    downloadUrl: "/path/to/career-development-workbook.pdf"
                 }
             ]
         },
@@ -48,13 +32,15 @@ export const ResourceCenter = () => {
                     title: "Volunteer Handbook",
                     description: "Guidelines and best practices for volunteers",
                     type: "PDF",
-                    size: "1.2 MB"
+                    size: "1.2 MB",
+                    downloadUrl: "/path/to/volunteer-handbook.pdf"
                 },
                 {
                     title: "Project Planning Template",
                     description: "Template for community project proposals",
                     type: "DOCX",
-                    size: "500 KB"
+                    size: "500 KB",
+                    downloadUrl: "/path/to/project-planning-template.docx"
                 }
             ]
         },
@@ -65,17 +51,29 @@ export const ResourceCenter = () => {
                     title: "Health Awareness Guide",
                     description: "Common health issues and preventive measures",
                     type: "PDF",
-                    size: "3.1 MB"
+                    size: "3.1 MB",
+                    downloadUrl: "/path/to/health-awareness-guide.pdf"
                 },
                 {
                     title: "Mental Health Support Directory",
                     description: "List of mental health resources and contacts",
                     type: "PDF",
-                    size: "1.5 MB"
+                    size: "1.5 MB",
+                    downloadUrl: "/path/to/mental-health-support-directory.pdf"
                 }
             ]
         }
     ];
+
+    const handleDownload = (url: any) => {
+        // Create an invisible anchor element
+        const anchor = document.createElement('a');
+        anchor.href = url;
+        anchor.download = url.split('/').pop(); // Extract file name from URL
+        document.body.appendChild(anchor);
+        anchor.click();
+        document.body.removeChild(anchor); // Remove anchor after clicking
+    };
 
     return (
         <div className="container mx-auto py-24 px-4">
@@ -126,7 +124,7 @@ export const ResourceCenter = () => {
                                                             <span>{resource.size}</span>
                                                         </div>
                                                     </div>
-                                                    <Button variant="outline" className="ml-4">
+                                                    <Button variant="outline" className="ml-4" onClick={() => handleDownload(resource.downloadUrl)}>
                                                         <Download className="h-4 w-4 mr-2" />
                                                         Download
                                                     </Button>

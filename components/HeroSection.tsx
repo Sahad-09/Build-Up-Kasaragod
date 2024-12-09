@@ -206,10 +206,12 @@ const HeroSection: React.FC<HeroSectionProps> = ({ title, description, buttonTex
                     className="relative mb-4"
                 >
                     <h1 className="text-6xl md:text-8xl leading-[5rem] md:leading-[8rem] font-extrabold tracking-tight text-center 
-  text-transparent bg-clip-text bg-gradient-to-r from-[#FBAA18] via-[#FBAA18] to-[#30C7F4]">
+    text-transparent bg-clip-text bg-gradient-to-r from-[#FBAA18] via-[#FBAA18] to-[#30C7F4]
+    drop-shadow-[0_4px_3px_rgba(251,170,24,0.4)] md:drop-shadow-[0_6px_5px_rgba(251,170,24,0.4)]
+   hover:drop-shadow-[0_4px_10px_rgba(48,199,244,0.5)] transition-all duration-300"
+                    >
                         {title}
                     </h1>
-
 
                     <div className="absolute -inset-x-8 inset-y-0 bg-primary/5 -skew-y-3 -z-10 rounded-xl" />
                 </motion.div>
@@ -229,7 +231,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ title, description, buttonTex
                     transition={{ delay: 0.5 }}
                     className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full"
                 >
-                    <Link href="/initiatives">
+                    <Link href="/events">
                         <Button variant="default" size="lg" className="rounded-full px-8 w-full sm:w-auto">
                             {buttonText}
                             <Users className="ml-2 h-4 w-4" />

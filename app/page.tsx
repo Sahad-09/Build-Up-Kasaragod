@@ -16,7 +16,7 @@ const KasaragodLandingPage = () => {
   const heroData = {
     title: "Build Up Kasaragod",
     description: "A Community-Driven Initiative to Transform and Uplift Kasaragod",
-    buttonText: "Explore Our Initiatives",
+    buttonText: "Explore Our Events",
   };
 
   // Only initialize scroll-based animations after component mount

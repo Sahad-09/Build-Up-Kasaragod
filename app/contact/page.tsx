@@ -54,7 +54,7 @@ const ElegantContactPage = () => {
                 className="w-full max-w-5xl grid md:grid-cols-2 border rounded-xl shadow-lg overflow-hidden"
             >
                 {/* Contact Information Side */}
-                <Card className="bg-accent/10 p-8 flex flex-col justify-between">
+                <Card className="bg-[#071028] p-8 flex flex-col justify-between">
                     <CardContent className="space-y-6">
                         <motion.h2
                             initial={{ y: -20, opacity: 0 }}
