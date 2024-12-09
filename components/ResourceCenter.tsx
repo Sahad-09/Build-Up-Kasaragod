@@ -65,15 +65,16 @@ export const ResourceCenter = () => {
         }
     ];
 
-    const handleDownload = (url: any) => {
+    const handleDownload = (url: string) => {
         // Create an invisible anchor element
         const anchor = document.createElement('a');
         anchor.href = url;
-        anchor.download = url.split('/').pop(); // Extract file name from URL
+        anchor.download = url.split('/').pop() ?? 'download'; // Extract file name from URL
         document.body.appendChild(anchor);
         anchor.click();
         document.body.removeChild(anchor); // Remove anchor after clicking
     };
+
 
     return (
         <div className="container mx-auto py-24 px-4">
