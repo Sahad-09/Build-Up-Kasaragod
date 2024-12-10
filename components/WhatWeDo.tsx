@@ -55,18 +55,6 @@ const initiatives = [
         ]
     },
     {
-        id: 'skills',
-        title: 'Skills Development',
-        icon: Users,
-        color: 'text-yellow-500 border-yellow-500',
-        items: [
-            'Vocational training programs',
-            'Entrepreneurship workshops',
-            'Hands-on technical skill development',
-            'Career-oriented certifications'
-        ]
-    },
-    {
         id: 'technology',
         title: 'Technological Advancements',
         icon: Laptop,
@@ -169,7 +157,14 @@ export const WhatWeDoSection = () => {
                                                 {initiative.title}
                                             </CardTitle>
                                         </CardHeader>
-                                        <CardContent>
+                                        <CardContent
+                                            style={{
+                                                backgroundImage: `url('/grain.png')`,
+                                                backgroundSize: "cover",
+                                                backgroundRepeat: "no-repeat",
+                                                backgroundPosition: "center",
+                                            }}
+                                        >
                                             <div className="grid gap-4">
                                                 {initiative.items.map((item, index) => (
                                                     <div
