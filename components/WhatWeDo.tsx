@@ -152,7 +152,14 @@ export const WhatWeDoSection = () => {
                                 >
                                     <Card className="h-full shadow-sm hover:shadow-md transition-shadow duration-300">
                                         <CardHeader>
-                                            <CardTitle className="flex items-center gap-3">
+                                            <CardTitle
+                                                style={{
+                                                    backgroundImage: `url('/grain.png')`,
+                                                    backgroundSize: "cover",
+                                                    backgroundRepeat: "no-repeat",
+                                                    backgroundPosition: "center",
+                                                }}
+                                                className="flex items-center gap-3">
                                                 <Icon className={`h-6 w-6 ${initiative.color}`} />
                                                 {initiative.title}
                                             </CardTitle>

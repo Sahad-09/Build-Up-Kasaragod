@@ -100,9 +100,9 @@ const ElegantContactPage = () => {
 
 
                 {/* Contact Form Side */}
-                <Card className="p-0 pt-4 md:p-8">
+                <Card className="p-0 pt-4 md:p-8 bg-accent/25">
                     <CardContent>
-                        <form onSubmit={handleSubmit} className="space-y-6">
+                        <form onSubmit={handleSubmit} className="space-y-6 ">
                             <div className="space-y-2">
                                 <label htmlFor="name" className="text-sm font-medium">
                                     Name
@@ -115,6 +115,7 @@ const ElegantContactPage = () => {
                                     onChange={handleInputChange}
                                     required
                                     placeholder="Your name"
+                                    className=" bg-[#030712]"
                                 />
                             </div>
 
@@ -130,6 +131,7 @@ const ElegantContactPage = () => {
                                     onChange={handleInputChange}
                                     required
                                     placeholder="Your email"
+                                    className=" bg-[#030712]"
                                 />
                             </div>
 
@@ -145,6 +147,7 @@ const ElegantContactPage = () => {
                                     required
                                     placeholder="Your message"
                                     rows={4}
+                                    className=" bg-[#030712]"
                                 />
                             </div>
 
