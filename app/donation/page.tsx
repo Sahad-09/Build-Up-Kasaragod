@@ -14,7 +14,7 @@ const CreativeDonationPage = () => {
             name: 'QR Code',
             Icon: QrCode,
             content: (
-                <div className="relative z-20 p-4 rounded-3xl shadow-2xl border-4 border-[#FBA918] flex justify-center items-center">
+                <div className="relative z-20 p-4 rounded-3xl shadow-2xl border-2 border-[#FBA918] flex justify-center items-center">
                     <Image
                         src="/QR.png"
                         alt="Donation QR Code"
