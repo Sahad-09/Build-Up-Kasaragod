@@ -7,60 +7,29 @@ import { Button } from "@/components/ui/button";
 export const ResourceCenter = () => {
     const resources = [
         {
-            category: "Educational Materials",
+            category: "Annual Reports",
             items: [
                 {
-                    title: "Digital Literacy Guide",
-                    description: "Basic computer and internet skills handbook",
+                    title: "Annual Report 2022",
+                    description: "Comprehensive overview of our organization's achievements, financial performance, and strategic initiatives during the 2022 fiscal year. Highlights include community impact, key program developments, and financial sustainability.",
                     type: "PDF",
                     size: "2.5 MB",
-                    downloadUrl: "/path/to/digital-literacy-guide.pdf"
+                    downloadUrl: "/files/Annual Report 2022.pdf"
                 },
                 {
-                    title: "Career Development Workbook",
-                    description: "Interactive workbook for career planning",
+                    title: "Annual Report 2023",
+                    description: "A detailed account of our progress and growth in 2023, showcasing innovative approaches to community development, expanded program reach, and significant milestones in our mission-driven work.",
                     type: "PDF",
                     size: "1.8 MB",
-                    downloadUrl: "/path/to/career-development-workbook.pdf"
-                }
-            ]
-        },
-        {
-            category: "Community Guidelines",
-            items: [
-                {
-                    title: "Volunteer Handbook",
-                    description: "Guidelines and best practices for volunteers",
-                    type: "PDF",
-                    size: "1.2 MB",
-                    downloadUrl: "/path/to/volunteer-handbook.pdf"
+                    downloadUrl: "/files/Annual Report 2023.pdf"
                 },
                 {
-                    title: "Project Planning Template",
-                    description: "Template for community project proposals",
-                    type: "DOCX",
-                    size: "500 KB",
-                    downloadUrl: "/path/to/project-planning-template.docx"
-                }
-            ]
-        },
-        {
-            category: "Health Resources",
-            items: [
-                {
-                    title: "Health Awareness Guide",
-                    description: "Common health issues and preventive measures",
+                    title: "Annual Report 2024",
+                    description: "Our latest annual report presenting a forward-looking perspective on organizational achievements, strategic vision, and continued commitment to creating meaningful social impact across our core focus areas.",
                     type: "PDF",
-                    size: "3.1 MB",
-                    downloadUrl: "/path/to/health-awareness-guide.pdf"
+                    size: "1.8 MB",
+                    downloadUrl: "/files/Annual Report 2024.pdf"
                 },
-                {
-                    title: "Mental Health Support Directory",
-                    description: "List of mental health resources and contacts",
-                    type: "PDF",
-                    size: "1.5 MB",
-                    downloadUrl: "/path/to/mental-health-support-directory.pdf"
-                }
             ]
         }
     ];
@@ -74,7 +43,6 @@ export const ResourceCenter = () => {
         anchor.click();
         document.body.removeChild(anchor); // Remove anchor after clicking
     };
-
 
     return (
         <div className="container mx-auto py-24 px-4">
