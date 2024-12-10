@@ -54,7 +54,7 @@ const ElegantContactPage = () => {
                 className="w-full max-w-5xl grid md:grid-cols-2 border rounded-xl shadow-lg overflow-hidden"
             >
                 {/* Contact Information Side */}
-                <CardContent className="space-y-6 px-4 sm:px-6 md:px-8 lg:px-10">
+                <CardContent className="space-y-6 pt-3 px-4 sm:px-6 md:px-8 lg:px-10">
                     <motion.h2
                         initial={{ y: -20, opacity: 0 }}
                         animate={{ y: 0, opacity: 1 }}
