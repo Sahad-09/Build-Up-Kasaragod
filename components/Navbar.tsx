@@ -9,7 +9,7 @@ import {
     NavigationMenuList,
 } from "@/components/ui/navigation-menu";
 import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetTrigger, SheetTitle, SheetClose } from "@/components/ui/sheet";
 import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
 import Link from 'next/link';
 import Image from 'next/image';
@@ -83,26 +83,29 @@ const Navbar = () => {
                             <SheetContent side="right" className="w-[240px]">
                                 <div className="flex flex-col gap-4 mt-8">
                                     {menuItems.map((item) => (
-                                        <a
-                                            key={item.title}
-                                            href={item.href}
-                                            className="px-4 py-2 text-sm font-medium rounded-full hover:bg-accent hover:text-accent-foreground transition-colors"
-                                        >
-                                            {item.title}
-                                        </a>
+                                        <SheetClose asChild key={item.title}>
+                                            <a
+                                                href={item.href}
+                                                className="px-4 py-2 text-sm font-medium rounded-full hover:bg-accent hover:text-accent-foreground transition-colors"
+                                            >
+                                                {item.title}
+                                            </a>
+                                        </SheetClose>
                                     ))}
                                 </div>
                                 <div className="mt-4">
-                                    <Link
-                                        href="/membership-form"
-                                        className="text-white bg-primary px-4 py-2 rounded-full text-sm font-medium 
-                                        animate-pulse-custom hover:scale-110 transform transition
-                                        hover:shadow-lg hover:shadow-primary/50
-                                        group relative overflow-hidden flex items-center gap-2"
-                                    >
-                                        <UserPlus className="h-5 w-5" />
-                                        <span className="relative z-10">New Member</span>
-                                    </Link>
+                                    <SheetClose asChild>
+                                        <Link
+                                            href="/membership-form"
+                                            className="text-white bg-primary px-4 py-2 rounded-full text-sm font-medium 
+                                            animate-pulse-custom hover:scale-110 transform transition
+                                            hover:shadow-lg hover:shadow-primary/50
+                                            group relative overflow-hidden flex items-center gap-2"
+                                        >
+                                            <UserPlus className="h-5 w-5" />
+                                            <span className="relative z-10">New Member</span>
+                                        </Link>
+                                    </SheetClose>
                                 </div>
                                 <SheetTitle className="hidden">
                                     <VisuallyHidden.Root>x</VisuallyHidden.Root>

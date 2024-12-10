@@ -14,13 +14,13 @@ const CreativeDonationPage = () => {
             name: 'QR Code',
             Icon: QrCode,
             content: (
-                <div className="relative z-20 p-4 rounded-3xl shadow-2xl border-4 border-blue-200/50">
+                <div className="relative z-20 p-4 rounded-3xl shadow-2xl border-4 border-blue-200/50 flex justify-center items-center">
                     <Image
                         src="/QR.png"
                         alt="Donation QR Code"
                         width={300}
                         height={300}
-                        className="rounded-2xl transform hover:scale-105 transition-transform duration-300"
+                        className="rounded-2xl transform hover:scale-105 transition-transform duration-300 max-w-full"
                     />
                 </div>
             )
@@ -30,11 +30,11 @@ const CreativeDonationPage = () => {
             name: 'UPI/BHIM',
             Icon: CreditCard,
             content: (
-                <div className="flex flex-col items-center space-y-4 text-center p-6 rounded-lg shadow-md bg-[#071028] border border-[#FBA918]/50">
+                <div className="flex flex-col items-center space-y-4 text-center p-6 rounded-lg shadow-md bg-[#071028] border border-[#FBA918]/50 w-full max-w-[350px]">
                     <h3 className="text-xl font-semibold text-[#FBA918]">
                         Scan QR or Use these UPI IDs
                     </h3>
-                    <div className="bg-white p-4 rounded-md shadow-sm border border-gray-200">
+                    <div className="bg-white p-4 rounded-md shadow-sm border border-gray-200 w-full">
                         <p className="text-sm font-medium text-gray-700">
                             <span className="text-[#FBA918] font-bold">UPI ID:</span> buildupkasaragod@sbi
                         </p>
@@ -48,22 +48,22 @@ const CreativeDonationPage = () => {
     ];
 
     return (
-        <div className="min-h-screen flex items-center justify-center p-8 overflow-x-hidden">
+        <div className="min-h-screen flex items-center justify-center p-4 md:p-8 overflow-x-hidden">
             <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5 }}
-                className="w-full max-w-5xl rounded-2xl shadow-2xl overflow-hidden grid md:grid-cols-2"
+                className="w-full max-w-5xl rounded-2xl shadow-2xl overflow-hidden grid grid-cols-1 md:grid-cols-2"
             >
                 {/* Donation Information Side */}
-                <div className="p-10 flex flex-col justify-center space-y-6 bg-blue-600/10">
+                <div className="p-6 md:p-10 flex flex-col justify-center space-y-6 bg-blue-600/10 order-2 md:order-1">
                     <motion.div
                         initial={{ x: -50, opacity: 0 }}
                         animate={{ x: 0, opacity: 1 }}
                         transition={{ delay: 0.2 }}
                     >
-                        <h2 className="text-4xl font-bold mb-4 flex items-center">
-                            <Heart className="mr-4 w-10 h-10" /> Donate with Ease
+                        <h2 className="text-3xl md:text-4xl font-bold mb-4 flex items-center">
+                            <Heart className="mr-4 w-8 h-8 md:w-10 md:h-10" /> Donate with Ease
                         </h2>
                         <p className="mb-6">
                             Your contribution makes a real difference. Every donation helps us create positive change.
@@ -89,7 +89,7 @@ const CreativeDonationPage = () => {
                     </div>
 
                     {/* Payment Method Selector */}
-                    <div className="flex space-x-4 mt-6">
+                    <div className="flex justify-center space-x-4 mt-6">
                         {paymentMethods.map((method) => (
                             <Button
                                 key={method.id}
@@ -105,15 +105,17 @@ const CreativeDonationPage = () => {
                 </div>
 
                 {/* Payment Method Content Side */}
-                <div className="flex items-center justify-center p-10 relative">
+                <div className="flex items-center justify-center p-6 md:p-10 relative order-1 md:order-2">
                     <motion.div
                         initial={{ scale: 0.7, opacity: 0 }}
                         animate={{ scale: 1, opacity: 1 }}
                         transition={{ delay: 0.4 }}
-                        className="relative z-10"
+                        className="relative z-10 flex justify-center items-center w-full"
                     >
                         <div className="absolute -inset-6 rounded-3xl blur-2xl animate-pulse"></div>
-                        {paymentMethods.find(m => m.id === activePaymentMethod)?.content}
+                        <div className="flex justify-center items-center w-full">
+                            {paymentMethods.find(m => m.id === activePaymentMethod)?.content}
+                        </div>
                     </motion.div>
                 </div>
             </motion.div>

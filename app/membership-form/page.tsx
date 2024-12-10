@@ -89,7 +89,7 @@ export default function MembershipForm() {
                         <RadioGroup
                             name="membershipCategory"
                             required
-                            className="flex flex-row space-x-4 mt-2"
+                            className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-4 mt-2"
                         >
                             <div className="flex items-center space-x-2">
                                 <RadioGroupItem value="Life Membership" id="lifeMembership" />
