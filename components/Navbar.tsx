@@ -18,7 +18,7 @@ const Navbar = () => {
     const [isOpen, setIsOpen] = React.useState(false);
 
     const menuItems = [
-        { title: "About Us", href: "/about" },
+        { title: "About Us", href: "/about-us" },
         { title: "Events", href: "/events" },
         { title: "Scholarship", href: "/scholarship" },
         { title: "Contact", href: "/contact" },

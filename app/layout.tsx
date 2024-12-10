@@ -33,14 +33,27 @@ export const metadata: Metadata = {
     description: "An independent organization dedicated to public good and community development in Kasaragod.",
     type: "website",
     locale: "en_US",
+    siteName: 'Build Up Kasaragod',
+    images: [{
+      url: '/logo.png',
+      width: 1200,
+      height: 630,
+      alt: 'Build Up Kasaragod'
+    }],
+
+  },
+  icons: {
+    icon: [
+      { url: '/logo.svg', sizes: 'any' },
+    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "BUK NGO - Empowering Kasaragod",
+    title: "BUK NGO - Transforming Kasaragod",
     description: "Strengthening community through governance, economic opportunity, and international cooperation.",
   },
   alternates: {
-    canonical: "https://www.bukngo.org" // Replace with actual website URL
+    canonical: "https://www.buildupkasaragod.org" // Replace with actual website URL
   },
   robots: {
     index: true,
