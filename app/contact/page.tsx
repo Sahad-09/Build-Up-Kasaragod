@@ -54,49 +54,50 @@ const ElegantContactPage = () => {
                 className="w-full max-w-5xl grid md:grid-cols-2 border rounded-xl shadow-lg overflow-hidden"
             >
                 {/* Contact Information Side */}
-                <Card className="bg-[#071028] p-8 flex flex-col justify-between">
-                    <CardContent className="space-y-6">
-                        <motion.h2
-                            initial={{ y: -20, opacity: 0 }}
-                            animate={{ y: 0, opacity: 1 }}
-                            transition={{ delay: 0.2 }}
-                            className="text-4xl font-light mb-4"
-                        >
-                            Contact Us
-                        </motion.h2>
-                        <motion.p
-                            initial={{ y: 20, opacity: 0 }}
-                            animate={{ y: 0, opacity: 1 }}
-                            transition={{ delay: 0.3 }}
-                            className="text-muted-foreground"
-                        >
-                            We&apos;d love to hear from you. Send us a message and we&apos;ll respond as soon as possible.
-                        </motion.p>
+                <CardContent className="space-y-6 px-4 sm:px-6 md:px-8 lg:px-10">
+                    <motion.h2
+                        initial={{ y: -20, opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
+                        transition={{ delay: 0.2 }}
+                        className="text-3xl sm:text-4xl font-light mb-4 text-center sm:text-left"
+                    >
+                        Contact Us
+                    </motion.h2>
+                    <motion.p
+                        initial={{ y: 20, opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
+                        transition={{ delay: 0.3 }}
+                        className="text-muted-foreground text-center sm:text-left"
+                    >
+                        We&apos;d love to hear from you. Send us a message and we&apos;ll respond as soon as possible.
+                    </motion.p>
 
-                        <div className="space-y-4">
-                            <div className="flex items-center space-x-4">
-                                <MapPin className="w-6 h-6 text-muted-foreground" />
-                                <span className="text-foreground">KMC:30/268, KSR/CA/02/2021, Near Clock Tower, Railway Station Road, Kasaragod, Kerala - 671121</span>
-                            </div>
-                            <div className="flex items-center space-x-4">
-                                <Phone className="w-6 h-6 text-muted-foreground" />
-                                <span className="text-foreground">+91 9900319096</span>
-                            </div>
-                            <div className="flex items-center space-x-4">
-                                <Mail className="w-6 h-6 text-muted-foreground" />
-                                <span className="text-foreground">contact@buildupkasaragod.org</span>
-                            </div>
+                    <div className="space-y-4">
+                        <div className="flex flex-col sm:flex-row items-center sm:items-start sm:space-x-4">
+                            <MapPin className="w-6 h-6 text-muted-foreground mb-2 sm:mb-0" />
+                            <span className="text-foreground text-center sm:text-left">
+                                KMC:30/268, KSR/CA/02/2021, Near Clock Tower, Railway Station Road, Kasaragod, Kerala - 671121
+                            </span>
                         </div>
+                        <div className="flex flex-col sm:flex-row items-center sm:items-start sm:space-x-4">
+                            <Phone className="w-6 h-6 text-muted-foreground mb-2 sm:mb-0" />
+                            <span className="text-foreground text-center sm:text-left">+91 9900319096</span>
+                        </div>
+                        <div className="flex flex-col sm:flex-row items-center sm:items-start sm:space-x-4">
+                            <Mail className="w-6 h-6 text-muted-foreground mb-2 sm:mb-0" />
+                            <span className="text-foreground text-center sm:text-left">contact@buildupkasaragod.org</span>
+                        </div>
+                    </div>
 
-                        <div className="flex space-x-6 pt-4">
-                            {[{ Icon: Facebook }, { Icon: Twitter }, { Icon: Instagram }].map(({ Icon }, index) => (
-                                <a key={index} href="#" className="text-muted-foreground hover:text-primary transition-colors">
-                                    <Icon className="w-6 h-6" />
-                                </a>
-                            ))}
-                        </div>
-                    </CardContent>
-                </Card>
+                    <div className="flex justify-center sm:justify-start space-x-6 pt-4">
+                        {[{ Icon: Facebook }, { Icon: Twitter }, { Icon: Instagram }].map(({ Icon }, index) => (
+                            <a key={index} href="#" className="text-muted-foreground hover:text-primary transition-colors">
+                                <Icon className="w-6 h-6" />
+                            </a>
+                        ))}
+                    </div>
+                </CardContent>
+
 
                 {/* Contact Form Side */}
                 <Card className="p-0 pt-4 md:p-8">

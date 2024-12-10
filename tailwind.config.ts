@@ -9,6 +9,9 @@ export default {
 	],
 	theme: {
 		extend: {
+			opacity: {
+				15: '0.15',
+			},
 			colors: {
 				background: 'hsl(var(--background))',
 				foreground: 'hsl(var(--foreground))',
