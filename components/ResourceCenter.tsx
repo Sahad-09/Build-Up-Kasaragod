@@ -11,25 +11,25 @@ export const ResourceCenter = () => {
             items: [
                 {
                     title: "Annual Report 2022",
-                    description: "Comprehensive overview of our organization's achievements, financial performance, and strategic initiatives during the 2022 fiscal year. Highlights include community impact, key program developments, and financial sustainability.",
+                    description: "Overview of achievements, financial performance, and initiatives for 2022.",
                     type: "PDF",
                     size: "2.5 MB",
                     downloadUrl: "/files/Annual Report 2022.pdf"
                 },
                 {
                     title: "Annual Report 2023",
-                    description: "A detailed account of our progress and growth in 2023, showcasing innovative approaches to community development, expanded program reach, and significant milestones in our mission-driven work.",
+                    description: "Progress and key milestones achieved in 2023.",
                     type: "PDF",
                     size: "1.8 MB",
                     downloadUrl: "/files/Annual Report 2023.pdf"
                 },
                 {
                     title: "Annual Report 2024",
-                    description: "Our latest annual report presenting a forward-looking perspective on organizational achievements, strategic vision, and continued commitment to creating meaningful social impact across our core focus areas.",
+                    description: "Highlights of achievements and strategic goals for 2024.",
                     type: "PDF",
                     size: "1.8 MB",
                     downloadUrl: "/files/Annual Report 2024.pdf"
-                },
+                }
             ]
         }
     ];
