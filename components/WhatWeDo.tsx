@@ -150,27 +150,22 @@ export const WhatWeDoSection = () => {
                                         : 'opacity-0 translate-y-4 hidden'
                                         }`}
                                 >
-                                    <Card className="h-full shadow-sm hover:shadow-md transition-shadow duration-300">
+                                    <Card
+                                        style={{
+                                            backgroundImage: `url('/grain.png')`,
+                                            backgroundSize: "cover",
+                                            backgroundRepeat: "no-repeat",
+                                            backgroundPosition: "center",
+                                        }}
+                                        className="h-full shadow-sm hover:shadow-md transition-shadow duration-300">
                                         <CardHeader>
                                             <CardTitle
-                                                style={{
-                                                    backgroundImage: `url('/grain.png')`,
-                                                    backgroundSize: "cover",
-                                                    backgroundRepeat: "no-repeat",
-                                                    backgroundPosition: "center",
-                                                }}
                                                 className="flex items-center gap-3">
                                                 <Icon className={`h-6 w-6 ${initiative.color}`} />
                                                 {initiative.title}
                                             </CardTitle>
                                         </CardHeader>
                                         <CardContent
-                                            style={{
-                                                backgroundImage: `url('/grain.png')`,
-                                                backgroundSize: "cover",
-                                                backgroundRepeat: "no-repeat",
-                                                backgroundPosition: "center",
-                                            }}
                                         >
                                             <div className="grid gap-4">
                                                 {initiative.items.map((item, index) => (
