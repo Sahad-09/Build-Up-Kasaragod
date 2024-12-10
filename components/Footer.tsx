@@ -2,6 +2,7 @@
 import React from "react";
 import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin } from "react-icons/fa";
 import { motion } from "framer-motion";
+import Link from "next/link";
 
 const Footer = () => {
     return (
@@ -25,10 +26,26 @@ const Footer = () => {
                     <div className="space-y-4">
                         <h3 className="text-2xl font-semibold">Quick Links</h3>
                         <ul className="space-y-2">
-                            <li><a href="/about-us" className="text-gray-400 hover:text-white">About</a></li>
-                            <li><a href="/events" className="text-gray-400 hover:text-white">Events</a></li>
-                            <li><a href="/contact" className="text-gray-400 hover:text-white">Contact</a></li>
-                            <li><a href="New Member" className="text-gray-400 hover:text-white">New Member</a></li>
+                            <li>
+                                <Link href="/about-us" className="text-gray-400 hover:text-white">
+                                    About
+                                </Link>
+                            </li>
+                            <li>
+                                <Link href="/events" className="text-gray-400 hover:text-white">
+                                    Events
+                                </Link>
+                            </li>
+                            <li>
+                                <Link href="/contact" className="text-gray-400 hover:text-white">
+                                    Contact
+                                </Link>
+                            </li>
+                            <li>
+                                <Link href="/new-member" className="text-gray-400 hover:text-white">
+                                    New Member
+                                </Link>
+                            </li>
                         </ul>
                     </div>
 
