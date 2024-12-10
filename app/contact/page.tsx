@@ -76,15 +76,15 @@ const ElegantContactPage = () => {
                         <div className="space-y-4">
                             <div className="flex items-center space-x-4">
                                 <MapPin className="w-6 h-6 text-muted-foreground" />
-                                <span className="text-foreground">123 Elegant Street, Design City</span>
+                                <span className="text-foreground">KMC:30/268, KSR/CA/02/2021, Near Clock Tower, Railway Station Road, Kasaragod, Kerala - 671121</span>
                             </div>
                             <div className="flex items-center space-x-4">
                                 <Phone className="w-6 h-6 text-muted-foreground" />
-                                <span className="text-foreground">+1 (555) 123-4567</span>
+                                <span className="text-foreground">+91 9900319096</span>
                             </div>
                             <div className="flex items-center space-x-4">
                                 <Mail className="w-6 h-6 text-muted-foreground" />
-                                <span className="text-foreground">hello@elegantdesign.com</span>
+                                <span className="text-foreground">contact@buildupkasaragod.org</span>
                             </div>
                         </div>
 
@@ -99,7 +99,7 @@ const ElegantContactPage = () => {
                 </Card>
 
                 {/* Contact Form Side */}
-                <Card className="p-8">
+                <Card className="p-0 pt-4 md:p-8">
                     <CardContent>
                         <form onSubmit={handleSubmit} className="space-y-6">
                             <div className="space-y-2">

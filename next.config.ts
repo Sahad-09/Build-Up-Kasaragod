@@ -1,7 +1,12 @@
-// next.config.js
+/** @type {import('next').NextConfig} */
 module.exports = {
   images: {
-    domains: ['placehold.co'],
-    dangerouslyAllowSVG: true, // Enable SVG images
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'placehold.co',
+      },
+    ],
+    dangerouslyAllowSVG: true,
   },
 };

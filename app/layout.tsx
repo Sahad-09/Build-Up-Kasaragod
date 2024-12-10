@@ -17,7 +17,7 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Build Up Kasaragod",
+  title: "Build Up Kasaragod - For a Better Tomorrow",
   description: "Build Up Kasaragod NGO works across 11 Divisions to strengthen governance, expand economic opportunities, and empower women in Kasaragod through local expertise and international cooperation.",
   keywords: [
     "NGO",
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     "international cooperation"
   ],
   openGraph: {
-    title: "Build Up Kasaragod",
+    title: "Build Up Kasaragod - For a Better Tomorrow",
     description: "An independent organization dedicated to public good and community development in Kasaragod.",
     type: "website",
     locale: "en_US",
