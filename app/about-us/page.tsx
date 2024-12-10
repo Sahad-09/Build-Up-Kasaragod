@@ -195,7 +195,7 @@ const AboutUsPage = () => {
                 {bearers.map((bearer, index) => (
                     <Link
                         key={index}
-                        href={`/about/${bearer.name.toLowerCase().replace(/\s+/g, '-')}`}
+                        href={`/about-us/${bearer.name.toLowerCase().replace(/\s+/g, '-')}`}
                         className="cursor-pointer"
                     >
                         <motion.div
