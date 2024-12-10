@@ -14,7 +14,7 @@ const CreativeDonationPage = () => {
             name: 'QR Code',
             Icon: QrCode,
             content: (
-                <div className="relative z-20 p-4 rounded-3xl shadow-2xl border-2 border-[#FBA918] flex justify-center items-center">
+                <div className="relative z-20 p-4 rounded-3xl shadow-2xl border-[1px] border-[#FBA918] flex justify-center items-center">
                     <Image
                         src="/QR.png"
                         alt="Donation QR Code"
@@ -30,7 +30,7 @@ const CreativeDonationPage = () => {
             name: 'UPI ID',
             Icon: CreditCard,
             content: (
-                <div className="flex flex-col items-center space-y-4 text-center p-6 rounded-lg shadow-md bg-[#071028] border border-[#FBA918]/50 w-full max-w-[350px]">
+                <div className="flex flex-col items-center space-y-4 text-center p-6 rounded-lg shadow-md bg-[#071028] border-[1px] border-[#FBA918] w-full max-w-[350px]">
                     <h3 className="text-xl font-semibold text-[#FBA918]">
                         Scan QR or Use this UPI ID
                     </h3>
