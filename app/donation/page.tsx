@@ -27,12 +27,12 @@ const CreativeDonationPage = () => {
         },
         {
             id: 'upi',
-            name: 'UPI/BHIM',
+            name: 'UPI ID',
             Icon: CreditCard,
             content: (
                 <div className="flex flex-col items-center space-y-4 text-center p-6 rounded-lg shadow-md bg-[#071028] border border-[#FBA918]/50 w-full max-w-[350px]">
                     <h3 className="text-xl font-semibold text-[#FBA918]">
-                        Scan QR or Use these UPI IDs
+                        Scan QR or Use this UPI ID
                     </h3>
                     <div className="bg-white p-4 rounded-md shadow-sm border border-gray-200 w-full">
                         <p className="text-sm font-medium text-gray-700">
@@ -73,7 +73,7 @@ const CreativeDonationPage = () => {
                     <div className="space-y-4">
                         {[
                             { Icon: HandCoins, text: "100% Impact Driven" },
-                            { Icon: ShieldCheck, text: "Secure Transactions" }
+                            { Icon: ShieldCheck, text: "Secure Transactions" },
                         ].map(({ Icon, text }, index) => (
                             <motion.div
                                 key={index}
@@ -102,7 +102,32 @@ const CreativeDonationPage = () => {
                             </Button>
                         ))}
                     </div>
+
+                    {/* Accepted Payment Methods */}
+                    <div className="mt-8">
+                        <h3 className="text-lg font-semibold mb-4">Accepted Payment Methods:</h3>
+                        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 text-center">
+                            {[
+                                "BHIM",
+                                "UPI",
+                                "Yono SBI",
+                                "SBI Pay",
+                                "Google Pay",
+                                "Paytm",
+                                "WhatsApp Pay",
+                            ].map((method, index) => (
+                                <div
+                                    key={index}
+                                    className="p-3 bg-[#030712] rounded-lg shadow-md text-sm font-medium"
+                                >
+                                    {method}
+                                </div>
+
+                            ))}
+                        </div>
+                    </div>
                 </div>
+
 
                 {/* Payment Method Content Side */}
                 <div className="flex items-center justify-center p-6 md:p-10 relative order-1 md:order-2">
