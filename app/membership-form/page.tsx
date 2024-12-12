@@ -207,13 +207,13 @@ export default function MembershipForm() {
                 <SubmitButton />
 
                 {status === "success" && (
-                    <Alert variant="default">
+                    <Alert variant="default" className="text-green-500">
                         <AlertDescription>Message sent successfully!</AlertDescription>
                     </Alert>
                 )}
 
                 {status === "error" && (
-                    <Alert variant="destructive">
+                    <Alert variant="destructive" className="text-red-500">
                         <AlertDescription>Failed to send message. Please try again.</AlertDescription>
                     </Alert>
                 )}
