@@ -1,6 +1,6 @@
 "use client";
-import React from "react";
-import { motion } from "framer-motion";
+import React, { useRef, useState } from "react";
+import { motion, useMotionValue, useTransform } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
 import { Users, Briefcase, Heart, Target } from "lucide-react";
 
@@ -28,6 +28,30 @@ const ImpactStatistics = () => {
         { icon: Target, number: "5", label: "Key Initiatives" },
     ];
 
+    const containerRef = useRef(null);
+    const x = useMotionValue(0);
+    const [isAnimating, setIsAnimating] = useState(true);
+
+    // Calculate the total width of the slider
+    const cardWidth = 320; // Matches the w-80 class (320px)
+    const totalWidth = statistics.length * cardWidth;
+
+    // Drag constraints
+    const dragConstraints = {
+        left: -(totalWidth - window.innerWidth),
+        right: 0
+    };
+
+    const handleDragEnd = () => {
+        // Resume animation after dragging
+        setIsAnimating(true);
+    };
+
+    const handleDragStart = () => {
+        // Pause animation during dragging
+        setIsAnimating(false);
+    };
+
     return (
         <div className="container mx-auto py-24">
             <motion.div
@@ -43,10 +67,20 @@ const ImpactStatistics = () => {
             </motion.div>
 
             <motion.div
-                className="flex gap-8"
-                animate={{
-                    x: ["0%", "-50%"],
+                ref={containerRef}
+                className="flex cursor-grab active:cursor-grabbing gap-8"
+                drag="x"
+                dragConstraints={dragConstraints}
+                dragElastic={0.1}
+                onDragStart={handleDragStart}
+                onDragEnd={handleDragEnd}
+                style={{
+                    x,
+                    width: `${totalWidth}px`
                 }}
+                animate={isAnimating ? {
+                    x: ["0%", "-50%"],
+                } : false}
                 transition={{
                     x: {
                         duration: 20,
@@ -54,14 +88,14 @@ const ImpactStatistics = () => {
                         ease: "linear",
                     },
                 }}
-                style={{
-                    width: "200%", // Double width to accommodate duplicate items
-                }}
             >
-                {statistics.map((stat, index) => (
-                    <div
+                {[...statistics, ...statistics].map((stat, index) => (
+                    <motion.div
                         key={index}
                         className="flex-shrink-0 w-80"
+                        style={{
+                            x: useTransform(x, [0, -totalWidth], [0, -totalWidth])
+                        }}
                     >
                         <Card
                             className="relative overflow-hidden hover:shadow-lg transition-shadow duration-300"
@@ -79,7 +113,7 @@ const ImpactStatistics = () => {
                                 <div className="text-sm text-muted-foreground">{stat.label}</div>
                             </CardContent>
                         </Card>
-                    </div>
+                    </motion.div>
                 ))}
             </motion.div>
         </div>

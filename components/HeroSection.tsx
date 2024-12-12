@@ -234,7 +234,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ title, description, buttonTex
                     <Link href="/events">
                         <Button variant="default" size="lg" className="rounded-full px-8 w-full sm:w-auto">
                             {buttonText}
-                            <Users className="ml-2 h-4 w-4" />
+                            <Globe className="ml-2 h-4 w-4" />
                         </Button>
                     </Link>
                     <Link href="/about-us">
