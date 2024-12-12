@@ -42,6 +42,9 @@ const ImpactStatistics = () => {
         right: 0
     };
 
+    // Move useTransform outside of the map function
+    const transformedX = useTransform(x, [0, -totalWidth], [0, -totalWidth]);
+
     const handleDragEnd = () => {
         // Resume animation after dragging
         setIsAnimating(true);
@@ -94,7 +97,7 @@ const ImpactStatistics = () => {
                         key={index}
                         className="flex-shrink-0 w-80"
                         style={{
-                            x: useTransform(x, [0, -totalWidth], [0, -totalWidth])
+                            x: transformedX // Use the pre-defined transformed x value
                         }}
                     >
                         <Card
