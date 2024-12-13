@@ -10,12 +10,14 @@ import {
     TooltipTrigger
 } from "@/components/ui/tooltip";
 import { Trophy, User, BookOpen } from "lucide-react";
-interface PageProps {
-    params: {
-        slug: string;
-    };
-    searchParams?: { [key: string]: string | string[] | undefined };
-}
+export type PageParams = {
+    slug: string;
+};
+
+// Define the page props type using Next.js conventions
+export type PageProps = {
+    params: PageParams;
+};
 
 const patrons = [
     {
