@@ -22,7 +22,7 @@ const Navbar = () => {
         { title: "Events", href: "/events" },
         { title: "Scholarship", href: "/scholarship" },
         { title: "Contact", href: "/contact" },
-        { title: "Donation", href: "/donation" },
+        { title: "Donate", href: "/donate-us" },
     ];
 
     return (
