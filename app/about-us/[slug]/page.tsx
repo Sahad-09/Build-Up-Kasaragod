@@ -10,6 +10,12 @@ import {
     TooltipTrigger
 } from "@/components/ui/tooltip";
 import { Trophy, User, BookOpen } from "lucide-react";
+interface PageProps {
+    params: {
+        slug: string;
+    };
+    searchParams?: { [key: string]: string | string[] | undefined };
+}
 
 const patrons = [
     {
@@ -123,11 +129,7 @@ const vicePresidents = [
     },
 ];
 
-export default function Page({
-    params,
-}: {
-    params: { slug: string };
-}) {
+export default function Page({ params }: PageProps) {
     // Helper function to find the bearer by name
     const findBearer = (slug: string) => {
         const allBearers = [...patrons, ...seniorOfficeBearers, ...vicePresidents];
