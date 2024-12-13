@@ -15,7 +15,7 @@ const patrons = [
     {
         name: "Mr. Abdul Khader Saleem",
         position: "Chief Patron",
-        image: "",
+        image: "/chiefPatron.jpeg",
         fallback: "AKS",
         bio: "Mr. Abdul Khader Saleem has been a guiding force in the community for over two decades, leading several initiatives aimed at education and welfare.",
         achievements: ["Led educational reforms", "Supported multiple charitable organizations"],
@@ -92,7 +92,7 @@ const vicePresidents = [
     {
         name: "Mrs. C. K. Zulekha Mahin",
         position: "Vice President",
-        image: "/vicePresident-01.png",
+        image: "/vicePresident-01.jpeg",
         fallback: "ZM",
         bio: "Mrs. C. K. Zulekha Mahin has been a tireless advocate for women's empowerment, leading numerous campaigns aimed at education and employment for women.",
         achievements: ["Launched women empowerment programs", "Awarded for her contribution to society"],

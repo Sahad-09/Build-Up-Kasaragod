@@ -36,7 +36,7 @@ const AboutUsPage = () => {
         {
             name: "Mr. Abdul Khader Saleem",
             position: "Chief Patron",
-            image: "",
+            image: "chiefPatron.jpeg",
             fallback: "AKS",
         },
         {
@@ -78,7 +78,7 @@ const AboutUsPage = () => {
         {
             name: "Mrs. C. K. Zulekha Mahin",
             position: "Vice President",
-            image: "/vicePresident-01.png",
+            image: "/vicePresident-01.jpeg",
             fallback: "ZM",
         },
         {
@@ -232,7 +232,8 @@ const AboutUsPage = () => {
         >
 
             {/* Office Bearers */}
-            <Card>
+            <Card
+            >
                 <CardHeader>
                     <CardTitle className="flex items-center gap-2">
                         <Users className="h-6 w-6 text-indigo-500" />
