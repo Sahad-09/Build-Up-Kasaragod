@@ -5,7 +5,7 @@ import Link from 'next/link';
 
 export const MembershipCTASection = () => {
     return (
-        <div className="py-24">
+        <div className="bg-gradient-to-b from-[#030712] to-[#1F2937] py-24">
             <div className="container mx-auto px-4">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}

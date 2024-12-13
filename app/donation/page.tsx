@@ -30,7 +30,14 @@ const CreativeDonationPage = () => {
             name: 'UPI ID',
             Icon: CreditCard,
             content: (
-                <div className="flex flex-col items-center space-y-4 text-center p-6 rounded-lg shadow-md bg-[#071028] border-[1px] border-[#FBA918] w-full max-w-[350px]">
+                <div
+                    style={{
+                        backgroundImage: `url('/grain.png')`,
+                        backgroundSize: "cover",
+                        backgroundRepeat: "no-repeat",
+                        backgroundPosition: "center",
+                    }}
+                    className="flex flex-col items-center space-y-4 text-center p-6 rounded-lg shadow-md bg-[#1F2937] border-[1px] border-[#FBA918] w-full max-w-[350px]">
                     <h3 className="text-xl font-semibold text-[#FBA918]">
                         Scan QR or Use this UPI ID
                     </h3>
@@ -56,7 +63,14 @@ const CreativeDonationPage = () => {
                 className="w-full max-w-5xl rounded-2xl shadow-2xl overflow-hidden grid grid-cols-1 md:grid-cols-2"
             >
                 {/* Donation Information Side */}
-                <div className="p-6 md:p-10 flex flex-col justify-center space-y-6 bg-blue-600/10 order-2 md:order-1">
+                <div
+                    style={{
+                        backgroundImage: `url('/grain.png')`,
+                        backgroundSize: "cover",
+                        backgroundRepeat: "no-repeat",
+                        backgroundPosition: "center",
+                    }}
+                    className="p-6 md:p-10 flex flex-col justify-center space-y-6 order-2 md:order-1">
                     <motion.div
                         initial={{ x: -50, opacity: 0 }}
                         animate={{ x: 0, opacity: 1 }}

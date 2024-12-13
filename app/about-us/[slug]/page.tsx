@@ -1,4 +1,15 @@
+"use client"
 import Image from 'next/image';
+import { motion } from "framer-motion";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipProvider,
+    TooltipTrigger
+} from "@/components/ui/tooltip";
+import { Trophy, User, BookOpen } from "lucide-react";
 
 const patrons = [
     {
@@ -14,16 +25,30 @@ const patrons = [
         position: "Patron",
         image: "/patron-01.jpg",
         fallback: "MA",
-        bio: "Shri KV Madhusudanan is known for his philanthropic contributions in the field of healthcare, having raised substantial funds for hospital infrastructure.",
-        achievements: ["Built a state-of-the-art hospital", "Received national awards for his social work"],
+        bio: "Shri KV Madhusudanan joined CRPF in 1975 as a Deputy Superintendent of Police and was the topper of his batch. He rendered invaluable service in the North Eastern region and during anti-terrorist operations in Punjab. In 1991, he was selected for the SPG, where he headed the close protection team for four Prime Ministers, from Narasimha Rao to Vajpayee. On promotion to DIG, he headed the Kerala CRPF. As IG, he commanded the North Eastern sector, the largest sector of CRPF. He has completed several courses both domestically and internationally and visited over 30 countries while accompanying the Prime Ministers. Currently, he is deeply involved in managing his plantation and engaging in social service.",
+        achievements: [
+            "Recipient of the President's Medal for Meritorious Services",
+            "Recipient of the President's Medal for Distinguished Services",
+            "Commanded the largest CRPF sector in the North East",
+            "Headed close protection teams for four Prime Ministers",
+            "Over 30 international visits accompanying Prime Ministers",
+            "Notable contributions to plantation management and social service post-retirement"
+        ],
     },
     {
-        name: "Mr. Kunhi Mohammed",
+        name: "Mr. M T P Mohammed Kunhi",
         position: "Patron",
         image: "/patron-02.jpg",
         fallback: "KM",
-        bio: "Mr. Kunhi Mohammed has been a cornerstone of several successful business ventures and social welfare projects in the region.",
-        achievements: ["Founded a leading manufacturing firm", "Established a scholarship fund for underprivileged students"],
+        bio: "Mr. M T P Mohammed Kunhi is a prominent businessman based in the Kingdom of Saudi Arabia and the Managing Director of the Sulfex Group of Companies. Born in Trikkaripur, Kasargode District, he ventured to KSA in 1985, where he worked in various companies before establishing a successful career in retail and manufacturing. His flagship venture, Sulfex Mattress Company, located in Kannur, Kerala, manufactures high-quality mattresses with a production capacity of 2,500 units per day, exporting to various countries and holding ISO certification and ISI marks. Known for his leadership, determination, and advocacy for hard work, Mr. Mohammed Kunhi continues to excel in business and social service.",
+        achievements: [
+            "Founder and CMD of Sulfex Group of Companies",
+            "Recipient of the 'Largest Seller of Rubberized Coir Products in India' award from the Ministry of MSME",
+            "Recipient of the Social Responsibility Award from the Hon. Governor of Kerala",
+            "Winner of the Chandrika Business Enclave Award",
+            "Second Business Award by the Kasaragod Chamber of Commerce and Industries",
+            "Led Sulfex Mattress Company to approval by the Ministry of Defence (DGQA) for quality assurance"
+        ],
     },
 ];
 
@@ -33,8 +58,17 @@ const seniorOfficeBearers = [
         position: "President",
         image: "/president.png",
         fallback: "SB",
-        bio: "Dr. Sheikh Bava is a renowned figure in the educational sector, advocating for modern teaching methods and curriculum reforms.",
-        achievements: ["Authored textbooks on contemporary education", "Promoted online learning initiatives"],
+        bio: "Dr. Sheikh Bava Mangalore, an entrepreneur and educator holding a PhD from Kalinga University, is known for his contributions to industrial development, education, and philanthropy. He is a Director at Hindustan Group of Companies and Bestgreenplates Pvt Ltd, a Partner at Venesa Industrial Complex LLP, and the Chairman of Surplus Infra Pvt Ltd. He has previously held key roles in the UAE Government-owned ADNOC Gas Processing & Distribution Plant. An advocate of hard work and effective leadership, Dr. Bava has been instrumental in promoting social welfare through various trusts and initiatives.",
+        achievements: [
+            "India Darshan National Integration Award (2021)",
+            "State Human Services Award (2014)",
+            "Pravasi Bhartiya Kerala 'Udyog Pathr' Award (2014)",
+            "ADNOC Outstanding Performer Award (2010)",
+            "NSS Honorary Fellow Award (1991)",
+            "Founder of TAWAM and Promoter of Integrated Industrial Estate Project",
+            "Board Member of Hindustan Education Trust and MAKE Welfare Trust",
+            "President of multiple social welfare organizations including Bafaqi Foundation Karnataka and Britent Welfare Trust"
+        ],
     },
     {
         name: "Dr. Rashmi Prakash",
@@ -89,56 +123,138 @@ const vicePresidents = [
     },
 ];
 
-export default async function Page({
+export default function Page({
     params,
 }: {
-    params: Promise<{ slug: string }>;
+    params: { slug: string };
 }) {
-    const { slug } = await params;
-
     // Helper function to find the bearer by name
     const findBearer = (slug: string) => {
-        // Check each category (patrons, senior office bearers, vice presidents)
         const allBearers = [...patrons, ...seniorOfficeBearers, ...vicePresidents];
         return allBearers.find((bearer) =>
             bearer.name.toLowerCase().replace(/\s+/g, '-') === slug
         );
     };
 
-    const bearer = findBearer(slug);
+    const bearer = findBearer(params.slug);
 
     if (!bearer) {
         return <div>Office bearer not found</div>;
     }
 
     return (
-        <div className="container mx-auto px-4 py-8 text-center">
-            <h1 className="text-3xl font-semibold">{bearer.name}</h1>
-            <p className="text-lg mt-2">{bearer.position}</p>
-            <div className="mt-4">
-                {bearer.image ? (
-                    <Image
-                        src={bearer.image}
-                        alt={bearer.name}
-                        width={128}
-                        height={128}
-                        className="mx-auto"
-                    />
-                ) : (
-                    <div className="w-32 h-32 bg-gray-200 flex items-center justify-center mx-auto">
-                        <span className="text-xl font-semibold">{bearer.fallback}</span>
-                    </div>
-                )}
-            </div>
-            <p className="mt-4 text-gray-700">More information about {bearer.name}...</p>
-            <p className="mt-2 font-medium text-gray-900">Bio:</p>
-            <p>{bearer.bio}</p>
-            <p className="mt-2 font-medium text-gray-900">Achievements:</p>
-            <ul className="list-disc pl-6 text-left mx-auto max-w-lg">
-                {bearer.achievements.map((achievement, index) => (
-                    <li key={index}>{achievement}</li>
-                ))}
-            </ul>
+        <div className="min-h-screen bg-gradient-to-b from-[#030712] to-[#1F2937]  flex items-center justify-center p-1">
+            <Card className="w-full max-w-4xl shadow-2xl border-none">
+                <CardContent className="p-0 grid grid-cols-1 md:grid-cols-2 overflow-hidden rounded-xl">
+                    {/* Profile Section - Now First on Mobile */}
+                    <motion.div
+                        className="p-8 bg-background flex flex-col justify-center space-y-6 order-1 md:order-2"
+                        initial={{ x: 100, opacity: 0 }}
+                        animate={{ x: 0, opacity: 1 }}
+                        transition={{ duration: 0.6 }}
+                    >
+                        <TooltipProvider>
+                            <Tooltip>
+                                <TooltipTrigger>
+                                    <div className="flex justify-center mb-4">
+                                        {bearer.image ? (
+                                            <Image
+                                                src={bearer.image}
+                                                alt={bearer.name}
+                                                width={150}
+                                                height={150}
+                                                className="rounded-full border-4 border-primary shadow-lg"
+                                            />
+                                        ) : (
+                                            <div className="w-40 h-40 bg-secondary rounded-full flex items-center justify-center">
+                                                <span className="text-4xl font-bold text-primary">
+                                                    {bearer.fallback}
+                                                </span>
+                                            </div>
+                                        )}
+                                    </div>
+                                </TooltipTrigger>
+                                <TooltipContent>
+                                    <p>{bearer.name}</p>
+                                </TooltipContent>
+                            </Tooltip>
+                        </TooltipProvider>
+
+                        <div className="text-center">
+                            <h1 className="text-3xl font-bold text-foreground mb-2">
+                                {bearer.name}
+                            </h1>
+                            <p className="text-md text-muted-foreground mb-4">
+                                {bearer.position}
+                            </p>
+                        </div>
+
+                        <div className="space-y-4">
+                            <div className="flex items-center space-x-3">
+                                <User className="text-[#FBA918] w-6 h-6" />
+                                <h2 className="text-xl font-semibold text-foreground">
+                                    Personal Bio
+                                </h2>
+                            </div>
+                            <p className="text-muted-foreground leading-relaxed">
+                                {bearer.bio}
+                            </p>
+                        </div>
+                    </motion.div>
+
+                    {/* Achievements Section - Now Second on Mobile */}
+                    <motion.div
+                        className="p-8 flex flex-col justify-center space-y-6 order-2 md:order-1"
+                        initial={{ x: -100, opacity: 0 }}
+                        animate={{ x: 0, opacity: 1 }}
+                        transition={{ duration: 0.6 }}
+                        style={{
+                            backgroundImage: `url('/grain.png')`,
+                            backgroundSize: "cover",
+                            backgroundRepeat: "no-repeat",
+                            backgroundPosition: "center",
+                        }}
+                    >
+                        <div className="flex items-center space-x-4 mb-4">
+                            <Trophy className="text-[#FBA918] w-10 h-10" />
+                            <h2 className="text-2xl font-bold text-primary-foreground">
+                                Remarkable Achievements
+                            </h2>
+                        </div>
+                        <motion.ul
+                            className="space-y-3 text-primary-foreground/90"
+                            initial="hidden"
+                            animate="visible"
+                            variants={{
+                                hidden: { opacity: 0 },
+                                visible: {
+                                    opacity: 1,
+                                    transition: {
+                                        delayChildren: 0.3,
+                                        staggerChildren: 0.1
+                                    }
+                                }
+                            }}
+                        >
+                            {bearer.achievements.map((achievement, index) => (
+                                <motion.li
+                                    key={index}
+                                    className="flex items-start space-x-3"
+                                    variants={{
+                                        hidden: { opacity: 0, x: -20 },
+                                        visible: { opacity: 1, x: 0 }
+                                    }}
+                                >
+                                    <Badge variant="secondary" className="bg-primary-foreground/20 text-primary-foreground">
+                                        {index + 1}
+                                    </Badge>
+                                    <span>{achievement}</span>
+                                </motion.li>
+                            ))}
+                        </motion.ul>
+                    </motion.div>
+                </CardContent>
+            </Card>
         </div>
     );
 }

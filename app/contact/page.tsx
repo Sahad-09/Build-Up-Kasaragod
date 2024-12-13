@@ -46,7 +46,7 @@ const ElegantContactPage = () => {
     };
 
     return (
-        <div className="min-h-screen bg-background flex items-center justify-center p-8">
+        <div className="  min-h-screen bg-background flex items-center justify-center p-8">
             <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -54,7 +54,7 @@ const ElegantContactPage = () => {
                 className="w-full max-w-5xl grid md:grid-cols-2 border rounded-xl shadow-lg overflow-hidden"
             >
                 {/* Contact Information Side */}
-                <CardContent className="space-y-6 pt-3 px-4 sm:px-6 md:px-8 lg:px-10">
+                <CardContent className="space-y-6 pt-20 sm:pt-14 md:pt-14 lg:pt-14 px-4 sm:px-6 md:px-8 lg:px-10">
                     <motion.h2
                         initial={{ y: -20, opacity: 0 }}
                         animate={{ y: 0, opacity: 1 }}
@@ -100,7 +100,14 @@ const ElegantContactPage = () => {
 
 
                 {/* Contact Form Side */}
-                <Card className="p-0 pt-4 md:p-8 bg-accent/25">
+                <Card
+                    style={{
+                        backgroundImage: `url('/grain.png')`,
+                        backgroundSize: "cover",
+                        backgroundRepeat: "no-repeat",
+                        backgroundPosition: "center",
+                    }}
+                    className="p-0 pt-4 md:p-8 ">
                     <CardContent>
                         <form onSubmit={handleSubmit} className="space-y-6 ">
                             <div className="space-y-2">

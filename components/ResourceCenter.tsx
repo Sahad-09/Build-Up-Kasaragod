@@ -3,9 +3,19 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { motion } from 'framer-motion';
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { useState, useEffect } from 'react';
+
+// Utility function to convert bytes to human-readable format
+const formatFileSize = (bytes: number): string => {
+    if (bytes === 0) return '0 Bytes';
+    const k = 1024;
+    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+};
 
 export const ResourceCenter = () => {
-    const resources = [
+    const [resources, setResources] = useState([
         {
             category: "Annual Reports",
             items: [
@@ -13,26 +23,70 @@ export const ResourceCenter = () => {
                     title: "Annual Report 2022",
                     description: "Overview of achievements, financial performance, and initiatives for 2022.",
                     type: "PDF",
-                    size: "2.5 MB",
+                    size: "Loading...",
                     downloadUrl: "/files/Annual Report 2022.pdf"
                 },
                 {
                     title: "Annual Report 2023",
                     description: "Progress and key milestones achieved in 2023.",
                     type: "PDF",
-                    size: "1.8 MB",
+                    size: "Loading...",
                     downloadUrl: "/files/Annual Report 2023.pdf"
                 },
                 {
                     title: "Annual Report 2024",
                     description: "Highlights of achievements and strategic goals for 2024.",
                     type: "PDF",
-                    size: "1.8 MB",
+                    size: "Loading...",
                     downloadUrl: "/files/Annual Report 2024.pdf"
                 }
             ]
+        },
+        {
+            category: "Organizational Statements",
+            items: [
+                {
+                    title: "Vision and Mission Statements",
+                    description: "Our core purpose, long-term aspirations, and strategic direction.",
+                    type: "PDF",
+                    size: "Loading...",
+                    downloadUrl: "/files/Mission Vision.pdf"
+                }
+            ]
         }
-    ];
+    ]);
+
+    useEffect(() => {
+        const fetchFileSizes = async () => {
+            const updatedResources = await Promise.all(
+                resources.map(async (category) => ({
+                    ...category,
+                    items: await Promise.all(
+                        category.items.map(async (item) => {
+                            try {
+                                const response = await fetch(item.downloadUrl, { method: 'HEAD' });
+                                const size = response.headers.get('Content-Length');
+                                return {
+                                    ...item,
+                                    size: size ? formatFileSize(parseInt(size)) : 'Unknown Size'
+                                };
+                            } catch (error) {
+                                console.error(`Error fetching size for ${item.title}:`, error);
+                                return {
+                                    ...item,
+                                    size: 'Unknown Size'
+                                };
+                            }
+                        })
+                    )
+                }))
+            );
+
+            setResources(updatedResources);
+        };
+
+        fetchFileSizes();
+    }, []);
 
     const handleDownload = (url: string) => {
         // Create an invisible anchor element

@@ -46,7 +46,7 @@ const AboutUsPage = () => {
             fallback: "MA",
         },
         {
-            name: "Mr. Kunhi Mohammed",
+            name: "Mr. M T P Mohammed Kunhi",
             position: "Patron",
             image: "/patron-02.jpg",
             fallback: "KM",

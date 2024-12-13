@@ -74,7 +74,7 @@ const KasaragodLandingPage = () => {
       </div> */}
 
 
-      <div className="container mx-auto py-6">
+      <div className=" pt-6">
         <MembershipCTASection />
       </div>
     </div>
