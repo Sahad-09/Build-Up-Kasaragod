@@ -131,16 +131,21 @@ const vicePresidents = [
     },
 ];
 
-export default function Page({ params }: PageProps) {
+export default async function Page({
+    params,
+}: {
+    params: Promise<{ slug: string }>;
+}) {
+    const { slug } = await params;
     // Helper function to find the bearer by name
     const findBearer = (slug: string) => {
+        // Check each category (patrons, senior office bearers, vice presidents)
         const allBearers = [...patrons, ...seniorOfficeBearers, ...vicePresidents];
         return allBearers.find((bearer) =>
             bearer.name.toLowerCase().replace(/\s+/g, '-') === slug
         );
     };
-
-    const bearer = findBearer(params.slug);
+    const bearer = findBearer(slug);
 
     if (!bearer) {
         return <div>Office bearer not found</div>;
