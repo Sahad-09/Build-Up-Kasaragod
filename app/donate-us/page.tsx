@@ -4,7 +4,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { Heart, HandCoins, ShieldCheck, QrCode, CreditCard } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Copy, CheckCheck } from 'lucide-react';
+import { Copy, Check } from 'lucide-react';
 const CreativeDonationPage = () => {
     const [activePaymentMethod, setActivePaymentMethod] = useState('qr');
     const [copied, setCopied] = useState(false);
@@ -61,7 +61,7 @@ const CreativeDonationPage = () => {
                             aria-label="Copy UPI ID"
                         >
                             {copied ? (
-                                <CheckCheck size={20} className="text-green-500" />
+                                <Check size={20} className="text-green-500" />
                             ) : (
                                 <Copy size={20} />
                             )}
