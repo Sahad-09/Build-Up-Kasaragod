@@ -4,9 +4,18 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { Heart, HandCoins, ShieldCheck, QrCode, CreditCard } from "lucide-react";
 import { Button } from "@/components/ui/button";
-
+import { Copy, CheckCheck } from 'lucide-react';
 const CreativeDonationPage = () => {
     const [activePaymentMethod, setActivePaymentMethod] = useState('qr');
+    const [copied, setCopied] = useState(false);
+    const upiId = 'buildupkasaragod@sbi';
+
+    const handleCopy = () => {
+        navigator.clipboard.writeText(upiId).then(() => {
+            setCopied(true);
+            setTimeout(() => setCopied(false), 2000);
+        });
+    };
 
     const paymentMethods = [
         {
@@ -37,14 +46,26 @@ const CreativeDonationPage = () => {
                         backgroundRepeat: "no-repeat",
                         backgroundPosition: "center",
                     }}
-                    className="flex flex-col items-center space-y-4 text-center p-6 rounded-lg shadow-md bg-[#1F2937] border-[1px] border-[#FBA918] w-full max-w-[350px]">
+                    className="flex z-50 flex-col items-center space-y-4 text-center p-6 rounded-lg shadow-md bg-[#1F2937] border-[1px] border-[#FBA918] w-full max-w-[350px]"
+                >
                     <h3 className="text-xl font-semibold text-[#FBA918]">
                         Scan QR or Use this UPI ID
                     </h3>
-                    <div className="bg-white p-4 rounded-md shadow-sm border border-gray-200 w-full">
+                    <div className="bg-white  p-4 rounded-md shadow-sm border border-gray-200 w-full flex items-center justify-between">
                         <p className="text-sm font-medium text-gray-700">
-                            <span className="text-[#FBA918] font-bold">UPI ID:</span> buildupkasaragod@sbi
+                            <span className="text-[#FBA918] font-bold">UPI ID:</span> {upiId}
                         </p>
+                        <button
+                            onClick={handleCopy}
+                            className="ml-2 text-gray-500 hover:text-[#FBA918] transition-colors"
+                            aria-label="Copy UPI ID"
+                        >
+                            {copied ? (
+                                <CheckCheck size={20} className="text-green-500" />
+                            ) : (
+                                <Copy size={20} />
+                            )}
+                        </button>
                     </div>
                     <p className="text-sm text-gray-400">
                         Every contribution brings us closer to making a difference!
