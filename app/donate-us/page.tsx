@@ -52,7 +52,7 @@ const CreativeDonationPage = () => {
                         Scan QR or Use this UPI ID
                     </h3>
                     <div className="bg-white  p-4 rounded-md shadow-sm border border-gray-200 w-full flex items-center justify-between">
-                        <p className="text-sm font-medium text-gray-700">
+                        <p className="text-sm font-semibold text-gray-700">
                             <span className="text-[#FBA918] font-bold">UPI ID:</span> {upiId}
                         </p>
                         <button
