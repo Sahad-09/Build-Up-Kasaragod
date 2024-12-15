@@ -108,7 +108,7 @@ const Navbar = () => {
                                     </SheetClose>
                                 </div>
                                 <SheetTitle className="hidden">
-                                    <VisuallyHidden.Root>x</VisuallyHidden.Root>
+                                    <VisuallyHidden.Root className='border border-red-900'>x</VisuallyHidden.Root>
                                 </SheetTitle>
                             </SheetContent>
                         </Sheet>

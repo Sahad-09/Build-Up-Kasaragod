@@ -2,39 +2,36 @@
 
 import nodemailer from 'nodemailer';
 
-// Define the function to send an email
 export async function sendEmail(formData: FormData) {
-    // Define the fields to extract from the form data
     const fields = [
         "name",
         "email",
         "message"
     ];
 
-    // Create a formatted string of the form data
     const data = fields
         .map((field) => `${field.charAt(0).toUpperCase() + field.slice(1)}: ${formData.get(field)}`)
         .join("\n");
 
     try {
-        // Configure the transporter using Gmail as the email service
+        // Configure the transporter using Hostinger SMTP settings
         const transporter = nodemailer.createTransport({
-            service: 'gmail',
+            host: 'smtp.hostinger.com', // Hostinger SMTP host
+            port: 465, // SSL port
+            secure: true, // Use SSL
             auth: {
-                user: process.env.EMAIL_USER, // Your email
-                pass: process.env.EMAIL_PASS, // Your email password
+                user: process.env.HOSTINGER_EMAIL_USER, // Your Hostinger email
+                pass: process.env.HOSTINGER_EMAIL_PASS, // Your Hostinger email password or app password
             },
         });
 
-        // Set up email options
         const mailOptions = {
-            from: process.env.EMAIL_USER,
-            to: process.env.EMAIL_USER, // Send email to yourself
+            from: process.env.HOSTINGER_EMAIL_USER,
+            to: process.env.HOSTINGER_EMAIL_USER,
             subject: `New Message from Contact Form`,
             text: data,
         };
 
-        // Send the email
         await transporter.sendMail(mailOptions);
         return { success: true };
     } catch (error) {

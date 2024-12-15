@@ -122,17 +122,19 @@ const CreativeDonationPage = () => {
                         <h3 className="text-lg font-semibold mb-4">Accepted Payment Methods:</h3>
                         <div className="grid grid-cols-2 md:grid-cols-3 gap-4 text-center">
                             {[
+                                "Google Pay",
+                                "PhonePe",
                                 "BHIM",
                                 "UPI",
                                 "Yono SBI",
                                 "SBI Pay",
-                                "Google Pay",
                                 "Paytm",
                                 "WhatsApp Pay",
                             ].map((method, index) => (
                                 <div
+
                                     key={index}
-                                    className="p-3 bg-[#030712] rounded-lg shadow-md text-sm font-medium"
+                                    className="p-3 rounded-lg shadow-md font-semibold"
                                 >
                                     {method}
                                 </div>
