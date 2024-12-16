@@ -242,7 +242,7 @@ const AboutUsPage = () => {
                 </CardHeader>
                 <CardContent className="space-y-8">
                     {renderOfficeBearerSection(patrons, "Patrons", true)}
-                    {renderOfficeBearerSection(seniorOfficeBearers, "Senior Office Bearers", true)}
+                    {renderOfficeBearerSection(seniorOfficeBearers, "Core Team", true)}
                     {renderOfficeBearerSection(vicePresidents, "Vice Presidents")}
                 </CardContent>
 

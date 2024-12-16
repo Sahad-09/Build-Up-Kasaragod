@@ -148,7 +148,7 @@ export default function MembershipForm() {
                     {/* Identity and Contact Information */}
                     <div>
                         <Label htmlFor="aadhaar">Aadhaar Number</Label>
-                        <Input type="text" id="aadhaar" name="aadhaar" required className="bg-[#030712]" />
+                        <Input type="tel" id="aadhaar" name="aadhaar" required className="bg-[#030712]" />
                     </div>
 
                     <div>

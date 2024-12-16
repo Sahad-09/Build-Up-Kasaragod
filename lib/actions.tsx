@@ -28,17 +28,19 @@ export async function sendEmail(formData: FormData) {
 
     try {
         const transporter = nodemailer.createTransport({
-            service: 'gmail',
+            host: 'smtp.hostinger.com', // Hostinger SMTP host
+            port: 465, // SSL port
+            secure: true, // Use SSL
             auth: {
-                user: process.env.EMAIL_USER,
-                pass: process.env.EMAIL_PASS,
+                user: process.env.HOSTINGER_EMAIL_USER, // Your Hostinger email
+                pass: process.env.HOSTINGER_EMAIL_PASS, // Your Hostinger email password or app password
             },
         });
 
         const mailOptions = {
-            from: process.env.EMAIL_USER,
-            to: process.env.EMAIL_USER,
-            subject: `New Membership Application`,
+            from: process.env.HOSTINGER_EMAIL_USER,
+            to: process.env.HOSTINGER_EMAIL_USER,
+            subject: `New Membership application`,
             text: data,
         };
 
