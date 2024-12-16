@@ -81,11 +81,18 @@ const seniorOfficeBearers = [
     {
         name: "Mr. Anoop K",
         position: "Treasurer",
-        image: "/treasurer.png",
+        image: "/treasurer.jpeg",
         fallback: "AK",
-        bio: "Mr. Anoop K is an expert in financial planning and management, ensuring the proper allocation of resources in all projects.",
-        achievements: ["Reformed the financial structure of several non-profits", "Awarded the Excellence in Financial Management Award"],
-    },
+        bio: "Mr. Anoop Kalanad, a prominent public figure from Kasaragod, is a politician, social activist, and business promoter. Born on 19 February 1978, he graduated in Chemistry from Govt College, Kasaragod, and holds a Diploma in Public Health and Sanitation from the All India Institute of Local Self Government, Mumbai. With extensive experience in government services, he has worked as a Water Analyst, Chemist, Health Inspector, Warden, and Scientific Assistant in various departments of the Government of Kerala. He is the Managing Director of Shravanam Digital Print House and a founder, promoter, and Director of Kashmart Ventures India Private Limited.",
+        achievements: [
+            "Established multiple Kashmart hypermarkets in Kasaragod",
+            "State Executive Member and District General Secretary of KPCC OBC Department",
+            "District Secretary of Kerala Printers Association",
+            "Business Innovative Award recipient from JCI Kasaragod Heritage City (2024)",
+            "Working Group Member in various local self-government committees",
+            "District Executive Member and leader in Kerala Vyapari Vyasaya Ekopana Samiti"
+        ],
+    }
 ];
 
 const vicePresidents = [

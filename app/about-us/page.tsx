@@ -69,7 +69,7 @@ const AboutUsPage = () => {
         {
             name: "Mr. Anoop K",
             position: "Treasurer",
-            image: "/treasurer.png",
+            image: "/treasurer.jpeg",
             fallback: "AK",
         },
     ];
