@@ -90,9 +90,21 @@ const SimpleScholarshipPage = () => {
         setFormStatus("Submitting application...");
 
         const formDataObj = new FormData();
+
         Object.entries(formData).forEach(([key, value]) => {
             if (value !== null) {
-                formDataObj.append(key, value);
+                // Handle file input (photo) separately
+                if (key === 'photo' && value instanceof File) {
+                    formDataObj.append(key, value);
+                }
+                // Handle boolean values by converting to string
+                else if (typeof value === 'boolean') {
+                    formDataObj.append(key, value.toString()); // 'true' or 'false'
+                }
+                // For all other types, append the value as a string
+                else {
+                    formDataObj.append(key, value.toString());
+                }
             }
         });
 
@@ -111,7 +123,24 @@ const SimpleScholarshipPage = () => {
                 city: "",
                 region: "",
                 postalCode: "",
-                state: ""
+                state: "",
+                courseName: "",
+                institutionName: "",
+                admissionDate: "",
+                collegeId: "",
+                bankName: "",
+                bankBranch: "",
+                ifsc: "",
+                accountNumber: "",
+                accountHolder: "",
+                panNumber: "",
+                studyFurther: "",
+                studyWish: "",
+                hobbies: "",
+                contribution: "",
+                declarationDate: "",
+                declarationPlace: "",
+                agreementChecked: false
             });
             const fileInput = document.getElementById('photo') as HTMLInputElement;
             if (fileInput) fileInput.value = '';
@@ -119,6 +148,7 @@ const SimpleScholarshipPage = () => {
             setFormStatus("Failed to submit application. Please try again.");
         }
     };
+
 
     return (
         <div className="min-h-screen bg-background flex items-center justify-center md:p-8 p-2">
