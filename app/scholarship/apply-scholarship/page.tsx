@@ -159,7 +159,7 @@ const SimpleScholarshipPage = () => {
                 className="w-full max-w-7xl"
             >
                 <Card
-                    className="p-6 bg-blue-900/10">
+                    className="p-6 bg-[#1F2937]/30">
                     <CardContent className="space-y-6">
                         <div className="text-center space-y-2">
                             <h2 className="text-2xl font-light">Scholarship Application</h2>

@@ -101,7 +101,7 @@ const ElegantContactPage = () => {
 
                 {/* Contact Form Side */}
                 <Card
-                    className="p-0 pt-4 md:p-8 bg-blue-900/10">
+                    className="p-0 pt-4 md:p-8 bg-[#1F2937]/30">
                     <CardContent>
                         <form onSubmit={handleSubmit} className="space-y-6 ">
                             <div className="space-y-2">
