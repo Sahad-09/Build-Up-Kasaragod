@@ -82,13 +82,8 @@ export default function MembershipForm() {
 
             {/* Form Section */}
             <form
-                style={{
-                    backgroundImage: `url('/grain.png')`,
-                    backgroundSize: "cover",
-                    backgroundRepeat: "no-repeat",
-                    backgroundPosition: "center",
-                }}
-                ref={formRef} action={handleSubmit} className="space-y-4 p-6 border rounded-md ">
+                ref={formRef} action={handleSubmit} className="space-y-4 p-6 border rounded-md bg-blue-900/10 "
+            >
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {/* Membership Category - Full Width */}
                     <div className="md:col-span-2">
@@ -117,7 +112,14 @@ export default function MembershipForm() {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:col-span-2">
                         <div>
                             <Label htmlFor="name">Full Name</Label>
-                            <Input type="text" id="name" name="name" required className="bg-[#030712]" />
+                            <Input
+                                type="text"
+                                id="name"
+                                name="name"
+                                required
+                                className="bg-[#030712]"
+                                placeholder="Enter your full name"
+                            />
                         </div>
 
                         <div>
@@ -137,70 +139,151 @@ export default function MembershipForm() {
                     {/* Personal Information Section */}
                     <div>
                         <Label htmlFor="dob">Date of Birth</Label>
-                        <Input type="date" id="dob" name="dob" required className="bg-[#030712]" />
+                        <Input
+                            type="date"
+                            id="dob"
+                            name="dob"
+                            required
+                            className="bg-[#030712]"
+                            placeholder="Select your date of birth"
+                        />
                     </div>
 
                     <div>
                         <Label htmlFor="fatherName">Father&apos;s Name</Label>
-                        <Input type="text" id="fatherName" name="fatherName" required className="bg-[#030712]" />
+                        <Input
+                            type="text"
+                            id="fatherName"
+                            name="fatherName"
+                            required
+                            className="bg-[#030712]"
+                            placeholder="Enter your father's name"
+                        />
                     </div>
 
                     {/* Identity and Contact Information */}
                     <div>
                         <Label htmlFor="aadhaar">Aadhaar Number</Label>
-                        <Input type="tel" id="aadhaar" name="aadhaar" required className="bg-[#030712]" />
+                        <Input
+                            type="tel"
+                            id="aadhaar"
+                            name="aadhaar"
+                            required
+                            className="bg-[#030712]"
+                            placeholder="Enter your Aadhaar number"
+                        />
                     </div>
 
                     <div>
                         <Label htmlFor="mobile">Mobile</Label>
-                        <Input type="tel" id="mobile" name="mobile" required className="bg-[#030712]" />
+                        <Input
+                            type="tel"
+                            id="mobile"
+                            name="mobile"
+                            required
+                            className="bg-[#030712]"
+                            placeholder="Enter your mobile number"
+                        />
                     </div>
 
                     <div>
                         <Label htmlFor="whatsapp">WhatsApp</Label>
-                        <Input type="tel" id="whatsapp" name="whatsapp" className="bg-[#030712]" />
+                        <Input
+                            type="tel"
+                            id="whatsapp"
+                            name="whatsapp"
+                            className="bg-[#030712]"
+                            placeholder="Enter your WhatsApp number"
+                        />
                     </div>
 
                     <div>
                         <Label htmlFor="email">Email</Label>
-                        <Input type="email" id="email" name="email" required className="bg-[#030712]" />
+                        <Input
+                            type="email"
+                            id="email"
+                            name="email"
+                            required
+                            className="bg-[#030712]"
+                            placeholder="Enter your email address"
+                        />
                     </div>
 
                     {/* Optional Personal Details */}
                     <div>
                         <Label htmlFor="spouse">Spouse</Label>
-                        <Input type="text" id="spouse" name="spouse" className="bg-[#030712]" />
+                        <Input
+                            type="text"
+                            id="spouse"
+                            name="spouse"
+                            className="bg-[#030712]"
+                            placeholder="Enter your spouse's name"
+                        />
                     </div>
 
                     <div>
                         <Label htmlFor="qualification">Qualification</Label>
-                        <Input type="text" id="qualification" name="qualification" className="bg-[#030712]" />
+                        <Input
+                            type="text"
+                            id="qualification"
+                            name="qualification"
+                            className="bg-[#030712]"
+                            placeholder="Enter your highest qualification"
+                        />
                     </div>
 
                     <div>
                         <Label htmlFor="occupation">Occupation</Label>
-                        <Input type="text" id="occupation" name="occupation" className="bg-[#030712]" />
+                        <Input
+                            type="text"
+                            id="occupation"
+                            name="occupation"
+                            className="bg-[#030712]"
+                            placeholder="Enter your occupation"
+                        />
                     </div>
 
                     <div>
                         <Label htmlFor="country">Country of Residence</Label>
-                        <Input type="text" id="country" name="country" className="bg-[#030712]" />
+                        <Input
+                            type="text"
+                            id="country"
+                            name="country"
+                            className="bg-[#030712]"
+                            placeholder="Enter your country of residence"
+                        />
                     </div>
 
                     {/* Address and Additional Information */}
                     <div className="md:col-span-2">
                         <Label htmlFor="address">Permanent Address</Label>
-                        <Textarea id="address" name="address" required className="bg-[#030712]" />
+                        <Textarea
+                            id="address"
+                            name="address"
+                            required
+                            className="bg-[#030712]"
+                            placeholder="Enter your permanent address"
+                        />
                     </div>
 
                     <div className="md:col-span-2">
                         <Label htmlFor="hobbies">Hobbies</Label>
-                        <Textarea id="hobbies" name="hobbies" className="bg-[#030712]" />
+                        <Textarea
+                            id="hobbies"
+                            name="hobbies"
+                            className="bg-[#030712]"
+                            placeholder="Enter your hobbies"
+                        />
                     </div>
 
                     <div className="md:col-span-2">
                         <Label htmlFor="awards">Awards</Label>
-                        <Textarea id="awards" name="awards" className="bg-[#030712]" />
+                        <Textarea
+                            id="awards"
+                            name="awards"
+                            className="bg-[#030712]"
+                            placeholder="Enter any awards you've received"
+                        />
                     </div>
                 </div>
 
@@ -218,6 +301,7 @@ export default function MembershipForm() {
                     </Alert>
                 )}
             </form>
+
         </div>
 
 

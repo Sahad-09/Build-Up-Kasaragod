@@ -1,221 +1,222 @@
-// "use client";
-// import React from "react";
-// import { motion } from "framer-motion";
-// import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-// import { ArrowRight, GraduationCap, Heart, Lightbulb, Users } from "lucide-react";
+"use client"
+import { motion } from 'framer-motion';
+import { GraduationCap, FileText, AlertCircle, ChevronRight, School } from 'lucide-react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Alert, AlertDescription } from '@/components/ui/alert';
 
-// // Define the type for the scholarship names (as string literals)
-// type ScholarshipName =
-//     | "Merit-Based Scholarship"
-//     | "Need-Based Scholarship"
-//     | "STEM Scholarship"
-//     | "Women in Tech Scholarship";
+const ScholarshipPage = () => {
+    const fadeIn = {
+        initial: { opacity: 0, y: 20 },
+        animate: { opacity: 1, y: 0 },
+        transition: { duration: 0.6 }
+    };
 
-// // Type for scholarship data
-// interface Scholarship {
-//     name: ScholarshipName;
-//     description: string;
-//     eligibility: string;
-//     amount: string;
-//     link: string;
-// }
-
-// // Type the getScholarshipIcon function argument as ScholarshipName
-// const getScholarshipIcon = (name: ScholarshipName): JSX.Element | null => {
-//     switch (name) {
-//         case "Merit-Based Scholarship":
-//             return (
-//                 <div className="p-2 w-fit rounded-lg bg-blue-100 dark:bg-blue-950">
-//                     <GraduationCap className="h-8 w-8 text-blue-600 dark:text-blue-400" />
-//                 </div>
-//             );
-//         case "Need-Based Scholarship":
-//             return (
-//                 <div className="p-2 w-fit rounded-lg bg-green-100 dark:bg-green-950">
-//                     <Heart className="h-8 w-8 text-green-600 dark:text-green-400" />
-//                 </div>
-//             );
-//         case "STEM Scholarship":
-//             return (
-//                 <div className="p-2 w-fit rounded-lg bg-purple-100 dark:bg-purple-950">
-//                     <Lightbulb className="h-8 w-8 text-purple-600 dark:text-purple-400" />
-//                 </div>
-//             );
-//         case "Women in Tech Scholarship":
-//             return (
-//                 <div className="p-2 w-fit rounded-lg bg-pink-100 dark:bg-pink-950">
-//                     <Users className="h-8 w-8 text-pink-600 dark:text-pink-400" />
-//                 </div>
-//             );
-//         default:
-//             return null;
-//     }
-// };
-
-// // Define the scholarships array with the Scholarship type
-// const scholarships: Scholarship[] = [
-//     {
-//         name: "Merit-Based Scholarship",
-//         description: "Awarded to students with exceptional academic achievements.",
-//         eligibility: "Students with a GPA of 3.8 or higher.",
-//         amount: "$5,000 per year",
-//         link: "/apply/merit-based",
-//     },
-//     {
-//         name: "Need-Based Scholarship",
-//         description: "Supports students from low-income families.",
-//         eligibility: "Family income less than $40,000 annually.",
-//         amount: "$3,000 per year",
-//         link: "/apply/need-based",
-//     },
-//     {
-//         name: "STEM Scholarship",
-//         description: "For students pursuing degrees in Science, Technology, Engineering, or Mathematics.",
-//         eligibility: "Must be enrolled in a STEM-related program.",
-//         amount: "$4,000 per year",
-//         link: "/apply/stem-scholarship",
-//     },
-//     {
-//         name: "Women in Tech Scholarship",
-//         description: "Empowering women in the field of technology.",
-//         eligibility: "Female students enrolled in tech programs.",
-//         amount: "$5,000 per year",
-//         link: "/apply/women-in-tech",
-//     },
-// ];
-
-// const MotionCard = motion(Card);
-
-// const ScholarshipsPage: React.FC = () => {
-//     return (
-//         <div className="max-w-7xl mx-auto px-4 py-12">
-//             {/* Header Section */}
-//             <motion.div
-//                 className="space-y-4 text-center mb-16"
-//                 initial={{ opacity: 0, y: -20 }}
-//                 animate={{ opacity: 1, y: 0 }}
-//                 transition={{ duration: 0.6 }}
-//             >
-//                 <h1 className="text-4xl font-bold tracking-tight">Scholarships</h1>
-//                 <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-//                     Explore a variety of scholarships designed to support your academic and career aspirations.
-//                 </p>
-//             </motion.div>
-
-//             {/* Scholarships Grid */}
-//             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-//                 {scholarships.map((scholarship, index) => (
-//                     <MotionCard
-//                         key={index}
-//                         className="group transition-all duration-300"
-//                         initial={{ opacity: 0, y: 50 }}
-//                         animate={{ opacity: 1, y: 0 }}
-//                         transition={{
-//                             duration: 0.5,
-//                             delay: index * 0.1,
-//                         }}
-//                         whileHover={{
-//                             y: -5,
-//                             transition: { duration: 0.2 },
-//                         }}
-//                     >
-//                         <CardHeader>
-//                             <motion.div
-//                                 className="mb-4"
-//                                 initial={{ scale: 0 }}
-//                                 animate={{ scale: 1 }}
-//                                 transition={{
-//                                     duration: 0.5,
-//                                     delay: 0.2 + index * 0.1,
-//                                     type: "spring",
-//                                     stiffness: 200,
-//                                 }}
-//                             >
-//                                 {getScholarshipIcon(scholarship.name)}
-//                             </motion.div>
-//                             <CardTitle>{scholarship.name}</CardTitle>
-//                             <CardDescription>{scholarship.description}</CardDescription>
-//                         </CardHeader>
-//                         <CardContent className="space-y-4">
-//                             <div className="border rounded-lg p-4">
-//                                 <p className="font-semibold mb-2">Eligibility:</p>
-//                                 <p className="text-muted-foreground">{scholarship.eligibility}</p>
-//                             </div>
-//                             <div className="border rounded-lg p-4">
-//                                 <p className="font-semibold mb-2">Amount:</p>
-//                                 <p className="text-muted-foreground">{scholarship.amount}</p>
-//                             </div>
-//                         </CardContent>
-//                         <CardFooter>
-//                             <motion.a
-//                                 href={scholarship.link}
-//                                 className="inline-flex items-center"
-//                                 whileHover={{ x: 5 }}
-//                                 transition={{ duration: 0.2 }}
-//                             >
-//                                 Apply Now
-//                                 <ArrowRight className="ml-2 h-4 w-4" />
-//                             </motion.a>
-//                         </CardFooter>
-//                     </MotionCard>
-//                 ))}
-//             </div>
-//         </div>
-//     );
-// };
-
-// export default ScholarshipsPage;
-
-"use client";
-import React from "react";
-import { motion } from "framer-motion";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-
-const MotionCard = motion(Card);
-
-const ScholarshipsPage: React.FC = () => {
     return (
-        <div className="max-w-7xl mx-auto px-4 py-12">
-            {/* Header Section */}
+        <div className="min-h-screen p-6 md:p-12">
+            {/* Hero Section */}
             <motion.div
-                className="space-y-4 text-center mb-16"
-                initial={{ opacity: 0, y: -20 }}
+                className="max-w-6xl mx-auto mb-12"
+                initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6 }}
+                transition={{ duration: 0.8 }}
             >
-                <h1 className="text-4xl font-bold tracking-tight">Scholarships</h1>
-                <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-                    No scholarship as of now.
-                </p>
+                {/* <h1 className="text-4xl md:text-5xl font-bold mb-4">
+                    BuildUp Kasaragod Society Scholarship
+                </h1> */}
+                {/* <p className="text-lg text-muted-foreground">
+                    An initiative to support students to pursue their college education
+                </p> */}
             </motion.div>
 
-            {/* Placeholder Message */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <MotionCard
-                    className="group transition-all duration-300"
-                    initial={{ opacity: 0, y: 50 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{
-                        duration: 0.5,
-                        delay: 0.1,
-                    }}
-                    whileHover={{
-                        y: -5,
-                        transition: { duration: 0.2 },
-                    }}
-                >
+            {/* Important Notice */}
+            {/* <motion.div
+                className="max-w-6xl mx-auto mb-12"
+                {...fadeIn}
+                transition={{ delay: 0.2 }}
+            >
+                <Alert>
+                    <AlertCircle className="h-5 w-5" />
+                    <AlertDescription>
+                        Applications are currently under review. Updates will be sent via WhatsApp to your registered mobile number.
+                    </AlertDescription>
+                </Alert>
+            </motion.div> */}
+
+            {/* About Section */}
+            <motion.div
+                className="max-w-6xl mx-auto mb-12"
+                {...fadeIn}
+                transition={{ delay: 0.4 }}
+            >
+                <Card>
                     <CardHeader>
-                        <CardTitle>No Scholarships Available</CardTitle>
-                        <CardDescription>Currently, there are no scholarships available. Please check back later.</CardDescription>
+                        <CardTitle className="flex items-center gap-2">
+                            <School className="h-6 w-6" />
+                            About the Scholarship
+                        </CardTitle>
                     </CardHeader>
                     <CardContent className="space-y-4">
-                        <p className="text-muted-foreground">We do not have any scholarship programs at the moment. Stay tuned for future updates.</p>
+                        <p className="text-muted-foreground">
+                            BuildUp Kasaragod Society is an NGO constituted for the integrated development of Kasaragod District. The scholarship supports professional students from disadvantaged backgrounds in their pursuit of college education.
+                        </p>
+                        <div className="border rounded-lg p-4">
+                            <h3 className="font-semibold mb-2">Scholarship Details (2024-25)</h3>
+                            <ul className="space-y-2">
+                                <li className="flex items-start gap-2">
+                                    <ChevronRight className="h-5 w-5 mt-1 flex-shrink-0" />
+                                    <span>INR 10,000/- scholarship for the entire duration of undergraduate course</span>
+                                </li>
+                                <li className="flex items-start gap-2">
+                                    <ChevronRight className="h-5 w-5 mt-1 flex-shrink-0" />
+                                    <span>Supports students who passed Grade XII with distinction</span>
+                                </li>
+                            </ul>
+                        </div>
                     </CardContent>
-                </MotionCard>
-            </div>
-        </div>
+                </Card>
+            </motion.div>
+
+            {/* Eligibility & Documents */}
+            <motion.div
+                className="max-w-6xl mx-auto grid grid-cols-1 gap-6 mb-12"
+                {...fadeIn}
+                transition={{ delay: 0.6 }}
+            >
+                <Card className='bg-green-100'>
+                    <CardHeader>
+                        <CardTitle className="flex items-center gap-2 text-lg font-semibold text-gray-900">
+                            <GraduationCap className="h-6 w-6" />
+                            Eligibility
+                        </CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-3 text-gray-800">
+                        <p className="font-medium">Students from Kasaragod District who:</p>
+                        <ul className="space-y-2">
+                            <li className="flex items-start gap-2">
+                                <ChevronRight className="h-5 w-5 mt-1 flex-shrink-0" />
+                                <span>Passed Grade XII from a local government or private school in 2024</span>
+                            </li>
+                            <li className="flex items-start gap-2">
+                                <ChevronRight className="h-5 w-5 mt-1 flex-shrink-0" />
+                                <span>Have secured admission for the academic year 2024-25 as a regular student in the
+                                    first year of a recognised undergraduate degree with flexible Curriculum and Industry
+                                    relevance at the time of application.</span>
+                            </li>
+                        </ul>
+                    </CardContent>
+                </Card>
+
+                <Card className="bg-green-100">
+                    <CardHeader>
+                        <CardTitle className="flex items-center gap-2 text-lg font-semibold text-gray-900">
+                            <FileText className="h-6 w-6" />
+                            Required Documents
+                        </CardTitle>
+                    </CardHeader>
+                    <CardContent className="text-gray-800">
+                        <ul className="space-y-2">
+                            <li className="flex items-start gap-2">
+                                <ChevronRight className="h-5 w-5 mt-1 flex-shrink-0" />
+                                <span>CLEAR, READABLE and COLOURED SCANNED FILES of the following documents:</span>
+                            </li>
+                            <li className="ml-6 flex items-start gap-2">
+                                <ChevronRight className="h-5 w-5 mt-1 flex-shrink-0" />
+                                <span>Copy of marksheets of Grade X and XII</span>
+                            </li>
+                            <li className="ml-6 flex items-start gap-2">
+                                <ChevronRight className="h-5 w-5 mt-1 flex-shrink-0" />
+                                <span>Copy of Aadhaar Card</span>
+                            </li>
+                            <li className="ml-6 flex items-start gap-2">
+                                <ChevronRight className="h-5 w-5 mt-1 flex-shrink-0" />
+                                <span>
+                                    Any one of the following documents as proof of admission to college:
+                                    <ul className="ml-6 mt-1 space-y-1">
+                                        <li className="flex items-start gap-2">
+                                            <ChevronRight className="h-4 w-4 mt-1 flex-shrink-0" />
+                                            <span>(Provisional) admission certificate</span>
+                                        </li>
+                                        <li className="flex items-start gap-2">
+                                            <ChevronRight className="h-4 w-4 mt-1 flex-shrink-0" />
+                                            <span>Bona fide certificate</span>
+                                        </li>
+                                        <li className="flex items-start gap-2">
+                                            <ChevronRight className="h-4 w-4 mt-1 flex-shrink-0" />
+                                            <span>Fee receipt</span>
+                                        </li>
+                                    </ul>
+                                </span>
+                            </li>
+                            <li className="ml-6 text-sm">
+                                <span className="font-semibold">Note:</span> Ensure the proof of admission document displays:
+                                <ul className="ml-6 mt-1 space-y-1">
+                                    <li className="flex items-start gap-2">
+                                        <ChevronRight className="h-4 w-4 mt-1 flex-shrink-0" />
+                                        <span>Applicant’s name</span>
+                                    </li>
+                                    <li className="flex items-start gap-2">
+                                        <ChevronRight className="h-4 w-4 mt-1 flex-shrink-0" />
+                                        <span>College name</span>
+                                    </li>
+                                    <li className="flex items-start gap-2">
+                                        <ChevronRight className="h-4 w-4 mt-1 flex-shrink-0" />
+                                        <span>Course start date/year of study</span>
+                                    </li>
+                                    <li className="flex items-start gap-2">
+                                        <ChevronRight className="h-4 w-4 mt-1 flex-shrink-0" />
+                                        <span>Course type</span>
+                                    </li>
+                                </ul>
+                                <p className="mt-1">
+                                    It must be system-generated or printed on the official letterhead of the
+                                    University/College with a seal and signature of the relevant authority.
+                                </p>
+                            </li>
+                            <li className="ml-6 flex items-start gap-2">
+                                <ChevronRight className="h-5 w-5 mt-1 flex-shrink-0" />
+                                <span>A passport-size photograph with a plain background (taken within the last 6 months)</span>
+                            </li>
+                            <li className="flex items-start gap-2">
+                                <ChevronRight className="h-5 w-5 mt-1 flex-shrink-0" />
+                                <span>
+                                    Scanned documents should be clearly visible, without any added elements
+                                    like emojis or camera/app stamps.
+                                </span>
+                            </li>
+                            <li className="flex items-start gap-2">
+                                <ChevronRight className="h-5 w-5 mt-1 flex-shrink-0" />
+                                <span>
+                                    The Scholarship Portal will accept documents in PDF/PNG/JPG/JPEG format,
+                                    with a file size less than 1.5 MB.
+                                </span>
+                            </li>
+                        </ul>
+                    </CardContent>
+                </Card>
+
+            </motion.div>
+
+
+            {/* Apply Button */}
+            < motion.div
+                className="max-w-6xl mx-auto text-center"
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.8, duration: 0.4 }}
+            >
+                <Button
+                    size="lg"
+                    className="text-white bg-primary rounded-full text-lg font-medium animate-pulse-custom px-8 py-6 hover:scale-110 transform transition  "
+                    onClick={() => (window.location.href = '/scholarship/apply-scholarship')}
+                >
+                    Apply Now
+                    <ChevronRight className="ml-2 h-5 w-5" />
+                </Button>
+
+            </motion.div >
+        </div >
     );
 };
 
-export default ScholarshipsPage;
-
+export default ScholarshipPage;
