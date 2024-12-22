@@ -219,9 +219,7 @@ const SimpleScholarshipPage = () => {
                                             </SelectTrigger>
                                             <SelectContent>
                                                 <SelectItem value="male">Male</SelectItem>
-                                                <SelectItem value="female">Female</SelectItem>
-                                                <SelectItem value="other">Other</SelectItem>
-                                            </SelectContent>
+                                                <SelectItem value="female">Female</SelectItem>                                       </SelectContent>
                                         </Select>
                                     </div>
 

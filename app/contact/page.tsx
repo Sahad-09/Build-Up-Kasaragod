@@ -101,13 +101,7 @@ const ElegantContactPage = () => {
 
                 {/* Contact Form Side */}
                 <Card
-                    style={{
-                        backgroundImage: `url('/grain.png')`,
-                        backgroundSize: "cover",
-                        backgroundRepeat: "no-repeat",
-                        backgroundPosition: "center",
-                    }}
-                    className="p-0 pt-4 md:p-8 ">
+                    className="p-0 pt-4 md:p-8 bg-blue-900/10">
                     <CardContent>
                         <form onSubmit={handleSubmit} className="space-y-6 ">
                             <div className="space-y-2">
