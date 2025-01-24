@@ -208,7 +208,7 @@ const ScholarshipPage = () => {
                 <Button
                     size="lg"
                     className="text-white bg-primary rounded-full text-lg font-medium animate-pulse-custom px-8 py-6 hover:scale-110 transform transition  "
-                    onClick={() => (window.location.href = '/scholarship/apply-scholarship')}
+                    onClick={() => (window.location.href = '/scholarship/apply-form')}
                 >
                     Apply Now
                     <ChevronRight className="ml-2 h-5 w-5" />

@@ -18,6 +18,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { ClipboardList } from "lucide-react";
 
 // Event type definition
 interface Event {
@@ -27,11 +28,30 @@ interface Event {
     location: string;
     description: string;
     image?: string;
-    category: 'Community' | 'Education' | 'Health' | 'Agriculture';
+    category: 'Community' | 'Education' | 'Health' | 'Agriculture' | 'National';
+    additionalLink?: {
+        url: string;
+        text: string;
+    };
 }
 
 const EventsPage: React.FC = () => {
-    // Sample events data
+    const upcomingEvents: Event[] = [
+        {
+            id: 0,
+            title: "Republic Day Celebration",
+            date: new Date(2024, 0, 26), // January 26, 2024
+            location: "Kasaragod",
+            description: "Join us in celebrating India's 75th Republic Day with patriotic spirit and national pride.",
+            category: "National",
+            image: "/upcoming_event.jpg",
+            additionalLink: {
+                url: "https://docs.google.com/forms/d/1oakFeM9riimCbMItghZRFxeIuIvZ7wTyKeWOD0PA8WE/viewform",
+                text: "Take the Republic Day Quiz"
+            }
+        }
+    ];
+
     const events: Event[] = [
         // Past Events
         {
@@ -72,7 +92,7 @@ const EventsPage: React.FC = () => {
         },
         {
             id: 4,
-            title: "Seminar on ‘Effects of Drug Abuse on Youths' with Narcotics Control Bureau",
+            title: "Seminar on 'Effects of Drug Abuse on Youths' with Narcotics Control Bureau",
             date: new Date(2022, 5, 26),
             location: "Kasaragod Government College",
             description: "A seminar on drug abuse effects on youths, with an essay writing competition for students.",
@@ -117,15 +137,10 @@ const EventsPage: React.FC = () => {
         }
     ];
 
-
     // Separate past and upcoming events
     const pastEvents = events
         .filter(event => event.date < new Date())
         .sort((a, b) => b.date.getTime() - a.date.getTime());
-
-    const upcomingEvents = events
-        .filter(event => event.date >= new Date())
-        .sort((a, b) => a.date.getTime() - b.date.getTime());
 
     // State for pagination
     const [pastEventsPage, setPastEventsPage] = useState(0);
@@ -148,14 +163,14 @@ const EventsPage: React.FC = () => {
             className="mb-6"
         >
             {/* Wrap the card in a Link component for dynamic routing */}
-            <Link href={`/events/${event.id}`}>
+            <Link href="/events">
                 <Card className="hover:shadow-lg transition-shadow">
                     {event.image && (
-                        <div className="w-full h-48 overflow-hidden rounded-t-lg">
+                        <div className="w-full">
                             <img
                                 src={event.image}
                                 alt={event.title}
-                                className="w-full h-full object-cover"
+                                className="w-full h-auto rounded-t-lg"
                             />
                         </div>
                     )}
@@ -163,7 +178,9 @@ const EventsPage: React.FC = () => {
                         <div className="flex justify-between items-start mb-4">
                             <div>
                                 <h3 className="text-xl font-semibold mb-2">{event.title}</h3>
-                                <Badge variant="secondary" className="mr-2">{event.category}</Badge>
+                                <Badge variant="secondary" className="mr-2">
+                                    {event.category}
+                                </Badge>
                             </div>
                         </div>
                         <div className="space-y-2 text-muted-foreground">
@@ -172,7 +189,7 @@ const EventsPage: React.FC = () => {
                                 {event.date.toLocaleDateString('en-US', {
                                     year: 'numeric',
                                     month: 'long',
-                                    day: 'numeric'
+                                    day: 'numeric',
                                 })}
                             </div>
                             <div className="flex items-center">
@@ -181,9 +198,18 @@ const EventsPage: React.FC = () => {
                             </div>
                         </div>
                         <p className="mt-4 text-sm">{event.description}</p>
+                        {event.additionalLink && (
+                            <Link href="https://docs.google.com/forms/d/1oakFeM9riimCbMItghZRFxeIuIvZ7wTyKeWOD0PA8WE/viewform">
+                                <Button variant="outline" className="mt-4 w-full">
+                                    <ClipboardList className="h-4 w-4 mr-2" />
+                                    Take the Republic Day Quiz
+                                </Button>
+                            </Link>
+                        )}
                     </CardContent>
                 </Card>
             </Link>
+
         </motion.div>
     );
 
@@ -231,8 +257,6 @@ const EventsPage: React.FC = () => {
             transition={{ duration: 0.5 }}
             className="container mx-auto px-4 py-8"
         >
-            {/* <h1 className="text-3xl font-bold mb-8 text-center">Our Events</h1> */}
-
             {/* Upcoming Events Section */}
             <section className="mb-12">
                 <h2 className="text-2xl font-semibold mb-6 flex items-center">
