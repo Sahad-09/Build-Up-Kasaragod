@@ -37,19 +37,19 @@ interface Event {
 
 const EventsPage: React.FC = () => {
     const upcomingEvents: Event[] = [
-        {
-            id: 0,
-            title: "Republic Day Celebration",
-            date: new Date(2024, 0, 26), // January 26, 2024
-            location: "Kasaragod",
-            description: "Join us in celebrating India's 75th Republic Day with patriotic spirit and national pride.",
-            category: "National",
-            image: "/upcoming_event.jpg",
-            additionalLink: {
-                url: "https://docs.google.com/forms/d/1oakFeM9riimCbMItghZRFxeIuIvZ7wTyKeWOD0PA8WE/viewform",
-                text: "Take the Republic Day Quiz"
-            }
-        }
+        // {
+        //     id: 0,
+        //     title: "Republic Day Celebration",
+        //     date: new Date(2024, 0, 26), // January 26, 2024
+        //     location: "Kasaragod",
+        //     description: "Join us in celebrating India's 75th Republic Day with patriotic spirit and national pride.",
+        //     category: "National",
+        //     image: "/upcoming_event.jpg",
+        //     additionalLink: {
+        //         url: "https://docs.google.com/forms/d/1oakFeM9riimCbMItghZRFxeIuIvZ7wTyKeWOD0PA8WE/viewform",
+        //         text: "Take the Republic Day Quiz"
+        //     }
+        // }
     ];
 
     const events: Event[] = [
