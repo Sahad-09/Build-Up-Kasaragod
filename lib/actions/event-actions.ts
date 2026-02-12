@@ -3,7 +3,7 @@
 import { ObjectId } from 'mongodb';
 import { getEventsCollection, eventDocumentToEvent, eventToEventDocument } from '../models/event';
 import { requireAuth } from '../auth';
-import { saveEventImage, saveMultipleEventImages, deleteEventImage } from '../utils/file-upload';
+import { uploadBlob, uploadMultipleBlobs, deleteBlob, isBlobUrl } from '../utils/blob-upload';
 import { revalidatePath } from 'next/cache';
 
 export interface CreateEventData {
@@ -43,19 +43,13 @@ export async function createEvent(formData: FormData): Promise<{ success: boolea
       return { success: false, error: 'Invalid date' };
     }
 
-    // Handle image upload (optional; fails on serverless/production where filesystem is read-only)
+    // Handle image upload (Vercel Blob)
     let imagePath: string | undefined;
     if (imageFile && imageFile.size > 0) {
-      try {
-        imagePath = await saveEventImage(imageFile);
-      } catch (imageError) {
-        console.error('Image upload failed (event will be saved without image):', imageError);
-        // Continue without image so event creation still succeeds
-      }
+      imagePath = await uploadBlob(imageFile, 'events');
     }
 
-    // Handle additional images (same: optional in production)
-    let additionalImagesPaths: string[] | undefined;
+    // Handle additional images
     const additionalImagesFiles: File[] = [];
     let index = 0;
     while (true) {
@@ -64,13 +58,10 @@ export async function createEvent(formData: FormData): Promise<{ success: boolea
       additionalImagesFiles.push(file);
       index++;
     }
-    if (additionalImagesFiles.length > 0) {
-      try {
-        additionalImagesPaths = await saveMultipleEventImages(additionalImagesFiles);
-      } catch (imageError) {
-        console.error('Additional images upload failed:', imageError);
-      }
-    }
+
+    const additionalImagesPaths = additionalImagesFiles.length > 0
+      ? await uploadMultipleBlobs(additionalImagesFiles, 'events')
+      : undefined;
 
     // Prepare event data
     const eventData = {
@@ -100,12 +91,7 @@ export async function createEvent(formData: FormData): Promise<{ success: boolea
     return { success: true, eventId: result.insertedId.toString() };
   } catch (error) {
     console.error('Error creating event:', error);
-    const message = error instanceof Error ? error.message : 'Failed to create event';
-    // In development, surface the real error; in production keep it generic
-    const userMessage = process.env.NODE_ENV === 'development'
-      ? `Failed to create event: ${message}`
-      : 'Failed to create event. Check server logs and ensure MONGODB_URI is set in production.';
-    return { success: false, error: userMessage };
+    return { success: false, error: 'Failed to create event' };
   }
 }
 
@@ -147,23 +133,22 @@ export async function updateEvent(
       return { success: false, error: 'Event not found' };
     }
 
-    // Handle image upload (optional in production; filesystem may be read-only)
+    // Handle image upload (Vercel Blob)
     let imagePath: string | undefined = existingEvent.image;
 
-    try {
-      if (deleteExistingImage && existingEvent.image) {
-        await deleteEventImage(existingEvent.image);
-        imagePath = undefined;
-      }
-
-      if (imageFile && imageFile.size > 0) {
-        if (existingEvent.image) await deleteEventImage(existingEvent.image);
-        imagePath = await saveEventImage(imageFile);
-      }
-    } catch (imageError) {
-      console.error('Event image update failed (keeping existing):', imageError);
+    if (deleteExistingImage && existingEvent.image) {
+      if (isBlobUrl(existingEvent.image)) await deleteBlob(existingEvent.image);
+      imagePath = undefined;
     }
 
+    if (imageFile && imageFile.size > 0) {
+      if (existingEvent.image && isBlobUrl(existingEvent.image)) {
+        await deleteBlob(existingEvent.image);
+      }
+      imagePath = await uploadBlob(imageFile, 'events');
+    }
+
+    // Handle additional images
     const additionalImagesFiles: File[] = [];
     let index = 0;
     while (true) {
@@ -174,17 +159,14 @@ export async function updateEvent(
     }
 
     let additionalImagesPaths = existingEvent.additionalImages || [];
+
     if (additionalImagesFiles.length > 0) {
-      try {
-        if (existingEvent.additionalImages) {
-          for (const oldImage of existingEvent.additionalImages) {
-            await deleteEventImage(oldImage);
-          }
+      if (existingEvent.additionalImages) {
+        for (const oldImage of existingEvent.additionalImages) {
+          if (isBlobUrl(oldImage)) await deleteBlob(oldImage);
         }
-        additionalImagesPaths = await saveMultipleEventImages(additionalImagesFiles);
-      } catch (imageError) {
-        console.error('Additional images update failed:', imageError);
       }
+      additionalImagesPaths = await uploadMultipleBlobs(additionalImagesFiles, 'events');
     }
 
     // Prepare update data
@@ -233,14 +215,14 @@ export async function deleteEvent(eventId: string): Promise<{ success: boolean; 
       return { success: false, error: 'Event not found' };
     }
 
-    // Delete associated images (best-effort; fails on serverless read-only FS)
-    try {
-      if (event.image) await deleteEventImage(event.image);
-      if (event.additionalImages) {
-        for (const image of event.additionalImages) await deleteEventImage(image);
+    // Delete associated images from Vercel Blob
+    if (event.image && isBlobUrl(event.image)) {
+      await deleteBlob(event.image);
+    }
+    if (event.additionalImages) {
+      for (const image of event.additionalImages) {
+        if (isBlobUrl(image)) await deleteBlob(image);
       }
-    } catch (imageError) {
-      console.error('Event image delete failed (event will still be removed):', imageError);
     }
 
     await collection.deleteOne({ _id: new ObjectId(eventId) });

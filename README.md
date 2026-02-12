@@ -29,6 +29,13 @@ To learn more about Next.js, take a look at the following resources:
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
+## Environment variables
+
+- **MONGODB_URI** – MongoDB connection string
+- **ADMIN_PASSWORD** – 6-digit admin password
+- **ADMIN_SESSION_SECRET** – Session cookie secret
+- **BLOB_READ_WRITE_TOKEN** – Vercel Blob read-write token (create a Blob store in Vercel Dashboard → Storage → Blob; for local dev use `vercel env pull` or set manually)
+
 ## Deploy on Vercel
 
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.

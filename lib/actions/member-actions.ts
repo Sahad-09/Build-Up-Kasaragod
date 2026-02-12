@@ -3,7 +3,7 @@
 import { ObjectId } from 'mongodb';
 import { getMembersCollection, memberDocumentToMember, memberToMemberDocument } from '../models/member';
 import { requireAuth } from '../auth';
-import { saveEventImage, deleteEventImage } from '../utils/file-upload';
+import { uploadBlob, deleteBlob, isBlobUrl } from '../utils/blob-upload';
 import { revalidatePath } from 'next/cache';
 
 export interface Member {
@@ -46,10 +46,10 @@ export async function createMember(formData: FormData): Promise<{ success: boole
       .toUpperCase()
       .slice(0, 3);
 
-    // Handle image upload
+    // Handle image upload (Vercel Blob)
     let imagePath: string = '/placeholder-avatar.png';
     if (imageFile && imageFile.size > 0) {
-      imagePath = await saveEventImage(imageFile);
+      imagePath = await uploadBlob(imageFile, 'members');
     }
 
     // Prepare member data
@@ -125,20 +125,19 @@ export async function updateMember(
       .toUpperCase()
       .slice(0, 3);
 
-    // Handle image upload
+    // Handle image upload (Vercel Blob)
     let imagePath: string = existingMember.image;
-    
+
     if (deleteExistingImage && existingMember.image && !existingMember.image.startsWith('/placeholder')) {
-      await deleteEventImage(existingMember.image);
+      if (isBlobUrl(existingMember.image)) await deleteBlob(existingMember.image);
       imagePath = '/placeholder-avatar.png';
     }
-    
+
     if (imageFile && imageFile.size > 0) {
-      // Delete old image if exists
-      if (existingMember.image && !existingMember.image.startsWith('/placeholder')) {
-        await deleteEventImage(existingMember.image);
+      if (existingMember.image && !existingMember.image.startsWith('/placeholder') && isBlobUrl(existingMember.image)) {
+        await deleteBlob(existingMember.image);
       }
-      imagePath = await saveEventImage(imageFile);
+      imagePath = await uploadBlob(imageFile, 'members');
     }
 
     // Prepare update data
@@ -185,9 +184,9 @@ export async function deleteMember(memberId: string): Promise<{ success: boolean
       return { success: false, error: 'Member not found' };
     }
 
-    // Delete associated image
-    if (member.image && !member.image.startsWith('/placeholder')) {
-      await deleteEventImage(member.image);
+    // Delete associated image from Vercel Blob
+    if (member.image && !member.image.startsWith('/placeholder') && isBlobUrl(member.image)) {
+      await deleteBlob(member.image);
     }
 
     await collection.deleteOne({ _id: new ObjectId(memberId) });
