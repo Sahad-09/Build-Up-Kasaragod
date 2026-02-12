@@ -1,5 +1,5 @@
 import { requireAuth } from '@/lib/auth';
-import { getMembers } from '@/lib/actions/member-actions';
+import { getMembers, type Member } from '@/lib/actions/member-actions';
 import { redirect } from 'next/navigation';
 import MembersDashboardClient from './members-dashboard-client';
 
@@ -10,7 +10,7 @@ export default async function MembersAdminPage() {
     redirect('/admin/login');
   }
 
-  let members = [];
+  let members: Member[] = [];
   try {
     members = await getMembers();
   } catch (error) {

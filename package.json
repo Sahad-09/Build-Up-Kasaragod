@@ -6,9 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "migrate:events": "tsx scripts/migrate-events.ts",
-    "migrate:members": "tsx scripts/migrate-members.ts"
+    "lint": "next lint"
   },
   "dependencies": {
     "@radix-ui/react-accordion": "^1.2.1",

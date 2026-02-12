@@ -1,5 +1,6 @@
 import { requireAuth } from '@/lib/auth';
 import { getEvents } from '@/lib/actions/event-actions';
+import type { Event } from '@/lib/models/event';
 import AdminDashboardClient from './admin-dashboard-client';
 import { redirect } from 'next/navigation';
 
@@ -10,7 +11,7 @@ export default async function AdminDashboard() {
     redirect('/admin/login');
   }
 
-  let events = [];
+  let events: Event[] = [];
   try {
     events = await getEvents();
     // Convert date strings to Date objects for proper display
