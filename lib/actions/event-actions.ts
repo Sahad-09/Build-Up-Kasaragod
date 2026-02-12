@@ -43,13 +43,19 @@ export async function createEvent(formData: FormData): Promise<{ success: boolea
       return { success: false, error: 'Invalid date' };
     }
 
-    // Handle image upload
+    // Handle image upload (optional; fails on serverless/production where filesystem is read-only)
     let imagePath: string | undefined;
     if (imageFile && imageFile.size > 0) {
-      imagePath = await saveEventImage(imageFile);
+      try {
+        imagePath = await saveEventImage(imageFile);
+      } catch (imageError) {
+        console.error('Image upload failed (event will be saved without image):', imageError);
+        // Continue without image so event creation still succeeds
+      }
     }
 
-    // Handle additional images
+    // Handle additional images (same: optional in production)
+    let additionalImagesPaths: string[] | undefined;
     const additionalImagesFiles: File[] = [];
     let index = 0;
     while (true) {
@@ -58,10 +64,13 @@ export async function createEvent(formData: FormData): Promise<{ success: boolea
       additionalImagesFiles.push(file);
       index++;
     }
-
-    const additionalImagesPaths = additionalImagesFiles.length > 0
-      ? await saveMultipleEventImages(additionalImagesFiles)
-      : undefined;
+    if (additionalImagesFiles.length > 0) {
+      try {
+        additionalImagesPaths = await saveMultipleEventImages(additionalImagesFiles);
+      } catch (imageError) {
+        console.error('Additional images upload failed:', imageError);
+      }
+    }
 
     // Prepare event data
     const eventData = {
@@ -91,7 +100,12 @@ export async function createEvent(formData: FormData): Promise<{ success: boolea
     return { success: true, eventId: result.insertedId.toString() };
   } catch (error) {
     console.error('Error creating event:', error);
-    return { success: false, error: 'Failed to create event' };
+    const message = error instanceof Error ? error.message : 'Failed to create event';
+    // In development, surface the real error; in production keep it generic
+    const userMessage = process.env.NODE_ENV === 'development'
+      ? `Failed to create event: ${message}`
+      : 'Failed to create event. Check server logs and ensure MONGODB_URI is set in production.';
+    return { success: false, error: userMessage };
   }
 }
 
@@ -133,23 +147,23 @@ export async function updateEvent(
       return { success: false, error: 'Event not found' };
     }
 
-    // Handle image upload
+    // Handle image upload (optional in production; filesystem may be read-only)
     let imagePath: string | undefined = existingEvent.image;
-    
-    if (deleteExistingImage && existingEvent.image) {
-      await deleteEventImage(existingEvent.image);
-      imagePath = undefined;
-    }
-    
-    if (imageFile && imageFile.size > 0) {
-      // Delete old image if exists
-      if (existingEvent.image) {
+
+    try {
+      if (deleteExistingImage && existingEvent.image) {
         await deleteEventImage(existingEvent.image);
+        imagePath = undefined;
       }
-      imagePath = await saveEventImage(imageFile);
+
+      if (imageFile && imageFile.size > 0) {
+        if (existingEvent.image) await deleteEventImage(existingEvent.image);
+        imagePath = await saveEventImage(imageFile);
+      }
+    } catch (imageError) {
+      console.error('Event image update failed (keeping existing):', imageError);
     }
 
-    // Handle additional images
     const additionalImagesFiles: File[] = [];
     let index = 0;
     while (true) {
@@ -160,16 +174,17 @@ export async function updateEvent(
     }
 
     let additionalImagesPaths = existingEvent.additionalImages || [];
-    
-    // Delete old additional images if new ones are uploaded
     if (additionalImagesFiles.length > 0) {
-      // Delete old images
-      if (existingEvent.additionalImages) {
-        for (const oldImage of existingEvent.additionalImages) {
-          await deleteEventImage(oldImage);
+      try {
+        if (existingEvent.additionalImages) {
+          for (const oldImage of existingEvent.additionalImages) {
+            await deleteEventImage(oldImage);
+          }
         }
+        additionalImagesPaths = await saveMultipleEventImages(additionalImagesFiles);
+      } catch (imageError) {
+        console.error('Additional images update failed:', imageError);
       }
-      additionalImagesPaths = await saveMultipleEventImages(additionalImagesFiles);
     }
 
     // Prepare update data
@@ -218,14 +233,14 @@ export async function deleteEvent(eventId: string): Promise<{ success: boolean; 
       return { success: false, error: 'Event not found' };
     }
 
-    // Delete associated images
-    if (event.image) {
-      await deleteEventImage(event.image);
-    }
-    if (event.additionalImages) {
-      for (const image of event.additionalImages) {
-        await deleteEventImage(image);
+    // Delete associated images (best-effort; fails on serverless read-only FS)
+    try {
+      if (event.image) await deleteEventImage(event.image);
+      if (event.additionalImages) {
+        for (const image of event.additionalImages) await deleteEventImage(image);
       }
+    } catch (imageError) {
+      console.error('Event image delete failed (event will still be removed):', imageError);
     }
 
     await collection.deleteOne({ _id: new ObjectId(eventId) });
