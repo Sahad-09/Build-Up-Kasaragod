@@ -1,10 +1,9 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import {
     Calendar,
     MapPin,
-    Clock,
     ArrowLeft,
 } from "lucide-react";
 import {
@@ -15,20 +14,26 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
+import { getEventById } from "@/lib/actions/event-actions";
 
 interface Event {
-    id: number;
+    id: string | number;
     title: string;
     date: Date;
     location: string;
     description: string;
     image?: string;
     additionalImages?: string[];
-    category: "Community" | "Education" | "Health" | "Agriculture";
+    category: "Community" | "Education" | "Health" | "Agriculture" | "National";
+    additionalLink?: {
+        url: string;
+        text: string;
+    };
 }
 
-const events: Event[] = [
+// Hardcoded events (fallback)
+const hardcodedEvents: Event[] = [
     {
         id: 0,
         title: "Paddy cultivation done under BUK Agricultural Division to promote organic farming.",
@@ -75,7 +80,7 @@ const events: Event[] = [
     },
     {
         id: 4,
-        title: "Seminar on ‘Effects of Drug Abuse on Youths' with Narcotics Control Bureau",
+        title: "Seminar on 'Effects of Drug Abuse on Youths' with Narcotics Control Bureau",
         date: new Date(2022, 5, 26),
         location: "Kasaragod Government College",
         description:
@@ -132,17 +137,77 @@ const events: Event[] = [
 
 const EventDetailsPage: React.FC = () => {
     const params = useParams();
-    const id = Number(params.id);  // Converts the id to a number
+    const router = useRouter();
+    const id = params.id as string;
+    
+    const [event, setEvent] = useState<Event | null>(null);
+    const [isLoading, setIsLoading] = useState(true);
+    const [selectedImage, setSelectedImage] = useState<string | undefined>(undefined);
 
-    console.log(id);  // Logs the converted id
-    console.log(typeof id);  // Logs the type of id (should be 'number')
+    useEffect(() => {
+        async function loadEvent() {
+            try {
+                // Try to fetch from MongoDB first (if ID looks like MongoDB ObjectId)
+                const dbEvent = await getEventById(id);
+                
+                if (dbEvent) {
+                    const eventData = {
+                        ...dbEvent,
+                        date: new Date(dbEvent.date),
+                    };
+                    setEvent(eventData);
+                    setSelectedImage(eventData.image);
+                } else {
+                    // Fallback to hardcoded events
+                    const numericId = parseInt(id, 10);
+                    if (!isNaN(numericId) && numericId >= 0 && numericId < hardcodedEvents.length) {
+                        const hardcodedEvent = hardcodedEvents[numericId];
+                        setEvent(hardcodedEvent);
+                        setSelectedImage(hardcodedEvent.image);
+                    } else {
+                        router.push('/events');
+                    }
+                }
+            } catch (error) {
+                console.error('Error loading event:', error);
+                // Fallback to hardcoded events
+                const numericId = parseInt(id, 10);
+                if (!isNaN(numericId) && numericId >= 0 && numericId < hardcodedEvents.length) {
+                    const hardcodedEvent = hardcodedEvents[numericId];
+                    setEvent(hardcodedEvent);
+                    setSelectedImage(hardcodedEvent.image);
+                } else {
+                    router.push('/events');
+                }
+            } finally {
+                setIsLoading(false);
+            }
+        }
 
+        loadEvent();
+    }, [id, router]);
 
+    if (isLoading) {
+        return (
+            <div className="container mx-auto px-4 py-8">
+                <div className="text-center text-muted-foreground">Loading event...</div>
+            </div>
+        );
+    }
 
+    if (!event) {
+        return (
+            <div className="container mx-auto px-4 py-8">
+                <div className="text-center text-muted-foreground mb-4">Event not found</div>
+                <Link href="/events">
+                    <Button variant="outline">Back to Events</Button>
+                </Link>
+            </div>
+        );
+    }
 
-
-    const event: Event = events[id]; // Replace with dynamic logic for selecting an event.
-    const [selectedImage, setSelectedImage] = useState(event.image);
+    const eventDate = event.date instanceof Date ? event.date : new Date(event.date);
+    const allImages = [event.image, ...(event.additionalImages || [])].filter(Boolean) as string[];
 
     return (
         <motion.div
@@ -159,33 +224,37 @@ const EventDetailsPage: React.FC = () => {
 
             <div className="grid md:grid-cols-2 gap-8">
                 <div>
-                    <motion.div
-                        key={selectedImage}
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ duration: 0.3 }}
-                        className="mb-4 rounded-lg overflow-hidden"
-                    >
-                        <img
-                            src={selectedImage}
-                            alt={event.title}
-                            className="w-full h-[400px] object-cover"
-                        />
-                    </motion.div>
-
-                    <div className="flex space-x-2 mt-4">
-                        {[event.image, ...(event.additionalImages || [])].map((img, index) => (
-                            <motion.img
-                                key={index}
-                                src={img}
-                                alt={`Event thumbnail ${index + 1}`}
-                                className={`w-20 h-20 object-cover rounded-md cursor-pointer hover:opacity-75 transition-opacity ${selectedImage === img ? "border-2 border-primary" : ""
-                                    }`}
-                                onClick={() => setSelectedImage(img)}
-                                whileHover={{ scale: 1.05 }}
+                    {selectedImage && (
+                        <motion.div
+                            key={selectedImage}
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ duration: 0.3 }}
+                            className="mb-4 rounded-lg overflow-hidden"
+                        >
+                            <img
+                                src={selectedImage}
+                                alt={event.title}
+                                className="w-full h-[400px] object-cover"
                             />
-                        ))}
-                    </div>
+                        </motion.div>
+                    )}
+
+                    {allImages.length > 1 && (
+                        <div className="flex space-x-2 mt-4">
+                            {allImages.map((img, index) => (
+                                <motion.img
+                                    key={index}
+                                    src={img}
+                                    alt={`Event thumbnail ${index + 1}`}
+                                    className={`w-20 h-20 object-cover rounded-md cursor-pointer hover:opacity-75 transition-opacity ${selectedImage === img ? "border-2 border-primary" : ""
+                                        }`}
+                                    onClick={() => setSelectedImage(img)}
+                                    whileHover={{ scale: 1.05 }}
+                                />
+                            ))}
+                        </div>
+                    )}
                 </div>
 
                 <Card className="w-full">
@@ -200,7 +269,7 @@ const EventDetailsPage: React.FC = () => {
                             <div className="flex items-center text-muted-foreground">
                                 <Calendar className="mr-2 h-5 w-5 text-blue-500" />
                                 <span>
-                                    {event.date.toLocaleDateString("en-US", {
+                                    {eventDate.toLocaleDateString("en-US", {
                                         year: "numeric",
                                         month: "long",
                                         day: "numeric",
@@ -218,6 +287,20 @@ const EventDetailsPage: React.FC = () => {
                                 <h3 className="text-xl font-semibold mb-2">Event Description</h3>
                                 <p className="text-muted-foreground">{event.description}</p>
                             </div>
+
+                            {event.additionalLink && (
+                                <div className="border-t pt-4">
+                                    <a
+                                        href={event.additionalLink.url}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        <Button variant="outline" className="w-full">
+                                            {event.additionalLink.text}
+                                        </Button>
+                                    </a>
+                                </div>
+                            )}
                         </div>
                     </CardContent>
                 </Card>

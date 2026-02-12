@@ -9,7 +9,9 @@ import {
     TooltipProvider,
     TooltipTrigger
 } from "@/components/ui/tooltip";
-import { Trophy, User, BookOpen } from "lucide-react";
+import { Trophy, User } from "lucide-react";
+import { useParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 const patrons = [
     {
@@ -130,24 +132,36 @@ const vicePresidents = [
     },
 ];
 
-export default async function Page({
-    params,
-}: {
-    params: Promise<{ slug: string }>;
-}) {
-    const { slug } = await params;
-    // Helper function to find the bearer by name
-    const findBearer = (slug: string) => {
-        // Check each category (patrons, senior office bearers, vice presidents)
-        const allBearers = [...patrons, ...seniorOfficeBearers, ...vicePresidents];
-        return allBearers.find((bearer) =>
-            bearer.name.toLowerCase().replace(/\s+/g, '-') === slug
-        );
-    };
-    const bearer = findBearer(slug);
+// Helper function to find the bearer by name
+const findBearer = (slugParam: string) => {
+    // Check each category (patrons, senior office bearers, vice presidents)
+    const allBearers = [...patrons, ...seniorOfficeBearers, ...vicePresidents];
+    return allBearers.find((bearer) =>
+        bearer.name.toLowerCase().replace(/\s+/g, '-') === slugParam
+    );
+};
+
+export default function Page() {
+    const params = useParams();
+    const slug = params.slug as string;
+    const [bearer, setBearer] = useState<typeof patrons[0] | undefined>(undefined);
+
+    useEffect(() => {
+        if (slug) {
+            const found = findBearer(slug);
+            setBearer(found);
+        }
+    }, [slug]);
 
     if (!bearer) {
-        return <div>Office bearer not found</div>;
+        return (
+            <div className="min-h-screen flex items-center justify-center">
+                <div className="text-center">
+                    <h1 className="text-2xl font-bold mb-2">Office bearer not found</h1>
+                    <p className="text-muted-foreground">The member you&apos;re looking for doesn&apos;t exist.</p>
+                </div>
+            </div>
+        );
     }
 
     return (
