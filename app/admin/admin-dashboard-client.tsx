@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Plus, Edit, Trash2, LogOut, Calendar, MapPin, Users } from 'lucide-react';
+import { Plus, Edit, Trash2, LogOut, Calendar, MapPin, Users, FileText } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -61,6 +61,12 @@ export default function AdminDashboardClient({ events }: AdminDashboardClientPro
             <Button variant="outline">
               <Users className="mr-2 h-4 w-4" />
               Manage Members
+            </Button>
+          </Link>
+          <Link href="/admin/agm-reports">
+            <Button variant="outline">
+              <FileText className="mr-2 h-4 w-4" />
+              Manage AGM Reports
             </Button>
           </Link>
           <Link href="/admin/events/new">

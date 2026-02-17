@@ -46,7 +46,7 @@ export default function MemberForm({ member }: MemberFormProps) {
     category: member?.category || 'Patron' as const,
     bio: member?.bio || '',
     achievements: member?.achievements?.join('\n') || '',
-    order: member?.order.toString() || '0',
+    displayPosition: member ? String(member.order + 1) : '',
   });
 
   const [imageFile, setImageFile] = useState<File | null>(null);
@@ -79,7 +79,18 @@ export default function MemberForm({ member }: MemberFormProps) {
     formDataObj.append('category', formData.category);
     formDataObj.append('bio', formData.bio);
     formDataObj.append('achievements', formData.achievements);
-    formDataObj.append('order', formData.order);
+
+    // Display Position is 1-based for UX; backend stores 0-based `order`
+    // Leave blank to auto-place at end (create) or keep current (edit).
+    if (formData.displayPosition.trim() !== '') {
+      const displayPositionNum = parseInt(formData.displayPosition, 10);
+      if (Number.isNaN(displayPositionNum) || displayPositionNum < 1) {
+        setError('Display Position must be a number starting from 1');
+        setIsSubmitting(false);
+        return;
+      }
+      formDataObj.append('order', String(displayPositionNum - 1));
+    }
     
     if (imageFile) {
       formDataObj.append('image', imageFile);
@@ -128,6 +139,14 @@ export default function MemberForm({ member }: MemberFormProps) {
             </div>
           )}
 
+          <div className="p-4 rounded-md border bg-muted/30 text-sm text-muted-foreground">
+            <p>
+              <span className="font-medium text-foreground">Category</span> decides which section this member appears in on the About Us page.
+              <span className="font-medium text-foreground"> Position</span> is the label shown on the card.
+              <span className="font-medium text-foreground"> Display Position</span> controls ordering within that category (1 = top).
+            </p>
+          </div>
+
           <div className="flex flex-col md:flex-row gap-6">
             <div className="flex-1 space-y-4">
               <div className="space-y-2">
@@ -150,6 +169,7 @@ export default function MemberForm({ member }: MemberFormProps) {
                   required
                   placeholder="e.g., President, Vice President"
                 />
+                <p className="text-xs text-muted-foreground">Shown on the member card. This does not decide the section.</p>
               </div>
 
               <div className="grid md:grid-cols-2 gap-4">
@@ -168,19 +188,23 @@ export default function MemberForm({ member }: MemberFormProps) {
                       <SelectItem value="Vice President">Vice President</SelectItem>
                     </SelectContent>
                   </Select>
+                  <p className="text-xs text-muted-foreground">This decides the section on the About Us page.</p>
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="order">Display Order</Label>
+                  <Label htmlFor="displayPosition">Display Position (within this category)</Label>
                   <Input
-                    id="order"
+                    id="displayPosition"
                     type="number"
-                    value={formData.order}
-                    onChange={(e) => setFormData({ ...formData, order: e.target.value })}
-                    min="0"
-                    placeholder="0"
+                    value={formData.displayPosition}
+                    onChange={(e) => setFormData({ ...formData, displayPosition: e.target.value })}
+                    min="1"
+                    step="1"
+                    placeholder="Leave blank to auto"
                   />
-                  <p className="text-xs text-muted-foreground">Lower numbers appear first</p>
+                  <p className="text-xs text-muted-foreground">
+                    1 appears first. Leave blank to auto-place at the end (new) or keep current (edit).
+                  </p>
                 </div>
               </div>
             </div>

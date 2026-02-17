@@ -63,3 +63,26 @@ export async function getPastEvents(): Promise<Event[]> {
     return [];
   }
 }
+
+export async function getPastEventsPaginated(
+  skip: number = 0,
+  limit: number = 6
+): Promise<Event[]> {
+  try {
+    const now = new Date();
+    now.setHours(0, 0, 0, 0);
+    
+    const collection = await getEventsCollection();
+    const events = await collection
+      .find({ date: { $lt: now } })
+      .sort({ date: -1 })
+      .skip(skip)
+      .limit(limit)
+      .toArray();
+    
+    return events.map(eventDocumentToEvent);
+  } catch (error) {
+    console.error('Error fetching paginated past events:', error);
+    return [];
+  }
+}

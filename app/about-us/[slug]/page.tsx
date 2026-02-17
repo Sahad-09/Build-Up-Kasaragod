@@ -12,146 +12,66 @@ import {
 import { Trophy, User } from "lucide-react";
 import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { getPublicMembers } from "@/lib/actions/member-actions";
+import { memberSlugFromName } from "@/lib/slug";
 
-const patrons = [
-    {
-        name: "Mr. Abdul Khader Saleem",
-        position: "Chief Patron",
-        image: "/chiefPatron.jpeg",
-        fallback: "AKS",
-        bio: "Mr. Abdul Khader Saleem has been a guiding force in the community for over two decades, leading several initiatives aimed at education and welfare.",
-        achievements: ["Led educational reforms", "Supported multiple charitable organizations"],
-    },
-    {
-        name: "Shri KV Madhusudanan",
-        position: "Patron",
-        image: "/patron-01.jpg",
-        fallback: "MA",
-        bio: "Shri KV Madhusudanan joined CRPF in 1975 as a Deputy Superintendent of Police and was the topper of his batch. He rendered invaluable service in the North Eastern region and during anti-terrorist operations in Punjab. In 1991, he was selected for the SPG, where he headed the close protection team for four Prime Ministers, from Narasimha Rao to Vajpayee. On promotion to DIG, he headed the Kerala CRPF. As IG, he commanded the North Eastern sector, the largest sector of CRPF. He has completed several courses both domestically and internationally and visited over 30 countries while accompanying the Prime Ministers. Currently, he is deeply involved in managing his plantation and engaging in social service.",
-        achievements: [
-            "Recipient of the President's Medal for Meritorious Services",
-            "Recipient of the President's Medal for Distinguished Services",
-            "Commanded the largest CRPF sector in the North East",
-            "Headed close protection teams for four Prime Ministers",
-            "Over 30 international visits accompanying Prime Ministers",
-            "Notable contributions to plantation management and social service post-retirement"
-        ],
-    },
-    {
-        name: "Mr. M T P Mohammed Kunhi",
-        position: "Patron",
-        image: "/patron-02.jpg",
-        fallback: "KM",
-        bio: "Mr. M T P Mohammed Kunhi is a prominent businessman based in the Kingdom of Saudi Arabia and the Managing Director of the Sulfex Group of Companies. Born in Trikkaripur, Kasargode District, he ventured to KSA in 1985, where he worked in various companies before establishing a successful career in retail and manufacturing. His flagship venture, Sulfex Mattress Company, located in Kannur, Kerala, manufactures high-quality mattresses with a production capacity of 2,500 units per day, exporting to various countries and holding ISO certification and ISI marks. Known for his leadership, determination, and advocacy for hard work, Mr. Mohammed Kunhi continues to excel in business and social service.",
-        achievements: [
-            "Founder and CMD of Sulfex Group of Companies",
-            "Recipient of the 'Largest Seller of Rubberized Coir Products in India' award from the Ministry of MSME",
-            "Recipient of the Social Responsibility Award from the Hon. Governor of Kerala",
-            "Winner of the Chandrika Business Enclave Award",
-            "Second Business Award by the Kasaragod Chamber of Commerce and Industries",
-            "Led Sulfex Mattress Company to approval by the Ministry of Defence (DGQA) for quality assurance"
-        ],
-    },
-];
-
-const seniorOfficeBearers = [
-    {
-        name: "Dr. Sheikh Bava",
-        position: "President",
-        image: "/president.png",
-        fallback: "SB",
-        bio: "Dr. Sheikh Bava Mangalore, an entrepreneur and educator holding a PhD from Kalinga University, is known for his contributions to industrial development, education, and philanthropy. He is a Director at Hindustan Group of Companies and Bestgreenplates Pvt Ltd, a Partner at Venesa Industrial Complex LLP, and the Chairman of Surplus Infra Pvt Ltd. He has previously held key roles in the UAE Government-owned ADNOC Gas Processing & Distribution Plant. An advocate of hard work and effective leadership, Dr. Bava has been instrumental in promoting social welfare through various trusts and initiatives.",
-        achievements: [
-            "India Darshan National Integration Award (2021)",
-            "State Human Services Award (2014)",
-            "Pravasi Bhartiya Kerala 'Udyog Pathr' Award (2014)",
-            "ADNOC Outstanding Performer Award (2010)",
-            "NSS Honorary Fellow Award (1991)",
-            "Founder of TAWAM and Promoter of Integrated Industrial Estate Project",
-            "Board Member of Hindustan Education Trust and MAKE Welfare Trust",
-            "President of multiple social welfare organizations including Bafaqi Foundation Karnataka and Britent Welfare Trust"
-        ],
-    },
-    {
-        name: "Dr. Rashmi Prakash",
-        position: "General Secretary",
-        image: "/generalSecretary.png",
-        fallback: "RP",
-        bio: "Dr. Rashmi Prakash has dedicated her career to mental health awareness, making significant strides in public policy for psychological wellbeing.",
-        achievements: ["Founded mental health awareness programs", "Recipient of the National Health Service Award"],
-    },
-    {
-        name: "Mr. Anoop K",
-        position: "Treasurer",
-        image: "/treasurer.jpeg",
-        fallback: "AK",
-        bio: "Mr. Anoop Kalanad, a prominent public figure from Kasaragod, is a politician, social activist, and business promoter. Born on 19 February 1978, he graduated in Chemistry from Govt College, Kasaragod, and holds a Diploma in Public Health and Sanitation from the All India Institute of Local Self Government, Mumbai. With extensive experience in government services, he has worked as a Water Analyst, Chemist, Health Inspector, Warden, and Scientific Assistant in various departments of the Government of Kerala. He is the Managing Director of Shravanam Digital Print House and a founder, promoter, and Director of Kashmart Ventures India Private Limited.",
-        achievements: [
-            "Established multiple Kashmart hypermarkets in Kasaragod",
-            "State Executive Member and District General Secretary of KPCC OBC Department",
-            "District Secretary of Kerala Printers Association",
-            "Business Innovative Award recipient from JCI Kasaragod Heritage City (2024)",
-            "Working Group Member in various local self-government committees",
-            "District Executive Member and leader in Kerala Vyapari Vyasaya Ekopana Samiti"
-        ],
-    }
-];
-
-const vicePresidents = [
-    {
-        name: "Mrs. C. K. Zulekha Mahin",
-        position: "Vice President",
-        image: "/vicePresident-01.jpeg",
-        fallback: "ZM",
-        bio: "Mrs. C. K. Zulekha Mahin has been a tireless advocate for women's empowerment, leading numerous campaigns aimed at education and employment for women.",
-        achievements: ["Launched women empowerment programs", "Awarded for her contribution to society"],
-    },
-    {
-        name: "Mr. Dayakara R. K.",
-        position: "Vice President",
-        image: "/vicePresident-02.png",
-        fallback: "DRK",
-        bio: "Mr. Dayakara R. K. is deeply involved in rural development and has worked extensively on improving the living conditions in remote areas.",
-        achievements: ["Built rural infrastructure", "Developed sustainable farming initiatives"],
-    },
-    {
-        name: "Mr. Abdul Nassir N. A.",
-        position: "Vice President",
-        image: "/vicePresident-03.png",
-        fallback: "AN",
-        bio: "Mr. Abdul Nassir N. A. has a background in technology and innovation, fostering numerous initiatives in the tech industry.",
-        achievements: ["Founded a successful tech startup", "Introduced tech-based educational programs"],
-    },
-    {
-        name: "Mr. Rafeek",
-        position: "Vice President",
-        image: "/vicePresident-04.png",
-        fallback: "R",
-        bio: "Mr. Rafeek is a social entrepreneur, creating initiatives that benefit local communities and provide them with better opportunities for growth.",
-        achievements: ["Founded a non-profit organization", "Launched job training programs for youth"],
-    },
-];
-
-// Helper function to find the bearer by name
-const findBearer = (slugParam: string) => {
-    // Check each category (patrons, senior office bearers, vice presidents)
-    const allBearers = [...patrons, ...seniorOfficeBearers, ...vicePresidents];
-    return allBearers.find((bearer) =>
-        bearer.name.toLowerCase().replace(/\s+/g, '-') === slugParam
-    );
-};
+interface OfficeBearerDetail {
+    name: string;
+    position: string;
+    image: string;
+    fallback: string;
+    bio?: string;
+    achievements: string[];
+}
 
 export default function Page() {
     const params = useParams();
     const slug = params.slug as string;
-    const [bearer, setBearer] = useState<typeof patrons[0] | undefined>(undefined);
+    const [bearer, setBearer] = useState<OfficeBearerDetail | undefined>(undefined);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        if (slug) {
-            const found = findBearer(slug);
-            setBearer(found);
+        async function loadBearer() {
+            try {
+                if (!slug) return;
+
+                const members = await getPublicMembers();
+                const matched = members.find((m) => memberSlugFromName(m.name) === slug);
+
+                if (!matched) {
+                    setBearer(undefined);
+                    return;
+                }
+
+                setBearer({
+                    name: matched.name,
+                    position: matched.position,
+                    image: matched.image,
+                    fallback: matched.fallback,
+                    bio: matched.bio,
+                    achievements: matched.achievements ?? [],
+                });
+            } catch (error) {
+                console.error('Error loading office bearer:', error);
+                setBearer(undefined);
+            } finally {
+                setIsLoading(false);
+            }
         }
+
+        loadBearer();
     }, [slug]);
+
+    if (isLoading) {
+        return (
+            <div className="min-h-screen flex items-center justify-center">
+                <div className="text-center">
+                    <h1 className="text-2xl font-bold mb-2">Loading office bearer...</h1>
+                    <p className="text-muted-foreground">Please wait while we fetch the details.</p>
+                </div>
+            </div>
+        );
+    }
 
     if (!bearer) {
         return (

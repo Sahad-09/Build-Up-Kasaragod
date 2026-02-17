@@ -27,7 +27,8 @@ export async function createMember(formData: FormData): Promise<{ success: boole
     const category = formData.get('category') as 'Patron' | 'Core Team' | 'Vice President';
     const bio = formData.get('bio') as string | null;
     const achievementsStr = formData.get('achievements') as string | null;
-    const orderStr = formData.get('order') as string;
+    const orderEntry = formData.get('order');
+    const orderStr = typeof orderEntry === 'string' ? orderEntry : null;
     const imageFile = formData.get('image') as File | null;
 
     // Validation
@@ -35,7 +36,24 @@ export async function createMember(formData: FormData): Promise<{ success: boole
       return { success: false, error: 'Name, position, and category are required' };
     }
 
-    const order = orderStr ? parseInt(orderStr, 10) : 0;
+    const collection = await getMembersCollection();
+
+    // Order: lower numbers appear first within a category.
+    // If not provided, auto-place at the end of the chosen category.
+    let order: number;
+    if (orderStr && orderStr.trim() !== '') {
+      order = parseInt(orderStr, 10);
+      if (Number.isNaN(order) || order < 0) {
+        return { success: false, error: 'Display Position must be a valid number' };
+      }
+    } else {
+      const lastInCategory = await collection.findOne(
+        { category },
+        { sort: { order: -1 } }
+      );
+      order = (lastInCategory?.order ?? -1) + 1;
+    }
+
     const achievements = achievementsStr ? achievementsStr.split('\n').filter(a => a.trim()) : undefined;
 
     // Generate fallback from name
@@ -64,7 +82,6 @@ export async function createMember(formData: FormData): Promise<{ success: boole
       order,
     };
 
-    const collection = await getMembersCollection();
     const now = new Date();
     const result = await collection.insertOne({
       ...memberToMemberDocument(memberData),

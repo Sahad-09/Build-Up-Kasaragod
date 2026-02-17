@@ -4,7 +4,7 @@ const BLOB_URL_PREFIX = 'blob.vercel-storage.com';
 
 export async function uploadBlob(
   file: File,
-  folder: 'events' | 'members'
+  folder: 'events' | 'members' | 'agm-reports'
 ): Promise<string> {
   const timestamp = Date.now();
   const originalName = file.name.replace(/[^a-zA-Z0-9.-]/g, '_');

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import {
     Card,
@@ -16,9 +16,10 @@ import {
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 import Link from "next/link";
 import { ClipboardList } from "lucide-react";
-import { getPublicEvents, getUpcomingEvents, getPastEvents } from "@/lib/actions/public-events";
+import { getPublicEvents, getUpcomingEvents, getPastEvents, getPastEventsPaginated } from "@/lib/actions/public-events";
 
 // Event type definition
 interface Event {
@@ -37,18 +38,83 @@ interface Event {
 
 const EventsPage: React.FC = () => {
     const [upcomingEvents, setUpcomingEvents] = useState<Event[]>([]);
-    const [pastEvents, setPastEvents] = useState<Event[]>([]);
-    const [isLoading, setIsLoading] = useState(true);
+    const [loadedPastEvents, setLoadedPastEvents] = useState<Event[]>([]);
+    const [isLoadingUpcoming, setIsLoadingUpcoming] = useState(true);
+    const [isLoadingMorePastEvents, setIsLoadingMorePastEvents] = useState(false);
+    const [currentPastBatch, setCurrentPastBatch] = useState(0);
+    const [hasMorePastEvents, setHasMorePastEvents] = useState(true);
+    const [pastEventsInitialized, setPastEventsInitialized] = useState(false);
+    const pastEventsRef = useRef<HTMLDivElement>(null);
+    const loadMoreTriggerRef = useRef<HTMLDivElement>(null);
+    const initialBatchSize = 3; // Load 3 events initially
+    const eventsPerBatch = 3; // Load 3 events per batch as user scrolls
 
+    // Function to load next batch of past events
+    const loadNextPastEventsBatch = React.useCallback(async (isInitialLoad: boolean = false) => {
+        if (isLoadingMorePastEvents || !hasMorePastEvents) return;
+
+        setIsLoadingMorePastEvents(true);
+        try {
+            const batchSize = isInitialLoad ? initialBatchSize : eventsPerBatch;
+            // Calculate skip: initial load starts at 0, subsequent loads account for initial batch
+            const skip = isInitialLoad 
+                ? 0 
+                : initialBatchSize + (currentPastBatch - 1) * eventsPerBatch;
+            const batch = await getPastEventsPaginated(skip, batchSize);
+
+            if (batch.length === 0) {
+                setHasMorePastEvents(false);
+                setIsLoadingMorePastEvents(false);
+                return;
+            }
+
+            const batchConverted = batch.map(event => ({
+                ...event,
+                date: new Date(event.date)
+            }));
+
+            // Deduplicate events
+            const uniqueBatch = batchConverted.reduce((acc, event) => {
+                const key = `${event.title}-${event.date.getTime()}`;
+                if (!acc.find(e => `${e.title}-${e.date.getTime()}` === key)) {
+                    acc.push(event);
+                }
+                return acc;
+            }, [] as Event[]);
+
+            // Append to loaded events
+            setLoadedPastEvents(prev => {
+                const combined = [...prev, ...uniqueBatch];
+                // Remove duplicates
+                const seen = new Set<string>();
+                return combined.filter(event => {
+                    const key = `${event.title}-${event.date.getTime()}`;
+                    if (seen.has(key)) return false;
+                    seen.add(key);
+                    return true;
+                });
+            });
+
+            // Check if we got fewer events than requested (end of list)
+            const expectedBatchSize = isInitialLoad ? initialBatchSize : eventsPerBatch;
+            if (batch.length < expectedBatchSize) {
+                setHasMorePastEvents(false);
+            } else {
+                setCurrentPastBatch(prev => prev + 1);
+            }
+        } catch (error) {
+            console.error('Error loading past events batch:', error);
+        } finally {
+            setIsLoadingMorePastEvents(false);
+        }
+    }, [currentPastBatch, isLoadingMorePastEvents, hasMorePastEvents]);
+
+    // Load upcoming events first (priority)
     useEffect(() => {
-        async function loadEvents() {
+        async function loadUpcomingEvents() {
             try {
-                // Fetch events from MongoDB
                 const dbUpcoming = await getUpcomingEvents();
-                const dbPast = await getPastEvents();
 
-                // Convert DB events date strings to Date objects
-                // Deduplicate by title and date to prevent duplicates
                 const upcomingUnique = dbUpcoming.reduce((acc, event) => {
                     const eventDate = new Date(event.date);
                     const key = `${event.title}-${eventDate.getTime()}`;
@@ -58,42 +124,77 @@ const EventsPage: React.FC = () => {
                     return acc;
                 }, [] as Event[]);
 
-                const upcoming = upcomingUnique;
-
-                const dbPastConverted = dbPast.map(event => ({
-                    ...event,
-                    date: new Date(event.date)
-                }));
-
-                // Use only MongoDB events (hardcoded events were migrated to DB)
-                // Deduplicate by title and date to prevent duplicates
-                const uniquePastEvents = dbPastConverted.reduce((acc, event) => {
-                    const key = `${event.title}-${event.date.getTime()}`;
-                    if (!acc.find(e => `${e.title}-${e.date.getTime()}` === key)) {
-                        acc.push(event);
-                    }
-                    return acc;
-                }, [] as Event[]);
-
-                const allPastEvents = uniquePastEvents
-                    .filter(event => event.date < new Date())
-                    .sort((a, b) => b.date.getTime() - a.date.getTime());
-
-                setUpcomingEvents(upcoming);
-                setPastEvents(allPastEvents);
+                setUpcomingEvents(upcomingUnique);
             } catch (error) {
-                console.error('Error loading events:', error);
-                setPastEvents([]);
+                console.error('Error loading upcoming events:', error);
+                setUpcomingEvents([]);
             } finally {
-                setIsLoading(false);
+                setIsLoadingUpcoming(false);
             }
         }
 
-        loadEvents();
+        loadUpcomingEvents();
     }, []);
 
-    // State for pagination
-    const [pastEventsPage, setPastEventsPage] = useState(0);
+    // Load initial batch when user scrolls near past events section
+    useEffect(() => {
+        if (pastEventsInitialized) return;
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                if (entries[0].isIntersecting && !pastEventsInitialized) {
+                    setPastEventsInitialized(true);
+                    loadNextPastEventsBatch(true); // Pass true for initial load
+                }
+            },
+            { rootMargin: '200px' } // Start loading 200px before section comes into view
+        );
+
+        if (pastEventsRef.current) {
+            observer.observe(pastEventsRef.current);
+        }
+
+        // Fallback: Load first batch after 2 seconds if user hasn't scrolled
+        const fallbackTimer = setTimeout(() => {
+            if (!pastEventsInitialized) {
+                setPastEventsInitialized(true);
+                loadNextPastEventsBatch(true); // Pass true for initial load
+            }
+        }, 2000);
+
+        return () => {
+            if (pastEventsRef.current) {
+                observer.unobserve(pastEventsRef.current);
+            }
+            clearTimeout(fallbackTimer);
+        };
+    }, [pastEventsInitialized, loadNextPastEventsBatch]);
+
+    // Infinite scroll: Load more batches when user scrolls to bottom
+    useEffect(() => {
+        if (!pastEventsInitialized || !hasMorePastEvents || isLoadingMorePastEvents) return;
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                if (entries[0].isIntersecting && hasMorePastEvents && !isLoadingMorePastEvents) {
+                    loadNextPastEventsBatch();
+                }
+            },
+            { rootMargin: '100px' } // Start loading 100px before trigger comes into view
+        );
+
+        if (loadMoreTriggerRef.current) {
+            observer.observe(loadMoreTriggerRef.current);
+        }
+
+        return () => {
+            if (loadMoreTriggerRef.current) {
+                observer.unobserve(loadMoreTriggerRef.current);
+            }
+        };
+    }, [pastEventsInitialized, hasMorePastEvents, isLoadingMorePastEvents, loadNextPastEventsBatch]);
+
+    // State for pagination (only for upcoming events)
     const [upcomingEventsPage, setUpcomingEventsPage] = useState(0);
     const eventsPerPage = 6; // Increased from 2 to 6 for better layout
 
@@ -113,6 +214,54 @@ const EventsPage: React.FC = () => {
             'National': 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200',
         };
         return colors[category] || 'bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200';
+    };
+
+    // Render skeleton event card
+    const renderSkeletonCard = (index: number) => {
+        return (
+            <motion.div
+                key={`skeleton-${index}`}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.3 }}
+            >
+                <Card className="h-full flex flex-col overflow-hidden">
+                    {/* Image Skeleton */}
+                    <div className="relative w-full h-56 overflow-hidden bg-gray-200 dark:bg-gray-800">
+                        <Skeleton className="w-full h-full" />
+                        {/* Badge Skeleton */}
+                        <div className="absolute top-4 left-4">
+                            <Skeleton className="h-6 w-20" />
+                        </div>
+                    </div>
+
+                    {/* Content Skeleton */}
+                    <CardContent className="p-6 flex flex-col flex-1">
+                        {/* Date and Location Skeleton */}
+                        <div className="flex flex-wrap gap-3 mb-4">
+                            <Skeleton className="h-4 w-24" />
+                            <Skeleton className="h-4 w-32" />
+                        </div>
+
+                        {/* Title Skeleton */}
+                        <Skeleton className="h-6 w-full mb-3" />
+                        <Skeleton className="h-6 w-3/4 mb-4" />
+
+                        {/* Description Skeleton */}
+                        <div className="space-y-2 mb-4 flex-1">
+                            <Skeleton className="h-4 w-full" />
+                            <Skeleton className="h-4 w-full" />
+                            <Skeleton className="h-4 w-5/6" />
+                        </div>
+
+                        {/* Button Skeleton */}
+                        <div className="mt-auto pt-4 border-t">
+                            <Skeleton className="h-10 w-full" />
+                        </div>
+                    </CardContent>
+                </Card>
+            </motion.div>
+        );
     };
 
     // Render event card with consistent design
@@ -135,6 +284,7 @@ const EventsPage: React.FC = () => {
                                 <img
                                     src={event.image}
                                     alt={event.title}
+                                    loading="lazy"
                                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                                 />
                             ) : (
@@ -266,12 +416,44 @@ const EventsPage: React.FC = () => {
         );
     };
 
-    if (isLoading) {
+    // Render skeleton loaders for initial load
+    if (isLoadingUpcoming && upcomingEvents.length === 0) {
         return (
-            <div className="container mx-auto px-4 py-16">
-                <div className="flex flex-col items-center justify-center min-h-[400px]">
-                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mb-4"></div>
-                    <p className="text-muted-foreground">Loading events...</p>
+            <div className="min-h-screen bg-background">
+                <div className="container mx-auto px-4 py-12 lg:py-16">
+                    {/* Upcoming Events Skeleton */}
+                    <section className="mb-16">
+                        <div className="flex items-center gap-3 mb-8">
+                            <div className="p-2 bg-green-100 dark:bg-green-900/30 rounded-lg">
+                                <Clock className="h-6 w-6 text-green-600 dark:text-green-400" />
+                            </div>
+                            <div>
+                                <Skeleton className="h-9 w-48 mb-2" />
+                                <Skeleton className="h-4 w-32" />
+                            </div>
+                        </div>
+                        
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+                            {Array.from({ length: 6 }).map((_, index) => renderSkeletonCard(index))}
+                        </div>
+                    </section>
+
+                    {/* Past Events Skeleton */}
+                    <section>
+                        <div className="flex items-center gap-3 mb-8">
+                            <div className="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-lg">
+                                <Calendar className="h-6 w-6 text-blue-600 dark:text-blue-400" />
+                            </div>
+                            <div>
+                                <Skeleton className="h-9 w-40 mb-2" />
+                                <Skeleton className="h-4 w-36" />
+                            </div>
+                        </div>
+                        
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+                            {Array.from({ length: initialBatchSize }).map((_, index) => renderSkeletonCard(index + 6))}
+                        </div>
+                    </section>
                 </div>
             </div>
         );
@@ -286,49 +468,73 @@ const EventsPage: React.FC = () => {
                 className="container mx-auto px-4 py-12 lg:py-16"
             >
                 {/* Upcoming Events Section */}
-                {upcomingEvents.length > 0 && (
-                    <section className="mb-16">
-                        <div className="flex items-center gap-3 mb-8">
-                            <div className="p-2 bg-green-100 dark:bg-green-900/30 rounded-lg">
-                                <Clock className="h-6 w-6 text-green-600 dark:text-green-400" />
-                            </div>
-                            <div>
-                                <h2 className="text-3xl font-bold">Upcoming Events</h2>
+                <section className="mb-16">
+                    <div className="flex items-center gap-3 mb-8">
+                        <div className="p-2 bg-green-100 dark:bg-green-900/30 rounded-lg">
+                            <Clock className="h-6 w-6 text-green-600 dark:text-green-400" />
+                        </div>
+                        <div>
+                            <h2 className="text-3xl font-bold">Upcoming Events</h2>
+                            {isLoadingUpcoming ? (
+                                <Skeleton className="h-4 w-32 mt-1" />
+                            ) : (
                                 <p className="text-muted-foreground text-sm mt-1">
                                     {upcomingEvents.length} {upcomingEvents.length === 1 ? 'event' : 'events'} scheduled
                                 </p>
-                            </div>
-                        </div>
-                        
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-                            {getPaginatedEvents(upcomingEvents, upcomingEventsPage).map((event, index) => 
-                                renderEventCard(event, index)
                             )}
                         </div>
-                        
-                        <PaginationControls
-                            currentPage={upcomingEventsPage}
-                            totalEvents={upcomingEvents}
-                            onPageChange={setUpcomingEventsPage}
-                        />
-                    </section>
-                )}
+                    </div>
+                    
+                    {isLoadingUpcoming ? (
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+                            {Array.from({ length: 6 }).map((_, index) => renderSkeletonCard(index))}
+                        </div>
+                    ) : upcomingEvents.length > 0 ? (
+                        <>
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+                                {getPaginatedEvents(upcomingEvents, upcomingEventsPage).map((event, index) => 
+                                    renderEventCard(event, index)
+                                )}
+                            </div>
+                            
+                            <PaginationControls
+                                currentPage={upcomingEventsPage}
+                                totalEvents={upcomingEvents}
+                                onPageChange={setUpcomingEventsPage}
+                            />
+                        </>
+                    ) : (
+                        <div className="text-center py-16">
+                            <Clock className="h-16 w-16 mx-auto text-muted-foreground mb-4 opacity-50" />
+                            <p className="text-lg text-muted-foreground">No upcoming events scheduled.</p>
+                        </div>
+                    )}
+                </section>
 
                 {/* Past Events Section */}
-                <section>
+                <section ref={pastEventsRef}>
                     <div className="flex items-center gap-3 mb-8">
                         <div className="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-lg">
                             <Calendar className="h-6 w-6 text-blue-600 dark:text-blue-400" />
                         </div>
                         <div>
                             <h2 className="text-3xl font-bold">Past Events</h2>
-                            <p className="text-muted-foreground text-sm mt-1">
-                                {pastEvents.length} {pastEvents.length === 1 ? 'event' : 'events'} in our history
-                            </p>
+                            {!pastEventsInitialized ? (
+                                <Skeleton className="h-4 w-32 mt-1" />
+                            ) : (
+                                <p className="text-muted-foreground text-sm mt-1">
+                                    {loadedPastEvents.length} {loadedPastEvents.length === 1 ? 'event' : 'events'} loaded
+                                    {hasMorePastEvents && ' • Scroll for more'}
+                                </p>
+                            )}
                         </div>
                     </div>
 
-                    {pastEvents.length === 0 ? (
+                    {!pastEventsInitialized ? (
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+                            {Array.from({ length: initialBatchSize }).map((_, index) => renderSkeletonCard(index))}
+                        </div>
+                    ) : loadedPastEvents.length === 0 ? (
                         <div className="text-center py-16">
                             <Calendar className="h-16 w-16 mx-auto text-muted-foreground mb-4 opacity-50" />
                             <p className="text-lg text-muted-foreground">No past events to display.</p>
@@ -336,16 +542,38 @@ const EventsPage: React.FC = () => {
                     ) : (
                         <>
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-                                {getPaginatedEvents(pastEvents, pastEventsPage).map((event, index) => 
+                                {loadedPastEvents.map((event, index) => 
                                     renderEventCard(event, index)
                                 )}
                             </div>
                             
-                            <PaginationControls
-                                currentPage={pastEventsPage}
-                                totalEvents={pastEvents}
-                                onPageChange={setPastEventsPage}
-                            />
+                            {/* Loading more skeletons */}
+                            {isLoadingMorePastEvents && (
+                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 mt-6">
+                                    {Array.from({ length: eventsPerBatch }).map((_, index) => 
+                                        renderSkeletonCard(loadedPastEvents.length + index)
+                                    )}
+                                </div>
+                            )}
+
+                            {/* Load more trigger (invisible element for Intersection Observer) */}
+                            {hasMorePastEvents && (
+                                <div 
+                                    ref={loadMoreTriggerRef} 
+                                    className="h-20 w-full"
+                                    aria-hidden="true"
+                                />
+                            )}
+
+                            {/* End of list indicator */}
+                            {!hasMorePastEvents && loadedPastEvents.length > 0 && (
+                                <div className="text-center py-12 mt-8">
+                                    <div className="inline-flex items-center gap-2 text-muted-foreground">
+                                        <Calendar className="h-5 w-5" />
+                                        <p className="text-sm">You've reached the end of past events</p>
+                                    </div>
+                                </div>
+                            )}
                         </>
                     )}
                 </section>

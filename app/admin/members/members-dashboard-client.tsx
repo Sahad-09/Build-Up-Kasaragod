@@ -115,6 +115,9 @@ export default function MembersDashboardClient({ members }: MembersDashboardClie
                                 <Badge variant="secondary" className="mt-2">
                                   {member.position}
                                 </Badge>
+                                <p className="text-xs text-muted-foreground mt-2">
+                                  Display Position: {member.order + 1}
+                                </p>
                               </div>
                             </div>
                             <div className="flex gap-2">

@@ -21,6 +21,7 @@ const Navbar = () => {
         { title: "About Us", href: "/about-us" },
         { title: "Events", href: "/events" },
         { title: "Scholarship", href: "/scholarship" },
+        { title: "AGM Reports", href: "/agm-reports" },
         { title: "Contact", href: "/contact" },
         { title: "Donate", href: "/donate-us" },
     ];
